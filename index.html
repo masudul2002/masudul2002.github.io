@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MASUDUL HASAN - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="logo">
+        MASUDUL HASAN
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#adventure">Adventure</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#payment">Payment for bKash</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero Section ===== -->
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container">
+      <h1>Welcome to my Website 🌸</h1>
+      <p>
+        Lying is a disease and truthfulness is a cure.
+      </p>
+      <a href="#about" class="btn-primary">Know more about me</a>
+    </div>
+  </section>
+
+  <!-- ===== Gallery Section ===== -->
+  <section class="section" >
+    <div class="container">
+      <h2 class="section-title">My Moments</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="images/photo1.jpg" alt="Photo 1" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/photo2.jpg" alt="Photo 2" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/photo3.jpg" alt="Photo 3" />
+        </div>
+        <div class="gallery-item">
+          <img src="images/photo4.jpg" alt="Photo 4" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Blog Section ===== -->
+  <section id="blog" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Blog</h2>
+      <p class="section-subtitle">
+        I share my thoughts about technology, life and adventures.
+      </p>
+      <div class="card-grid">
+        <article class="card">
+          <h3>How I started my CSE journey</h3>
+          <p>
+            A short story about my admission, dreams and plans as a CSE student.
+          </p>
+          <a href="#" class="card-link">Read more</a>
+        </article>
+        <article class="card">
+          <h3>Learning HTML, CSS &amp; C++</h3>
+          <p>
+            Notes and tips from my early learning days as a beginner developer.
+          </p>
+          <a href="#" class="card-link">Read more</a>
+        </article>
+        <article class="card">
+          <h3>Memories from university life</h3>
+          <p>
+            Campus, friends, classes and unforgettable moments at SSTU.
+          </p>
+          <a href="#" class="card-link">Read more</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Adventure Section ===== -->
+  <section id="adventure" class="section">
+    <div class="container">
+      <h2 class="section-title">Adventure</h2>
+      <p class="section-subtitle">
+        Some of the places I have visited and enjoyed.
+      </p>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Travel Diary</h3>
+          <p>Short notes from my tours and adventures.</p>
+        </div>
+        <div class="card">
+          <h3>Photography</h3>
+          <p>Capturing moments that tell a story.</p>
+        </div>
+        <div class="card">
+          <h3>Future Plans</h3>
+          <p>New cities, new people and new memories.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About Me Section ===== -->
+  <section id="about" class="section section-alt">
+    <div class="container about-layout">
+      <div>
+        <h2 class="section-title">About Me</h2>
+        <p>
+          I’m <strong>Masudul Hasan</strong>, a student of
+          <strong>Sunamgonj Science and Technology University</strong>, Department of CSE.
+          I love learning new technologies and improving myself every day.
+        </p>
+        <ul class="list">
+          <li>🎓 CSE student at SSTU</li>
+          <li>🌱 Learning HTML, CSS &amp; C++</li>
+          <li>💻 Interested in problem solving &amp; development</li>
+          <li>✍️ I write articles on Google Sites</li>
+        </ul>
+      </div>
+      <div class="about-box">
+        <h3>Quick Links</h3>
+        <p>
+          GitHub:
+          <a href="https://github.com/masudul2002" target="_blank">
+            github.com/masudul2002
+          </a>
+          <br />
+          Articles:
+          <a href="https://sites.google.com/view/masudul2002" target="_blank">
+            My Google Sites
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact Section ===== -->
+  <section id="contact" class="section">
+    <div class="container contact-layout">
+      <div>
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">
+          Feel free to reach out to me for collaboration, questions or just to say hi.
+        </p>
+        <p>
+          📧 Email: <a href="mailto:yourmail@example.com">yourmail@example.com</a><br />
+          🔗 LinkedIn:
+          <a href="https://www.linkedin.com/in/masudul2002" target="_blank">
+            linkedin.com/in/masudul2002
+          </a>
+        </p>
+      </div>
+      <form class="contact-form" onsubmit="return false;">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Your email" required />
+        <textarea rows="4" placeholder="Your message" required></textarea>
+        <button type="submit" class="btn-primary">Send (demo)</button>
+        <p class="form-note">This is a demo form. You can connect it later with a real backend.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Payment Section ===== -->
+  <section id="payment" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Payment for bKash</h2>
+      <p class="section-subtitle">
+        You can support my works or make payments through bKash.
+      </p>
+      <div class="payment-box">
+        <p>📱 bKash Number: <strong>01XXXXXXXXX</strong></p>
+        <p>
+          Please send a screenshot or transaction ID to my email after payment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      © <span id="year"></span> Masudul Hasan. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

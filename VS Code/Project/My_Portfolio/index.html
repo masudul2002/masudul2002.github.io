@@ -169,36 +169,44 @@
         </div>
 
         <!-- Mobile Menu Overlay -->
-        <div class="fixed inset-0 bg-black/95 z-[60] transform translate-x-full transition-transform duration-300 md:hidden flex flex-col justify-center items-center gap-8 backdrop-blur-xl"
-            id="mobile-menu">
-            <button class="absolute top-6 right-6 text-3xl text-gray-400 hover:text-white transition-colors"
+        <div class="fixed inset-x-0 top-0 bg-black/97 z-[60] transform -translate-y-full transition-transform duration-500 ease-out md:hidden flex flex-col items-center gap-6 backdrop-blur-2xl pt-24 pb-10 overflow-y-auto"
+            id="mobile-menu" style="max-height: 100dvh;">
+            <button class="absolute top-5 right-6 text-3xl text-gray-400 hover:text-white transition-colors"
                 id="close-menu-btn">&times;</button>
 
+            <!-- Divider -->
+            <div class="w-12 h-0.5 bg-primary/40 rounded-full mb-2"></div>
+
             <a href="#home"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-home text-sm"></i> Home
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-home text-primary w-5 text-center"></i> Home
             </a>
             <a href="#about"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-user text-sm"></i> About
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-user text-primary w-5 text-center"></i> About
             </a>
             <a href="#skills"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-code text-sm"></i> Skills
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-code text-primary w-5 text-center"></i> Skills
             </a>
             <a href="#experience"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-briefcase text-sm"></i> Experience
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-briefcase text-primary w-5 text-center"></i> Experience
             </a>
             <a href="#projects"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-laptop-code text-sm"></i> Projects
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-laptop-code text-primary w-5 text-center"></i> Projects
             </a>
             <a href="payment.html"
-                class="mobile-link text-xl font-medium text-gray-300 hover:text-primary flex items-center gap-3">
-                <i class="fas fa-credit-card text-sm"></i> Payment
+                class="mobile-link w-64 flex items-center gap-4 px-5 py-3 rounded-xl text-gray-300 hover:text-primary hover:bg-white/5 transition-all text-lg font-medium border border-transparent hover:border-primary/20">
+                <i class="fas fa-credit-card text-primary w-5 text-center"></i> Payment
             </a>
-            <a href="#contact" class="px-8 py-3 rounded-full bg-primary text-black font-bold shadow-neon mt-4">
+
+            <!-- Divider -->
+            <div class="w-12 h-0.5 bg-primary/40 rounded-full my-2"></div>
+
+            <a href="#contact"
+                class="mobile-link w-64 px-8 py-3 rounded-full bg-primary text-black font-bold shadow-neon text-center hover:scale-105 active:scale-95 transition-transform">
                 Let's Talk
             </a>
         </div>
@@ -267,7 +275,7 @@
                         <div
                             class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 z-20 mix-blend-overlay">
                         </div>
-                        <img src="PNG/MASUDUL HASAN.png" alt="MD MASUDUL HASAN"
+                        <img src="PNG/MASUDUL-HASAN.png" alt="MD MASUDUL HASAN"
                             class="w-full h-full object-cover rounded-xl filter grayscale hover:grayscale-0 transition-all duration-500 scale-100 hover:scale-110">
                     </div>
 
@@ -984,7 +992,8 @@
                     <i class="fas fa-bullseye text-primary text-xl flex-shrink-0"></i>
                     <div>
                         <p class="font-bold text-sm">Target: ICPC 2026</p>
-                        <p class="text-gray-400 text-xs">Practicing daily on Codeforces &middot; LeetCode &middot; AtCoder. Focused on
+                        <p class="text-gray-400 text-xs">Practicing daily on Codeforces &middot; LeetCode &middot;
+                            AtCoder. Focused on
                             algorithmic problem solving, DP, and graph theory.</p>
                     </div>
                     <span class="ml-auto text-[10px] text-gray-600 font-mono whitespace-nowrap"

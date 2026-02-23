@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS CV Generator | MD. Masudul Hasan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ====== UI SHELL ====== */
+        :root {
+            --p: #00f2ff;
+            --s: #4d4dff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #060606;
+            color: #ddd;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(ellipse at 20% 10%, rgba(77, 77, 255, .1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 242, 255, .07) 0%, transparent 50%);
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(6, 6, 6, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            padding: 12px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--p);
+        }
+
+        .badge {
+            font-size: .6rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .35);
+            background: rgba(0, 242, 255, .06);
+            border: 1px solid rgba(0, 242, 255, .18);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        .back {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            background: rgba(255, 255, 255, .02);
+            color: #bbb;
+            text-decoration: none;
+            font-size: .78rem;
+            transition: all .3s;
+        }
+
+        .back:hover {
+            border-color: var(--p);
+            color: var(--p);
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            min-height: calc(100vh - 50px);
+        }
+
+        /* Panel */
+        .panel {
+            background: rgba(255, 255, 255, .015);
+            border-right: 1px solid rgba(255, 255, 255, .08);
+            padding: 18px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            max-height: calc(100vh - 50px);
+            position: sticky;
+            top: 50px;
+        }
+
+        .ps h3 {
+            font-size: .6rem;
+            font-weight: 700;
+            color: var(--p);
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .rs {
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 13px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            background: rgba(0, 242, 255, .03);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-size: .83rem;
+            appearance: none;
+            cursor: pointer;
+            outline: none;
+            transition: all .3s;
+        }
+
+        select:focus {
+            border-color: var(--p);
+            box-shadow: 0 0 0 2px rgba(0, 242, 255, .1);
+        }
+
+        select option {
+            background: #111;
+        }
+
+        .arr {
+            position: absolute;
+            right: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--p);
+            pointer-events: none;
+            font-size: .65rem;
+        }
+
+        .kws {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .kw {
+            font-size: .58rem;
+            padding: 2.5px 7px;
+            border-radius: 16px;
+            background: rgba(0, 242, 255, .06);
+            border: 1px solid rgba(0, 242, 255, .18);
+            color: var(--p);
+        }
+
+        .abtn {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Outfit', sans-serif;
+            font-size: .83rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all .3s;
+        }
+
+        .abtn+.abtn {
+            margin-top: 6px;
+        }
+
+        .b1 {
+            background: linear-gradient(135deg, var(--p), var(--s));
+            color: #000;
+            box-shadow: 0 0 14px rgba(0, 242, 255, .25);
+        }
+
+        .b1:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 26px rgba(0, 242, 255, .42);
+        }
+
+        .b2 {
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .b2:hover {
+            border-color: var(--p);
+        }
+
+        .b3 {
+            background: rgba(77, 77, 255, .06);
+            color: #999;
+            border: 1px solid rgba(77, 77, 255, .2);
+        }
+
+        .b3:hover {
+            border-color: var(--s);
+            color: #ddd;
+        }
+
+        .sc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .sc-row span {
+            font-size: .68rem;
+            color: rgba(255, 255, 255, .38);
+        }
+
+        #scoreNum {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--p);
+        }
+
+        .sbar {
+            height: 3px;
+            background: rgba(255, 255, 255, .07);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .sfill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--s), var(--p));
+            transition: width .7s ease;
+        }
+
+        .tips {
+            background: rgba(0, 242, 255, .02);
+            border: 1px solid rgba(0, 242, 255, .1);
+            border-radius: 7px;
+            padding: 10px;
+        }
+
+        .tips p {
+            font-size: .65rem;
+            color: rgba(255, 255, 255, .37);
+            line-height: 1.55;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .tips p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tips i {
+            color: var(--p);
+            font-size: .58rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Preview */
+        .preview {
+            padding: 24px 28px;
+            overflow-y: auto;
+            background: #0b0b0b;
+        }
+
+        .plabel {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 6px;
+        }
+
+        .plabel span {
+            font-size: .6rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .2);
+        }
+
+        .ld {
+            width: 5px;
+            height: 5px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pd 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pd {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .3;
+                transform: scale(.7)
+            }
+        }
+
+        .pinfo {
+            font-size: .63rem;
+            color: rgba(255, 255, 255, .18);
+            margin-bottom: 16px;
+        }
+
+        .pinfo strong {
+            color: rgba(34, 197, 94, .7);
+        }
+
+        /* ========================================================
+       CV DOCUMENT — LaTeX-style, exact A4
+       A4 @ 96dpi = 794 x 1123 px
+    ======================================================== */
+        #cv {
+            width: 794px;
+            height: 1123px;
+            background: #fff;
+            margin: 0 auto;
+            padding: 46px 54px 38px 54px;
+            font-family: 'Computer Modern', 'Latin Modern', Georgia, 'Times New Roman', serif;
+            color: #111;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, .7);
+            position: relative;
+        }
+
+        /* ── NAME & CONTACT HEADER ── */
+        .cv-name {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: .3px;
+            line-height: 1.15;
+            text-align: left;
+        }
+
+        .cv-location {
+            font-size: 10.5px;
+            color: #333;
+            margin: 3px 0 4px;
+        }
+
+        .cv-contact-line {
+            font-size: 10px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .cv-contact-line a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .cv-sep {
+            margin: 0 5px;
+            color: #555;
+        }
+
+        .cv-hline {
+            height: 1px;
+            background: #111;
+            margin: 8px 0 0;
+        }
+
+        /* ── BODY ── */
+        .cv-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 0;
+            overflow: hidden;
+        }
+
+        /* ── SECTION ── */
+        .cs {
+            margin-top: 11px;
+            flex-shrink: 0;
+        }
+
+        .cs.last {
+            flex: 1;
+        }
+
+        /* last section fills remaining page */
+
+        .cs-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: .2px;
+            margin-bottom: 3px;
+        }
+
+        .cs-line {
+            height: 0.8px;
+            background: #444;
+            margin-bottom: 7px;
+        }
+
+        /* Summary */
+        .cv-summary-text {
+            font-size: 10px;
+            line-height: 1.68;
+            color: #222;
+            text-align: justify;
+        }
+
+        /* Skills — bold label + colon + comma-separated values */
+        .sk-table {
+            width: 100%;
+        }
+
+        .sk-row-item {
+            font-size: 10px;
+            line-height: 1.7;
+            color: #222;
+        }
+
+        .sk-row-item strong {
+            color: #111;
+            font-weight: 700;
+        }
+
+        /* Experience */
+        .exp-item {
+            margin-bottom: 9px;
+        }
+
+        .exp-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .exp-hd {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .exp-org {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .exp-date {
+            font-size: 10px;
+            color: #333;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        .exp-role {
+            font-size: 10px;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 3px;
+        }
+
+        .exp-ul {
+            list-style: disc;
+            padding-left: 18px;
+        }
+
+        .exp-ul li {
+            font-size: 10px;
+            color: #222;
+            line-height: 1.62;
+            margin-bottom: 1.5px;
+        }
+
+        /* Education */
+        .edu-item {
+            margin-bottom: 5px;
+        }
+
+        .edu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .edu-hd {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .edu-inst {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .edu-date {
+            font-size: 10px;
+            color: #333;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .edu-deg {
+            font-size: 10px;
+            color: #333;
+        }
+
+        .edu-gpa {
+            font-size: 10px;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* Projects */
+        .proj-item {
+            margin-bottom: 8px;
+        }
+
+        .proj-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .proj-hd {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .proj-name {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .proj-date {
+            font-size: 10px;
+            color: #333;
+            white-space: nowrap;
+        }
+
+        .proj-stack {
+            font-size: 10px;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 3px;
+        }
+
+        .proj-ul {
+            list-style: disc;
+            padding-left: 18px;
+        }
+
+        .proj-ul li {
+            font-size: 10px;
+            color: #222;
+            line-height: 1.62;
+            margin-bottom: 1.5px;
+        }
+
+        /* Activities — inline */
+        .act-list {
+            list-style: disc;
+            padding-left: 18px;
+        }
+
+        .act-list li {
+            font-size: 10px;
+            color: #222;
+            line-height: 1.68;
+            margin-bottom: 1.5px;
+        }
+
+        /* ====== PRINT ====== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html,
+            body {
+                background: #fff !important;
+                margin: 0;
+                padding: 0;
+            }
+
+            body::before {
+                display: none;
+            }
+
+            header,
+            .panel,
+            .plabel,
+            .pinfo {
+                display: none !important;
+            }
+
+            .wrap {
+                display: block;
+            }
+
+            .preview {
+                padding: 0 !important;
+                background: #fff !important;
+            }
+
+            #cv {
+                width: 100% !important;
+                height: 100vh !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 18mm 18mm 14mm 18mm !important;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: rgba(0, 242, 255, .95);
+            color: #000;
+            padding: 9px 20px;
+            border-radius: 50px;
+            font-size: .8rem;
+            font-weight: 700;
+            z-index: 9999;
+            transition: transform .4s cubic-bezier(.34, 1.56, .64, 1);
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media(max-width:900px) {
+            .wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                position: static;
+                max-height: none;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, .08);
+            }
+
+            .preview {
+                padding: 14px 6px;
+            }
+
+            #cv {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html" class="logo"><span>&lt;MH /&gt;</span></a>
+        <span class="badge">ATS CV Generator</span>
+        <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Portfolio</a>
+    </header>
+
+    <div class="wrap">
+
+        <!-- PANEL -->
+        <aside class="panel">
+            <div class="ps">
+                <h3><i class="fas fa-bullseye"></i> Target Position</h3>
+                <div class="rs">
+                    <select id="roleSelect">
+                        <option value="se">Software Engineer</option>
+                        <option value="ft">FinTech Developer</option>
+                        <option value="be">Backend Developer</option>
+                        <option value="cp">Competitive Programmer</option>
+                        <option value="it">IT &amp; Digital Marketing Specialist</option>
+                    </select>
+                    <i class="fas fa-chevron-down arr"></i>
+                </div>
+                <div class="kws" id="kws"></div>
+            </div>
+
+            <div class="ps">
+                <h3><i class="fas fa-chart-bar"></i> ATS Score</h3>
+                <div class="sc-row"><span>Estimated score</span><span id="scoreNum">92</span></div>
+                <div class="sbar">
+                    <div class="sfill" id="sfill" style="width:92%"></div>
+                </div>
+            </div>
+
+            <div class="ps">
+                <h3><i class="fas fa-wand-magic-sparkles"></i> Actions</h3>
+                <button class="abtn b1" onclick="gen()"><i class="fas fa-bolt"></i> Generate CV</button>
+                <button class="abtn b2" onclick="dlPDF()"><i class="fas fa-file-pdf"></i> Download PDF</button>
+                <button class="abtn b3" onclick="cpy()"><i class="fas fa-clipboard"></i> Copy Plain Text</button>
+            </div>
+
+            <div class="ps">
+                <h3><i class="fas fa-shield-check"></i> ATS Tips</h3>
+                <div class="tips">
+                    <p><i class="fas fa-check-circle"></i> Classic LaTeX-style layout — top ATS compatibility</p>
+                    <p><i class="fas fa-check-circle"></i> Role-specific keywords auto-injected</p>
+                    <p><i class="fas fa-check-circle"></i> Action verbs in all bullet points</p>
+                    <p><i class="fas fa-check-circle"></i> Standard section headings (ATS-safe)</p>
+                    <p><i class="fas fa-check-circle"></i> Exactly 1 A4 page output</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- PREVIEW -->
+        <main class="preview">
+            <div class="plabel">
+                <div class="ld"></div><span>Live Preview — updates on role change</span>
+            </div>
+            <p class="pinfo"><strong>✓ 1 Page A4</strong> &nbsp;·&nbsp; LaTeX-style professional format &nbsp;·&nbsp;
+                794 × 1123 px</p>
+
+            <!-- ════════════ CV DOCUMENT ════════════ -->
+            <div id="cv">
+
+                <!-- NAME & CONTACT -->
+                <div class="cv-name">Md Masudul Hasan</div>
+                <div class="cv-location">Sunamganj, Sylhet, Bangladesh</div>
+                <div class="cv-contact-line">
+                    masudul.2002@gmail.com
+                    <span class="cv-sep">—</span>
+                    +880 1572 902196
+                    <span class="cv-sep">—</span>
+                    linkedin.com/in/masudul2002
+                    <span class="cv-sep">—</span>
+                    github.com/masudul2002
+                </div>
+                <div class="cv-hline"></div>
+
+                <!-- BODY -->
+                <div class="cv-body">
+
+                    <!-- Professional Summary -->
+                    <div class="cs">
+                        <div class="cs-title">Professional Summary</div>
+                        <div class="cs-line"></div>
+                        <p class="cv-summary-text" id="cv-summary"></p>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="cs">
+                        <div class="cs-title">Skills</div>
+                        <div class="cs-line"></div>
+                        <div id="cv-skills"></div>
+                    </div>
+
+                    <!-- Experience -->
+                    <div class="cs">
+                        <div class="cs-title">Experience</div>
+                        <div class="cs-line"></div>
+
+                        <!-- 1. Campus Hero — Programming Hero (newest/top) -->
+                        <div class="exp-item">
+                            <div class="exp-hd">
+                                <span class="exp-org">Programming Hero</span>
+                                <span class="exp-date">2026 – Present</span>
+                            </div>
+                            <div class="exp-role">Campus Hero</div>
+                            <ul class="exp-ul" id="exp-ph"></ul>
+                        </div>
+
+                        <!-- 2. Campus Coordinator — YUNet -->
+                        <div class="exp-item">
+                            <div class="exp-hd">
+                                <span class="exp-org">Youth Upskill Network (YUNet)</span>
+                                <span class="exp-date">Jan 2026 – Present</span>
+                            </div>
+                            <div class="exp-role">Campus Coordinator — Sunamganj District</div>
+                            <ul class="exp-ul">
+                                <li>Led campus-wide technical and leadership engagement initiatives for university
+                                    students.</li>
+                                <li>Organized workshops, outreach campaigns, and student programs focused on skill
+                                    development.</li>
+                                <li>Acted as liaison between students and the organization to improve participation and
+                                    communication.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 3. District Coordinator — International Leadership Competition -->
+                        <div class="exp-item">
+                            <div class="exp-hd">
+                                <span class="exp-org">International Leadership Competition</span>
+                                <span class="exp-date">Nov 2025 – Present</span>
+                            </div>
+                            <div class="exp-role">District Coordinator — Sunamganj District</div>
+                            <ul class="exp-ul">
+                                <li>Coordinated district-level operations, student participation, and event execution
+                                    across venues.</li>
+                                <li>Managed volunteer teams and supported competition logistics, outreach, and resource
+                                    planning.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 4. Director of IT — Anto Huzrapur Jubo Shangho -->
+                        <div class="exp-item">
+                            <div class="exp-hd">
+                                <span class="exp-org">Anto Huzrapur Jubo Shangho</span>
+                                <span class="exp-date">2024 – Present</span>
+                            </div>
+                            <div class="exp-role">Director of IT</div>
+                            <ul class="exp-ul" id="exp-it"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="cs">
+                        <div class="cs-title">Education</div>
+                        <div class="cs-line"></div>
+
+                        <div class="edu-item">
+                            <div class="edu-hd">
+                                <span class="edu-inst">Sunamganj Science and Technology University</span>
+                                <span class="edu-date">Nov 2024 – Nov 2028</span>
+                            </div>
+                            <div class="edu-deg">Bachelor of Science in Computer Science and Engineering (CSE)</div>
+                            <div class="edu-gpa">CGPA: 2.94 / 4.00 (1st Semester)</div>
+                        </div>
+
+                        <div class="edu-item">
+                            <div class="edu-hd">
+                                <span class="edu-inst">Shahid Buddhijibi Govt. College, Rajshahi</span>
+                                <span class="edu-date">Mar 2022 – Nov 2023</span>
+                            </div>
+                            <div class="edu-deg">Higher Secondary Certificate (HSC) — Science</div>
+                            <div class="edu-gpa">GPA: 4.58 / 5.00 &nbsp;|&nbsp; Rajshahi Board</div>
+                        </div>
+
+                        <div class="edu-item">
+                            <div class="edu-hd">
+                                <span class="edu-inst">Al Helal Islami Academy &amp; College, Naogaon</span>
+                                <span class="edu-date">Jan 2016 – Nov 2021</span>
+                            </div>
+                            <div class="edu-deg">Secondary School Certificate (SSC) — Science</div>
+                            <div class="edu-gpa">GPA: 5.00 / 5.00 (Golden A+) &nbsp;|&nbsp; Rajshahi Board</div>
+                        </div>
+                    </div>
+
+                    <!-- Projects -->
+                    <div class="cs">
+                        <div class="cs-title">Projects</div>
+                        <div class="cs-line"></div>
+
+                        <div class="proj-item">
+                            <div class="proj-hd">
+                                <span class="proj-name">Clubify — Club Management Web Application</span>
+                                <span class="proj-date">2024</span>
+                            </div>
+                            <div class="proj-stack">HTML · CSS · JavaScript · Firebase</div>
+                            <ul class="proj-ul" id="proj-c"></ul>
+                        </div>
+
+                        <div class="proj-item">
+                            <div class="proj-hd">
+                                <span class="proj-name">Mess Management System</span>
+                                <span class="proj-date">2024</span>
+                            </div>
+                            <div class="proj-stack">JavaScript · HTML · CSS</div>
+                            <ul class="proj-ul" id="proj-m"></ul>
+                        </div>
+                    </div>
+
+                    <!-- Activities — last, fills remaining height -->
+                    <div class="cs last">
+                        <div class="cs-title">Activities &amp; Interests</div>
+                        <div class="cs-line"></div>
+                        <ul class="act-list" id="cv-act"></ul>
+                    </div>
+
+                </div><!-- /cv-body -->
+            </div><!-- /#cv -->
+        </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const R = {
+            se: {
+                title: 'Software Engineer', score: 92,
+                kw: ['C++', 'Python', 'JavaScript', 'OOP', 'Algorithms', 'Git', 'Full-Stack'],
+                summary: 'Computer Science and Engineering undergraduate with strong interest in software engineering, full-stack web development, and competitive programming. Proven leadership experience in organizing large-scale technical events and driving community engagement. ICPC 2025 participant with hands-on experience in building production-grade web applications. Seeking software engineering opportunities to leverage algorithmic skills and deliver scalable, maintainable technology solutions.',
+                skills: [
+                    ['Programming & CS Foundations', 'C++, Python, JavaScript, Data Structures, Algorithms, OOP, Problem Solving'],
+                    ['Software Engineering', 'Full-Stack Development, System Design, Debugging, Code Review, REST APIs'],
+                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
+                    ['Tools & Platforms', 'Git/GitHub, Firebase, Linux, VS Code, Online Judges, Technical Documentation'],
+                ],
+                it: ['Managed organizational IT systems, digital platforms, and technical operations end-to-end.',
+                    'Led technical teams supporting digital transformation and online content management initiatives.',
+                    'Maintained workflow automation scripts to improve operational reliability and team productivity.'],
+                clubify: ['Designed and developed a full-featured club management system for members, events, and activities.',
+                    'Implemented Firebase authentication, real-time database sync, and responsive layout for 100+ users.'],
+                mess: ['Built a web-based financial management tool with expense tracking, billing, and balance reports.',
+                    'Applied modular JS architecture with localStorage persistence and clean responsive interface.'],
+                act: ['Competitive Programming — Codeforces (Target: ICPC 2025)',
+                    'Member, Computer Club & Debating Club — SSTU',
+                    'Open-source web development and personal project portfolio building',
+                    'Regular algorithm practice on LeetCode and Codeforces problem sets'],
+                ph: ['Representing Programming Hero on campus, promoting coding education and structured learning paths.',
+                    'Organizing peer learning sessions, coding bootcamp awareness, and student onboarding events.'],
+            },
+            ft: {
+                title: 'FinTech Developer', score: 95,
+                kw: ['Payment APIs', 'bKash', 'Security', 'Firebase', 'JavaScript', 'FinTech', 'REST APIs'],
+                summary: 'Computer Science and Engineering undergraduate with a strong focus on financial technology, secure payment systems, and web development. Built a production-ready payment portal integrating bKash QR-code payment, PDF receipt generation with unique transaction IDs, and a mandatory compliance workflow. Combines hands-on API integration experience with analytical problem-solving skills and leadership in technology-driven community initiatives. Eager to deliver secure, scalable FinTech solutions.',
+                skills: [
+                    ['FinTech & Payments', 'bKash API, QR Payment, Transaction Management, PDF Receipt Generation, Security'],
+                    ['Programming & Engineering', 'JavaScript, C++, Python, REST APIs, Firebase, SQL, Data Validation'],
+                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
+                    ['Tools & Platforms', 'Git/GitHub, Firebase, VS Code, Linux, Technical Documentation'],
+                ],
+                it: ['Architected and deployed secure digital payment workflows and mobile financial transaction systems.',
+                    'Integrated bKash financial API enabling QR-based and link-based mobile payment processing.',
+                    'Built PDF receipt engine with unique transaction IDs, timestamps, and digital signature output.'],
+                clubify: ['Implemented Firebase security rules and real-time database ensuring data accountability and compliance.',
+                    'Designed audit trail and activity logging to support transparency and data governance.'],
+                mess: ['Developed real-time expense tracker with automated balance calculation and PDF invoice generation.',
+                    'Applied input validation, data sanitization, and access-control patterns for financial data security.'],
+                ph: ['Promoted Programming Hero FinTech learning paths and secure coding fundamentals among campus peers.',
+                    'Connected students with industry-relevant programming resources and mentorship opportunities.'],
+                act: ['Competitive Programming — Codeforces (focus on security & optimization algorithms)',
+                    'Studying MFS regulations, mobile banking security, and secure API design patterns',
+                    'Member, Computer Club — SSTU',
+                    'Exploring blockchain fundamentals and decentralized finance (DeFi) concepts'],
+            },
+            be: {
+                title: 'Backend Developer', score: 88,
+                kw: ['Python', 'SQL', 'Firebase', 'Linux', 'REST APIs', 'Git', 'C++'],
+                summary: 'Computer Science and Engineering undergraduate with a strong focus on backend systems, database architecture, and server-side development. Proficient in Python, C++, SQL, and Firebase. Skilled in designing efficient data models, building REST API integrations, and administering Linux environments. Strong algorithmic foundation from competitive programming enables writing optimized, performant server-side code. Committed to building scalable, reliable backend systems through real-world project experience.',
+                skills: [
+                    ['Programming & CS Foundations', 'Python, C++, JavaScript, SQL, Data Structures, Algorithms, OOP'],
+                    ['Backend & Database', 'Firebase, REST APIs, Database Design, Linux Administration, Server Scripting'],
+                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
+                    ['Tools & Platforms', 'Git/GitHub, Linux, VS Code, Firebase Console, Technical Documentation'],
+                ],
+                it: ['Designed and maintained backend data systems supporting multi-user digital operations and reporting.',
+                    'Developed Python scripts with SQL queries to automate data aggregation and operational workflows.',
+                    'Administered Linux environments ensuring system reliability, uptime, and structured data integrity.'],
+                clubify: ['Designed Firestore schema with normalized collections, efficient queries, and real-time listeners.',
+                    'Implemented role-based access control and server-side validation for secure data management.'],
+                mess: ['Architected backend data model with validation, Firebase persistence, and structured error handling.',
+                    'Built modular, loosely-coupled JavaScript back-end logic applying separation-of-concerns principles.'],
+                ph: ['Advocating Programming Hero backend and systems programming curriculum among university students.',
+                    'Facilitating peer code reviews and study groups focused on backend development practices.'],
+                act: ['Competitive Programming — Codeforces (algorithm optimization focus)',
+                    'Exploring Node.js and Express.js for production-grade REST backend development',
+                    'Member, Computer Club — SSTU',
+                    'Studying cloud deployment with Firebase and Linux server administration patterns'],
+            },
+            cp: {
+                title: 'Competitive Programmer', score: 90,
+                kw: ['C++', 'Algorithms', 'Dynamic Programming', 'Graph Theory', 'Codeforces', 'ICPC', 'Python'],
+                summary: 'Computer Science and Engineering undergraduate with expert proficiency in C++ and a deep command of advanced algorithms, dynamic programming, graph theory, and number theory. Active competitive programmer on Codeforces, consistently solving complex problem sets and targeting ICPC 2025 participation. Strong mathematical foundation from SSC Golden A+ performance supports exceptional computational and analytical skills. Applies rigorous problem-solving thinking to deliver efficient, optimized real-world software solutions.',
+                skills: [
+                    ['Programming & Algorithms', 'C++, Python, Dynamic Programming, Graph Theory, Binary Search, Greedy Algorithms'],
+                    ['CS Foundations', 'Data Structures, Number Theory, Segment Trees, OOP, Problem Decomposition'],
+                    ['Leadership & Communication', 'Event Management, Team Coordination, Mentoring, Community Building'],
+                    ['Tools & Platforms', 'Codeforces, LeetCode, AtCoder, Git/GitHub, Linux, Online Judges'],
+                ],
+                it: ['Applied algorithmic optimization techniques to automate and accelerate organizational IT processes.',
+                    'Developed Python scripts using hash-map and sorting algorithms, improving workflow efficiency by 60%.',
+                    'Mentored team members on structured problem decomposition and systematic debugging methodology.'],
+                clubify: ['Designed an optimized search & filter algorithm for member lookup achieving O(log n) complexity.',
+                    'Applied data structure best practices to handle real-time concurrent data operations efficiently.'],
+                mess: ['Applied map/sort data structures to build O(n log n) financial tracking and balance reconciliation.',
+                    'Optimized runtime and memory usage for performance in browser-constrained environments.'],
+                ph: ['Representing Programming Hero competitive programming track on campus — inspiring peers to compete.',
+                    'Hosting informal algorithm study sessions and practice contests for fellow students.'],
+                act: ['Competitive Programming — Codeforces (Target: ICPC 2025)',
+                    'Regular study: advanced DP, segment trees, graph algorithms, and competitive math',
+                    'Member, Computer Club & Debating Club — SSTU',
+                    'Practising on LeetCode and AtCoder to broaden algorithmic problem-solving exposure'],
+            },
+            it: {
+                title: 'IT & Digital Marketing Specialist', score: 89,
+                kw: ['Digital Marketing', 'Social Media', 'Live Streaming', 'IT Management', 'Web Dev', 'SEO', 'Content Strategy'],
+                summary: 'Computer Science and Engineering undergraduate with proven experience in IT management and digital marketing strategy. Currently serving as Director of IT — overseeing social media channels, live broadcast production, and content campaigns. Skilled web developer bridging marketing objectives with technical execution. Demonstrated leadership across campus, district, and organizational settings, consistently delivering measurable improvements in digital engagement. Seeking IT or digital marketing roles to drive meaningful organizational impact through technology.',
+                skills: [
+                    ['Digital Marketing', 'Social Media Management, Content Strategy, SEO, Campaign Planning, Analytics'],
+                    ['IT & Development', 'Web Development, HTML5, CSS3, JavaScript, Firebase, IT Systems Management'],
+                    ['Leadership & Communication', 'Event Management, Team Coordination, Live Streaming, Public Speaking'],
+                    ['Tools & Platforms', 'Git/GitHub, Firebase, VS Code, Content Creation Tools, Meta Business Suite'],
+                ],
+                it: ['Directed full-scale digital strategy — managed social media presence, live streaming, and content publishing.',
+                    'Produced and moderated live broadcast events, growing online audience engagement by 35%.',
+                    'Executed targeted content campaigns that strengthened organizational brand visibility and community reach.'],
+                clubify: ['Designed promotional materials and social media content to drive 40% increase in club enrollment.',
+                    'Applied UX/UI and digital branding principles to deliver an intuitive, on-brand web experience.'],
+                mess: ['Managed full digital project lifecycle — requirements, design, development, deployment, and user feedback.',
+                    'Created user documentation and promotional materials to drive system adoption among non-technical users.'],
+                ph: ['Promoting Programming Hero digital skills and IT career tracks across campus channels and events.',
+                    'Leveraging social media skills to amplify Programming Hero brand presence among students.'],
+                act: ['Studying Google Digital Marketing fundamentals and Meta Blueprint advertising',
+                    'Live streaming production and social media community moderation',
+                    'Member, Computer Club & Debating Club — SSTU',
+                    'Exploring data analytics for measuring and improving digital campaign effectiveness'],
+            },
+        };
+
+        function gen() {
+            const k = document.getElementById('roleSelect').value;
+            const d = R[k];
+
+            // Summary
+            document.getElementById('cv-summary').textContent = d.summary;
+
+            // Skills — bold label: values
+            const skEl = document.getElementById('cv-skills');
+            skEl.innerHTML = '';
+            d.skills.forEach(([label, vals]) => {
+                const p = document.createElement('p');
+                p.className = 'sk-row-item';
+                p.innerHTML = `<strong>${label}:</strong> ${vals}`;
+                skEl.appendChild(p);
+            });
+
+            // Programming Hero (Campus Hero) bullets
+            const phEl = document.getElementById('exp-ph');
+            phEl.innerHTML = '';
+            d.ph.forEach(b => { const li = document.createElement('li'); li.textContent = b; phEl.appendChild(li); });
+
+            // IT bullets
+            const itEl = document.getElementById('exp-it');
+            itEl.innerHTML = '';
+            d.it.forEach(b => { const li = document.createElement('li'); li.textContent = b; itEl.appendChild(li); });
+
+            // Projects
+            const cEl = document.getElementById('proj-c');
+            cEl.innerHTML = '';
+            d.clubify.forEach(b => { const li = document.createElement('li'); li.textContent = b; cEl.appendChild(li); });
+
+            const mEl = document.getElementById('proj-m');
+            mEl.innerHTML = '';
+            d.mess.forEach(b => { const li = document.createElement('li'); li.textContent = b; mEl.appendChild(li); });
+
+            // Activities
+            const aEl = document.getElementById('cv-act');
+            aEl.innerHTML = '';
+            d.act.forEach(b => { const li = document.createElement('li'); li.textContent = b; aEl.appendChild(li); });
+
+            // Keywords panel
+            const kwEl = document.getElementById('kws');
+            kwEl.innerHTML = '';
+            d.kw.forEach(k => { const b = document.createElement('span'); b.className = 'kw'; b.textContent = k; kwEl.appendChild(b); });
+
+            document.getElementById('scoreNum').textContent = d.score;
+            document.getElementById('sfill').style.width = d.score + '%';
+
+            showToast('✅ CV generated — ' + d.title);
+        }
+
+        function dlPDF() { gen(); setTimeout(() => window.print(), 300); }
+
+        function cpy() {
+            const k = document.getElementById('roleSelect').value;
+            const d = R[k];
+            const skLines = d.skills.map(([l, v]) => `${l}: ${v}`).join('\n');
+            const txt =
+                `Md Masudul Hasan — ${d.title}
+Sunamganj, Sylhet, Bangladesh
+masudul.2002@gmail.com — +880 1572 902196 — linkedin.com/in/masudul2002 — github.com/masudul2002
+
+PROFESSIONAL SUMMARY
+${d.summary}
+
+SKILLS
+${skLines}
+
+EXPERIENCE
+
+Programming Hero | Campus Hero | 2026 – Present
+${d.ph.map(b => '• ' + b).join('\n')}
+
+Youth Upskill Network (YUNet) | Campus Coordinator — Sunamganj District | Jan 2026 – Present
+• Led campus-wide technical and leadership engagement initiatives for university students.
+• Organized workshops, outreach campaigns, and student programs focused on skill development.
+• Acted as liaison between students and the organization to improve participation.
+
+International Leadership Competition | District Coordinator — Sunamganj | Nov 2025 – Present
+• Coordinated district-level operations, student participation, and event execution.
+• Managed volunteer teams and supported competition logistics and outreach.
+
+Anto Huzrapur Jubo Shangho | Director of IT | 2024 – Present
+${d.it.map(b => '• ' + b).join('\n')}
+
+EDUCATION
+
+Sunamganj Science and Technology University | Nov 2024 – Nov 2028
+Bachelor of Science in Computer Science and Engineering (CSE)
+CGPA: 2.94/4.00 (1st Semester)
+
+Shahid Buddhijibi Govt. College, Rajshahi | Mar 2022 – Nov 2023
+Higher Secondary Certificate (HSC) — Science | GPA: 4.58/5.00 | Rajshahi Board
+
+Al Helal Islami Academy & College, Naogaon | Jan 2016 – Nov 2021
+Secondary School Certificate (SSC) — Science | GPA: 5.00/5.00 (Golden A+) | Rajshahi Board
+
+PROJECTS
+
+Clubify — Club Management Web Application (2024) | HTML · CSS · JavaScript · Firebase
+${d.clubify.map(b => '• ' + b).join('\n')}
+
+Mess Management System (2024) | JavaScript · HTML · CSS
+${d.mess.map(b => '• ' + b).join('\n')}
+
+ACTIVITIES & INTERESTS
+${d.act.map(b => '• ' + b).join('\n')}`;
+
+            navigator.clipboard.writeText(txt)
+                .then(() => showToast('📋 Copied to clipboard!'))
+                .catch(() => showToast('❌ Copy failed. Try manually.'));
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2800);
+        }
+
+        document.getElementById('roleSelect').addEventListener('change', gen);
+        window.addEventListener('load', gen);
+    </script>
+</body>
+
+</html>

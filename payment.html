@@ -1,242 +1,726 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Gateway - MD. MASUDUL HASAN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css"> 
-    <style>
-        /* -------------------- Payment Page এর জন্য বেসিক স্টাইল -------------------- */
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
+    <title>Secure Payment - MD. MASUDUL HASAN</title>
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-            background-color: var(--background-color);
-        }
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Great+Vibes&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        .payment-container {
-            /* ক্যারোসেল এর জন্য max-width 900px এ রাখা হলো */
-            max-width: 800px; 
-            width: 95%;
-            background-color: var(--card-background);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .payment-container h1 {
-            color: var(--secondary-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(97, 218, 251, 0.3);
-        }
-
-        .payment-container p {
-            color: var(--sub-text-color);
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-        
-        /* -------------------- ক্যারোসেল/স্লাইডার স্টাইল -------------------- */
-        .carousel-wrapper {
-            position: relative;
-            overflow: hidden; 
-            margin: 30px 0;
-            padding: 0 40px; 
-        }
-        
-        .method-grid {
-            display: flex; 
-            transition: transform 0.5s ease-in-out; 
-            width: 100%; 
-        }
-
-        .payment-method {
-            flex: 0 0 100%; 
-            background-color: var(--background-color);
-            padding: 40px 20px; 
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* লোগো ও টেক্সট স্টাইল */
-        .payment-method .logo-img { max-width: 300px; height: auto; margin-bottom: 15px; }
-        .payment-method h3 { color: var(--text-color); margin-bottom: 5px; }
-        
-        /* চূড়ান্ত ফিক্স: QR কোড সাইজ 400px এ বাড়ানো হলো */
-        .qr-code-individual {
-            max-width: 400px; 
-            height: auto;
-            border: 3px solid var(--secondary-color); 
-            border-radius: 5px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        
-        /* অ্যারো বাটন স্টাইল */
-        .arrow-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(74, 144, 226, 0.8);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 1.2rem;
-            box-shadow: 0 0 10px rgba(74, 144, 226, 0.6);
-            transition: background 0.3s;
-        }
-
-        .arrow-btn:hover {
-            background: var(--secondary-color);
-        }
-
-        #prevBtn { left: 0; }
-        #nextBtn { right: 0; }
-        
-        /* যখন অ্যারো ডিসেবল হবে */
-        .arrow-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* -------------------- রেসপনসিভ ফিক্স -------------------- */
-        @media (max-width: 600px) {
-            .payment-container { padding: 20px; }
-            .carousel-wrapper { padding: 0 20px; }
-            .arrow-btn { 
-                padding: 8px 12px;
-                font-size: 1rem;
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#080808',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        'glass-border': 'rgba(255, 255, 255, 0.08)',
+                        primary: '#00f2ff', // Cyan
+                        secondary: '#4d4dff',
+                        surface: '#121212',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                        signature: ['Great Vibes', 'cursive'],
+                        report: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(0, 242, 255, 0.2)',
+                        'neon-card': '0 0 30px rgba(0, 242, 255, 0.1)',
+                    }
+                }
             }
-            #prevBtn { left: 0; }
-            #nextBtn { right: 0; }
-            
-            /* ছোট স্ক্রিনে QR কোড সাইজ ফিক্স */
-            .qr-code-individual {
-                 max-width: 90vw; /* ভিউপোর্ট প্রস্থের 90% ব্যবহার করবে */
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #080808;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Glow Effect for Profile */
+        .profile-glow {
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+            border: 2px solid #00f2ff;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05), transparent 70%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #080808;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2ff;
+        }
+
+        /* PDF Report Styles (Hidden from view) */
+        #payment-report {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            /* Positioned off-screen but still renderable */
+            background: white;
+            color: black;
+            font-family: 'Inter', sans-serif;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* Hide UI elements when generating PDF if viewed directly (not applicable for html2pdf but good practice) */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #payment-report,
+            #payment-report * {
+                visibility: visible;
+            }
+
+            #payment-report {
+                position: absolute;
+                left: 0;
+                top: 0;
             }
         }
     </style>
 </head>
-<body>
 
-    <div class="payment-container">
-        <h1>Secure Payment Gateway</h1>
-        <p>Choose your preferred mobile financial service (MFS) or scan the Bangla QR to proceed with payment.</p>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8">
 
-        <div class="carousel-wrapper">
-            
-            <button id="prevBtn" class="arrow-btn" disabled><i class="fas fa-chevron-left"></i></button>
-            
-            <div class="method-grid">
-                
-                <div class="payment-method">
-                
-                <a href="https://shop.bkash.com/masudul01572902196/paymentlink/default-payment" target="_blank">
-                    <img src="Bkash-logo.png" alt="bKash Logo" class="logo-img">
-                </a>
-                
-                <h3>bKash Payment</h3>
-                <p style="color: var(--primary-color); font-weight: bold;">01572902196</p>
-                
-                <img src="bKash.png" alt="bKash QR Code" class="qr-code-individual">
-                <p style="font-size: 0.9rem; color: var(--sub-text-color);">Scan and Pay using bKash App.</p>
+    <div class="ambient-glow"></div>
+
+    <main class="w-full max-w-6xl grid lg:grid-cols-12 gap-8 items-start relative z-10">
+
+        <!-- Left Column: Summary -->
+        <div class="lg:col-span-5 space-y-6" id="left-col">
+
+            <!-- Branding Header -->
+            <div class="text-center lg:text-left mb-4">
+                <h1 class="text-3xl font-bold font-mono tracking-tighter text-white">
+                    MASUDUL <span class="text-primary">HASAN</span>
+                </h1>
+                <p class="text-xs text-gray-500 uppercase tracking-widest mt-1">Computer Science & Engineering</p>
             </div>
-                
-                <div class="payment-method">
-                    <img src="Nagad.png" alt="Nagad Logo" class="logo-img">
-                    <h3>Nagad Payment</h3>
-                    <p style="color: var(--primary-color); font-weight: bold;">01572902196</p>
-                    <img src="Nagad-qr.png" alt="Nagad QR Code" class="qr-code-individual">
-                    <p style="font-size: 0.9rem; color: var(--sub-text-color);">Scan and Pay using Nagad App.</p>
-                </div>
-                
-                <div class="payment-method">
-                    <img src="upay.jpg" alt="Upay Logo" class="logo-img">
-                    <h3>Upay Payment</h3>
-                    <p style="color: var(--primary-color); font-weight: bold;">01572902196</p>
-                    <img src="Upay-qr.png" alt="Upay QR Code" class="qr-code-individual">
-                    <p style="font-size: 0.9rem; color: var(--sub-text-color);">Scan and Pay using Upay App.</p>
+
+            <!-- Transaction Details Card -->
+            <div class="glass-panel rounded-2xl p-8 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+
+                <!-- Recipient Profile -->
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="relative">
+                        <div class="w-16 h-16 rounded-full profile-glow overflow-hidden bg-black">
+                            <!-- Using a placeholder if image fails, or try generic person icon -->
+                            <img src="PNG/MASUDUL HASAN.png"
+                                onerror="this.src='https://ui-avatars.com/api/?name=Masudul+Hasan&background=00f2ff&color=000'"
+                                alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div
+                            class="absolute -bottom-1 -right-1 bg-blue-500 text-white text-[10px] w-6 h-6 flex items-center justify-center rounded-full border-2 border-[#121212]">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">Payment To</p>
+                        <h2 class="text-lg font-bold text-white leading-tight">MD. MASUDUL HASAN</h2>
+                        <p class="text-xs text-primary mt-1 flex items-center gap-1">
+                            <i class="fas fa-shield-alt"></i> Verified Professional
+                        </p>
+                    </div>
                 </div>
 
-                <div class="payment-method">
-                    <i class="fas fa-qrcode" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 15px;"></i>
-                    <h3>Bangla QR Universal</h3>
-                    <p style="font-size: 0.95rem; color: var(--sub-text-color);">Scan this QR from any Banking/MFS app.</p>
-                    <img src="bangla-qr.png" alt="Bangla QR Code" class="qr-code-individual">
-                    <p style="color: var(--primary-color); margin-top: 10px; font-weight: bold;">Transaction Reference: [প্রয়োজন অনুসারে রেফারেন্স]</p>
-                    
+                <!-- Fields -->
+                <div class="space-y-5">
+                    <!-- Support Type -->
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Support Type</label>
+                        <div class="relative">
+                            <select id="payment-purpose"
+                                class="w-full bg-black/40 border border-gray-800 rounded-lg px-4 py-3 text-white focus:border-primary focus:outline-none appearance-none transition-colors">
+                                <option>Coffee / Project Support</option>
+                                <option>Consultation Fee</option>
+                                <option>Service Charge</option>
+                                <option>Donation</option>
+                            </select>
+                            <i class="fas fa-chevron-down absolute right-4 top-4 text-gray-600 pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <!-- Amount Input -->
+                    <div>
+                        <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">Subtotal (BDT)</label>
+                        <input type="number" id="amount-input" value="500" min="10"
+                            class="w-full bg-black/40 border border-gray-800 rounded-lg px-4 py-3 text-white font-mono text-lg focus:border-primary focus:outline-none transition-colors"
+                            oninput="updateTotal()">
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="flex justify-between text-sm py-2 border-b border-white/5">
+                        <span class="text-gray-400">Convenience Charge</span>
+                        <span class="font-mono text-white">0.00 BDT</span>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="flex justify-between items-end pt-2">
+                        <span class="font-bold text-white text-lg">Total Amount</span>
+                        <span class="text-3xl font-bold text-primary font-mono drop-shadow-lg" id="total-text">500
+                            BDT</span>
+                    </div>
+                </div>
+
+                <!-- Signature -->
+                <div class="mt-8 text-right">
+                    <p class="font-signature text-2xl text-gray-500 rotate-[-5deg] inline-block opacity-70">Masudul
+                        Hasan</p>
                 </div>
 
             </div>
-            <div <p style="color: var(--primary-color); margin-top: 10px; font-weight: bold;">যেকোন ধরনের লেনদেনের পূর্বে, প্রাপক এবং লেনদেনর প্রকৃতি সম্পর্কে সত্যতা যাচাই করার দায়িত্ব আপনার। আপনার একাউন্টের লেনদেন সম্পর্কিত অন্যান্য প্রয়োজনীয় তথ্যাদি প্রবেশ করানোর সময় সতর্ক থাকা এবং সঠিক তথ্যের নিশ্চয়তা যাচাই করার দায়িত্বও আপনার।</p>
 
+            <!-- Footer Badge -->
+            <div class="text-center opacity-60">
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest">
+                    Powered by <span class="font-bold text-gray-400">MASUDUL HASAN Infrastructure</span>
+                </p>
+            </div>
         </div>
-            <button id="nextBtn" class="arrow-btn"><i class="fas fa-chevron-right"></i></button>
 
-        </div> 
-        <div class="back-home">
-            <a href="index.html" class="btn">
-                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Portfolio
-            </a>
+        <!-- Right Column: Payment Methods -->
+        <div class="lg:col-span-7" id="right-col">
+            <div class="glass-panel rounded-2xl overflow-hidden min-h-[600px] flex flex-col">
+
+                <div class="p-8 border-b border-white/5">
+                    <h2 class="text-xl font-bold text-white">Select Your Preferred Method</h2>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-white/5">
+                    <button
+                        class="flex-1 py-4 text-sm font-bold uppercase tracking-wider text-primary border-b-2 border-primary bg-primary/5 transition-all"
+                        id="tab-mobile" onclick="switchTab('mobile')">
+                        Mobile Banking
+                    </button>
+                    <button
+                        class="flex-1 py-4 text-sm font-bold uppercase tracking-wider text-gray-500 hover:text-white transition-all"
+                        id="tab-cards" onclick="switchTab('cards')">
+                        Cards
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="p-8 flex-1 relative">
+
+                    <!-- Mobile Banking Grid -->
+                    <div id="content-mobile" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Items -->
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'bKash')" data-qr="PNG/bKash.png" data-number="01572902196"
+                            data-type="MASUDUL">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/bkash-logo-free-vector.jpg" class="w-full h-full object-contain rounded">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">bKash</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+
+                        <!-- bKash Payment Link (Separate Card) -->
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'bKash Link')" data-number="01572902196" data-type="Merchant">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/Bkash-logo.png" class="w-full h-full object-contain rounded">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">Payment Link</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'Nagad')" data-qr="PNG/Nagad-qr.png" data-number="01572902196"
+                            data-type="Merchant">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/Nagad.png" class="w-full h-full object-contain">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">Nagad</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'Rocket')" data-qr="PNG/Rocket QR.jpg" data-number="01572902196"
+                            data-type="Merchant">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/rocket.png" class="w-full h-full object-contain rounded">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">Rocket</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'Upay')" data-qr="PNG/Upay-qr.png" data-number="01572902196"
+                            data-type="Merchant">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/upay.jpg" class="w-full h-full object-contain rounded">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">Upay</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+
+                        <!-- Bangla QR (Replaces Tap) -->
+                        <div class="method-card cursor-pointer group p-4 rounded-xl border border-white/10 bg-white/5 hover:border-primary/50 hover:bg-primary/5 transition-all flex flex-col items-center gap-3 relative overflow-hidden"
+                            onclick="selectMethod(this, 'Bangla QR')" data-qr="PNG/bangla-scan-qr.png"
+                            data-number="01572902196" data-type="Merchant">
+                            <div
+                                class="w-14 h-14 bg-white rounded-lg p-1 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <img src="PNG/bangla-logo.png" class="w-full h-full object-contain rounded">
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 group-hover:text-white">Bangla QR</span>
+                            <div
+                                class="absolute inset-0 border-2 border-primary opacity-0 group-[.selected]:opacity-100 rounded-xl transition-opacity pointer-events-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cards Content (Hidden) -->
+                    <div id="content-cards" class="hidden h-full flex items-center justify-center text-center">
+                        <div>
+                            <div
+                                class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="far fa-credit-card text-3xl text-gray-500"></i>
+                            </div>
+                            <p class="text-gray-400">Card payments are coming soon.</p>
+                        </div>
+                    </div>
+
+                    <!-- Action Area (QR Display + Button) -->
+                    <div id="action-area"
+                        class="absolute bottom-6 left-6 right-6 top-6 bg-black/90 backdrop-blur-xl rounded-2xl p-6 flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300 z-20">
+
+                        <!-- Close Button -->
+                        <button onclick="closeActionArea()"
+                            class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            Pay via <span id="selected-method-name" class="text-primary">Method</span>
+                        </h3>
+
+                        <!-- QR Code Container -->
+                        <div id="qr-container" class="bg-white p-3 rounded-xl mb-4 shadow-neon-card hidden">
+                            <img id="qr-image" src="" class="w-40 h-40 object-contain">
+                        </div>
+
+                        <!-- Wallet Details -->
+                        <div class="text-center mb-6 space-y-1">
+                            <p class="text-gray-400 text-xs uppercase tracking-widest">Merchant Payment</p>
+                            <div
+                                class="flex items-center gap-2 justify-center bg-white/5 px-4 py-2 rounded-lg border border-white/10">
+                                <i class="fas fa-mobile-alt text-gray-400"></i>
+                                <span id="wallet-number"
+                                    class="text-xl font-mono font-bold text-white tracking-wider">01XXXXXXX</span>
+                                <button
+                                    onclick="navigator.clipboard.writeText(document.getElementById('wallet-number').innerText)"
+                                    class="text-primary hover:text-white ml-2 text-xs">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <p id="wallet-type" class="text-xs text-gray-500">MASUDUL Account</p>
+                        </div>
+
+                        <!-- bKash Payment Link Button (Hidden by default) -->
+                        <div id="bkash-link-container" class="hidden mb-6 w-full flex justify-center">
+                            <a href="https://shop.bkash.com/masudul01572902196/paymentlink/default-payment"
+                                target="_blank" class="block w-48 hover:scale-105 transition-transform">
+                                <img src="PNG/Bkash-logo.png" alt="Pay with bKash"
+                                    class="w-full h-auto rounded shadow-lg border border-white/10">
+                            </a>
+                        </div>
+
+                        <button onclick="processPayment()"
+                            class="w-full max-w-sm py-3 bg-primary text-black font-bold text-lg rounded-xl hover:bg-white hover:scale-[1.02] transition-all shadow-neon flex items-center justify-center gap-2">
+                            <span>I Have Paid</span>
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- HIDDEN PDF REPORT TEMPLATE -->
+    <div id="payment-report">
+        <!-- Header -->
+        <table style="width: 100%; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 20px;">
+            <tr>
+                <td style="width: 70%; vertical-align: top;">
+                    <table>
+                        <tr>
+                            <td style="padding-right: 15px; vertical-align: top;">
+                                <img src="PNG/MH.png" alt="Logo"
+                                    style="width: 60px; height: 60px; object-fit: contain; display: block;">
+                            </td>
+                            <td style="vertical-align: top;">
+                                <h1 style="font-size: 20px; font-weight: bold; color: #1f2937; margin: 0; padding: 0;">
+                                    MASUDUL HASAN</h1>
+                                <p
+                                    style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.1em; margin: 5px 0 0 0; padding: 0;">
+                                    Computer Science & Engineering</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 30%; text-align: right; vertical-align: top;">
+                    <h2 style="font-size: 16px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0; padding: 0;">
+                        TRANSACTION REPORT</h2>
+                    <span
+                        style="background-color: #fee2e2; color: #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">(CONFIDENTIAL)</span>
+                    <p style="font-size: 11px; color: #6b7280; margin: 10px 0 0 0; padding: 0;">Generation Time: <span
+                            id="report-time"></span></p>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Merchant Info -->
+        <div style="margin-bottom: 30px;">
+            <h3
+                style="font-size: 13px; font-weight: bold; color: #374151; margin: 0 0 15px 0; padding: 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                Merchant Information</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px 0; font-size: 13px; color: #6b7280; width: 180px;">Merchant Name:</td>
+                    <td style="padding: 8px 0; font-size: 13px; font-weight: bold; color: #1f2937;">MASUDUL_01572902196
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-size: 13px; color: #6b7280;">Merchant Wallet:</td>
+                    <td style="padding: 8px 0; font-size: 13px; font-weight: bold; color: #1f2937;">01572902196</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Transaction Table -->
+        <div style="margin-bottom: 30px;">
+            <h3
+                style="font-size: 13px; font-weight: bold; color: #374151; margin: 0 0 15px 0; padding: 0; text-transform: uppercase; letter-spacing: 0.05em;">
+                Transaction Details</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                <thead>
+                    <tr style="background-color: #f9fafb;">
+                        <th
+                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
+                            Date & Time</th>
+                        <th
+                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
+                            Transaction ID</th>
+                        <th
+                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
+                            Type</th>
+                        <th
+                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
+                            Reference</th>
+                        <th
+                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: right;">
+                            Amount (BDT)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;"
+                            id="report-date"></td>
+                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151; font-family: 'Courier New', monospace;"
+                            id="report-trx-id">SKR-177122808191</td>
+                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;">
+                            Payment</td>
+                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;"
+                            id="report-ref">PORTFOLIO-23</td>
+                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; font-weight: bold; color: #1f2937; text-align: right;"
+                            id="report-amount">500.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary Box -->
+        <table style="width: 100%; margin-bottom: 40px;">
+            <tr>
+                <td style="width: 60%;"></td>
+                <td style="width: 40%;">
+                    <table
+                        style="width: 100%; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 12px; font-size: 13px; color: #6b7280;">Subtotal</td>
+                            <td style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937; text-align: right;"
+                                id="report-subtotal">500.00</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; font-size: 13px; color: #6b7280;">Charge</td>
+                            <td
+                                style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937; text-align: right;">
+                                0.00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding: 0; border-top: 1px solid #e5e7eb;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937;">Total Amount
+                                Paid</td>
+                            <td style="padding: 12px; font-size: 16px; font-weight: bold; color: #2563eb; text-align: right;"
+                                id="report-total">500.00</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Signature -->
+        <div style="margin-bottom: 60px; text-align: right; padding-right: 40px;">
+            <p style="font-size: 11px; color: #6b7280; margin: 0 0 8px 0; padding: 0;">Authorized Signature</p>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 28px; color: #374151; margin: 0; padding: 0;">
+                Masudul Hasan</p>
+            <div style="width: 180px; height: 1px; background-color: #d1d5db; margin: 5px 0 0 auto;"></div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 80px;">
+            <p style="font-size: 11px; color: #9ca3af; margin: 0 0 8px 0; padding: 0;">[Software generated statement, a
+                signature is not required]</p>
+            <div style="height: 1px; background-color: #f3f4f6; width: 100%; margin-bottom: 8px;"></div>
+            <p style="font-size: 9px; color: #9ca3af; margin: 0; padding: 0;">Page 1 of 1</p>
         </div>
     </div>
 
+    <!-- Logic -->
     <script>
-        const carousel = document.querySelector('.method-grid');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const items = document.querySelectorAll('.payment-method');
-        let currentIndex = 0;
-        const totalItems = items.length;
+        // GSAP Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.from("#left-col", { duration: 1, x: -50, opacity: 0, ease: "power3.out" });
+            gsap.from("#right-col", { duration: 1, x: 50, opacity: 0, delay: 0.2, ease: "power3.out" });
+        });
 
-        function updateCarousel() {
-            // ক্যারোসেলটিকে তার বর্তমান ইনডেক্স অনুযায়ী স্লাইড করা
-            const offset = -currentIndex * 100;
-            carousel.style.transform = `translateX(${offset}%)`;
+        // State
+        let selectedMethod = null;
 
-            // বাটনের ডিসেবল স্টেট নিয়ন্ত্রণ করা
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex === totalItems - 1;
+        // Update Total
+        function updateTotal() {
+            const val = document.getElementById('amount-input').value;
+            const display = parseFloat(val || 0).toFixed(2);
+            document.getElementById('total-text').innerText = display + " BDT";
         }
 
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < totalItems - 1) {
-                currentIndex++;
-                updateCarousel();
-            }
-        });
+        // Switch Tabs
+        function switchTab(tab) {
+            const mobileBtn = document.getElementById('tab-mobile');
+            const cardsBtn = document.getElementById('tab-cards');
+            const mobileContent = document.getElementById('content-mobile');
+            const cardsContent = document.getElementById('content-cards');
 
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
+            if (tab === 'mobile') {
+                mobileBtn.className = "flex-1 py-4 text-sm font-bold uppercase tracking-wider text-primary border-b-2 border-primary bg-primary/5 transition-all";
+                cardsBtn.className = "flex-1 py-4 text-sm font-bold uppercase tracking-wider text-gray-500 hover:text-white transition-all";
+                mobileContent.classList.remove('hidden');
+                cardsContent.classList.add('hidden');
+            } else {
+                cardsBtn.className = "flex-1 py-4 text-sm font-bold uppercase tracking-wider text-primary border-b-2 border-primary bg-primary/5 transition-all";
+                mobileBtn.className = "flex-1 py-4 text-sm font-bold uppercase tracking-wider text-gray-500 hover:text-white transition-all";
+                cardsContent.classList.remove('hidden');
+                mobileContent.classList.add('hidden');
+                // Hide action area if switching to unavailable tab
+                document.getElementById('action-area').classList.add('hidden');
             }
-        });
+        }
 
-        // পেজ লোড হওয়ার সাথে সাথেই একবার ক্যারোসেল আপডেট করা
-        updateCarousel();
+        // Select Method
+        function selectMethod(el, name) {
+            // Remove selection from all
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.classList.remove('selected', 'border-primary', 'bg-primary/5');
+                card.classList.add('border-white/10', 'bg-white/5');
+            });
+
+            // Add selection to clicked
+            el.classList.add('selected', 'border-primary', 'bg-primary/5');
+            el.classList.remove('border-white/10', 'bg-white/5');
+
+            selectedMethod = name;
+
+            // Get Data Attributes
+            const qrSrc = el.getAttribute('data-qr');
+            const number = el.getAttribute('data-number');
+            const type = el.getAttribute('data-type');
+
+            // Populate Action Area
+            document.getElementById('selected-method-name').innerText = name;
+            document.getElementById('wallet-number').innerText = number || 'N/A';
+            document.getElementById('wallet-type').innerText = type || 'MASUDUL Account';
+
+            const qrContainer = document.getElementById('qr-container');
+            const qrImage = document.getElementById('qr-image');
+
+            if (qrSrc) {
+                qrImage.src = qrSrc;
+                qrContainer.classList.remove('hidden');
+            } else {
+                qrContainer.classList.add('hidden');
+            }
+
+            // Show/Hide bKash Link
+            const bkashLink = document.getElementById('bkash-link-container');
+            if (name === 'bKash Link') {
+                bkashLink.classList.remove('hidden');
+                // Hide QR for Payment Link method as it uses the button
+                if (qrContainer) qrContainer.classList.add('hidden');
+            } else {
+                bkashLink.classList.add('hidden');
+            }
+
+            // Show Action Area (Overlay style)
+            const actionArea = document.getElementById('action-area');
+            actionArea.classList.remove('hidden');
+            setTimeout(() => {
+                actionArea.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeActionArea() {
+            const actionArea = document.getElementById('action-area');
+            actionArea.classList.add('opacity-0');
+            setTimeout(() => {
+                actionArea.classList.add('hidden');
+                // Reset selection visual
+                document.querySelectorAll('.method-card').forEach(card => {
+                    card.classList.remove('selected', 'border-primary', 'bg-primary/5');
+                    card.classList.add('border-white/10', 'bg-white/5');
+                });
+            }, 300);
+        }
+
+        // Process Payment & Gen PDF
+        function processPayment() {
+            const btn = document.querySelector('#action-area button');
+            const originalContent = btn.innerHTML;
+
+            // 1. Loading State
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            // 2. Simulate Delay
+            setTimeout(() => {
+                // 3. Populate Report Data
+                const amount = parseFloat(document.getElementById('amount-input').value).toFixed(2);
+                const purpose = document.getElementById('payment-purpose').value;
+                const now = new Date();
+
+                // Generate Random Transaction ID (SKR-XXXXXXXXXXXXX format)
+                const randomId = 'SKR-' + Math.floor(Math.random() * 900000000000) + 100000000000;
+
+                // Format date and time
+                const dateTimeString = now.toLocaleString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                });
+
+                document.getElementById('report-time').innerText = dateTimeString;
+                document.getElementById('report-date').innerText = dateTimeString;
+                document.getElementById('report-trx-id').innerText = randomId;
+                document.getElementById('report-amount').innerText = amount;
+                document.getElementById('report-subtotal').innerText = amount;
+                document.getElementById('report-total').innerText = amount;
+                document.getElementById('report-ref').innerText = purpose;
+
+                // 4. Generate PDF
+                const element = document.getElementById('payment-report');
+                const opt = {
+                    margin: 10,
+                    filename: `Transaction_Report_${randomId}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        letterRendering: true
+                    },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+
+                // Generate and Save
+                html2pdf().from(element).set(opt).save().then(() => {
+                    // 5. Reset Button
+                    btn.innerHTML = '<i class="fas fa-check"></i> Success';
+                    setTimeout(() => {
+                        alert('Payment Successful! Receipt downloaded.');
+                        btn.innerHTML = originalContent;
+                        btn.disabled = false;
+                    }, 1000);
+                });
+
+            }, 2000);
+        }
     </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
+
 </html>

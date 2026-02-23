@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me - MD. MASUDUL HASAN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        /* Contact Page এর জন্য স্পেসিফিক স্টাইল */
+        
+        /* বডি এবং কন্টেইনার স্টাইল (সাধারণত পোর্টফোলিও থেকে ইনহেরিট হয়) */
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-top: 0px; /* হেডার এর নিচে জায়গা রাখা */
+            min-height: 100vh;
+        }
+
+        .contact-page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .contact-box {
+            background-color: var(--card-background);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+        
+        /* কন্টাক্ট ইনফো গ্রিড */
+        .info-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .info-item {
+            margin: 15px;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .info-item a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        /* ফর্ম স্টাইল */
+        .contact-form {
+            text-align: left;
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--sub-text-color);
+            border-radius: 6px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(97, 218, 251, 0.5);
+        }
+        
+        .submit-btn {
+            /* index.html এর .btn স্টাইল ব্যবহার করা */
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        /* Back Button */
+        .back-home-link {
+            margin-top: 40px;
+        }
+        
+        /* ছোট স্ক্রিনের জন্য */
+        @media (max-width: 500px) {
+            .contact-box {
+                padding: 20px;
+            }
+            .info-grid {
+                flex-direction: column;
+            }
+            .info-item {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <div class="logo-btn">
+                <img src="MH.png" alt="Masudul Hasan Logo" style="width: 40px; height: auto; vertical-align: middle;">
+            </div>
+        </div>
+        <nav>
+            <a href="index.html#home">
+                <i class="fas fa-home" style="margin-right: 5px;"></i>
+                Home
+            </a>
+            <a href="index.html#about">
+                <i class="fas fa-user" style="margin-right: 5px;"></i>
+                About Me
+            </a>
+            <a href="index.html#experience">
+                <i class="fas fa-briefcase" style="margin-right: 5px;"></i>
+                Experience
+            </a>
+            <a href="index.html#education">
+                <i class="fas fa-graduation-cap" style="margin-right: 5px;"></i>
+                Education
+            </a>
+            <a href="index.html#projects">
+                <i class="fas fa-laptop-code" style="margin-right: 5px;"></i>
+                Projects
+            </a>
+            <a href="payment.html"> 
+                <i class="fas fa-credit-card" style="margin-right: 5px;"></i>
+                Payment
+            </a>
+            <a href="#contact">
+                <i class="fas fa-envelope" style="margin-right: 5px;"></i>
+                Contact
+            </a>
+        </nav>
+    </header>
+    
+    <div class="contact-page-container">
+        
+        <h2 class="section-title" style="margin-bottom: 20px;">Get In Touch</h2>
+        <p style="color: var(--sub-text-color);">I'm open to discussing new projects, job opportunities, or collaborations. Drop a message anytime!</p>
+
+        <div class="contact-box">
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Email</h4>
+                    <a href="mailto:23240442@sstu.ac.bd">23240442@sstu.ac.bd</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <h4>Phone</h4>
+                    <a href="tel:+8801572902196">+88 01572902196</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Address</h4>
+                    <p style="color: var(--sub-text-color); margin: 0;">133/A, Huzrapur, Goala, Sapahar, Naogaon</p>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form action="mailto:23240442@sstu.ac.bd" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn submit-btn">Send Message</button>
+                </form>
+            </div>
+            
+        </div>
+        
+        <div class="back-home-link">
+            <a href="index.html" class="btn contact-btn">
+                <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Back to Portfolio
+            </a>
+        </div>
+        
+    </div>
+    
+    </body>
+</html>

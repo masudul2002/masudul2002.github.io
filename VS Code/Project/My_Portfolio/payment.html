@@ -95,22 +95,26 @@
             background: #00f2ff;
         }
 
-        /* PDF Report Styles (Hidden from view) */
+        /* PDF Report Styles — completely hidden, clone is used for PDF */
         #payment-report {
+            display: none;
+        }
+
+        /* Visible clone used during PDF capture */
+        #payment-report-clone {
             position: fixed;
-            left: -9999px;
             top: 0;
-            /* Positioned off-screen but still renderable */
-            background: white;
-            color: black;
-            font-family: 'Inter', sans-serif;
+            left: 0;
             width: 210mm;
             min-height: 297mm;
             padding: 40px;
             box-sizing: border-box;
+            background: white;
+            color: black;
+            font-family: 'Inter', Arial, sans-serif;
+            z-index: 99999;
         }
 
-        /* Hide UI elements when generating PDF if viewed directly (not applicable for html2pdf but good practice) */
         @media print {
             body * {
                 visibility: hidden;
@@ -122,9 +126,11 @@
             }
 
             #payment-report {
+                display: block;
                 position: absolute;
                 left: 0;
                 top: 0;
+                opacity: 1;
             }
         }
     </style>
@@ -406,125 +412,138 @@
 
     </main>
 
-    <!-- HIDDEN PDF REPORT TEMPLATE -->
+    <!-- HIDDEN PDF INVOICE TEMPLATE -->
     <div id="payment-report">
-        <!-- Header -->
-        <table style="width: 100%; margin-bottom: 30px; border-bottom: 2px solid #e5e7eb; padding-bottom: 20px;">
-            <tr>
-                <td style="width: 70%; vertical-align: top;">
-                    <table>
-                        <tr>
-                            <td style="padding-right: 15px; vertical-align: top;">
-                                <img src="PNG/MH.png" alt="Logo"
-                                    style="width: 60px; height: 60px; object-fit: contain; display: block;">
-                            </td>
-                            <td style="vertical-align: top;">
-                                <h1 style="font-size: 20px; font-weight: bold; color: #1f2937; margin: 0; padding: 0;">
-                                    MASUDUL HASAN</h1>
+        <!-- Coloured header banner -->
+        <div
+            style="background: linear-gradient(135deg,#0a0a1a 0%,#0f2044 60%,#00b4cc 100%); padding:30px 40px; margin:-40px -40px 30px -40px; border-radius:0;">
+            <table style="width:100%; border-collapse:collapse;">
+                <tr>
+                    <td style="vertical-align:middle;">
+                        <div style="display:inline-flex; align-items:center; gap:14px;">
+                            <img src="PNG/MH.png" alt="Logo"
+                                style="width:52px; height:52px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.1); padding:4px;"
+                                onerror="this.style.display='none'">
+                            <div>
                                 <p
-                                    style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.1em; margin: 5px 0 0 0; padding: 0;">
-                                    Computer Science & Engineering</p>
-                            </td>
+                                    style="font-size:20px; font-weight:900; color:#fff; margin:0; letter-spacing:0.05em;">
+                                    MASUDUL HASAN</p>
+                                <p
+                                    style="font-size:10px; color:#00f2ff; margin:4px 0 0; text-transform:uppercase; letter-spacing:0.12em;">
+                                    Computer Science &amp; Engineering · SSTU</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="text-align:right; vertical-align:middle;">
+                        <p style="font-size:22px; font-weight:900; color:#fff; margin:0; letter-spacing:0.08em;">INVOICE
+                        </p>
+                        <p style="font-size:10px; color:#00f2ff; margin:6px 0 0; font-family:monospace;"
+                            id="report-trx-id">TXN-XXXXXXXXX</p>
+                        <span
+                            style="display:inline-block; margin-top:6px; background:#00f2ff; color:#000; font-size:9px; font-weight:700; padding:3px 10px; border-radius:20px; text-transform:uppercase; letter-spacing:0.1em;">PAID</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Meta row -->
+        <table style="width:100%; border-collapse:collapse; margin-bottom:28px;">
+            <tr>
+                <!-- Bill From -->
+                <td style="width:48%; vertical-align:top; padding-right:20px;">
+                    <p
+                        style="font-size:9px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.1em; margin:0 0 8px;">
+                        Received By</p>
+                    <p style="font-size:14px; font-weight:700; color:#111827; margin:0 0 3px;">MD. Masudul Hasan</p>
+                    <p style="font-size:11px; color:#6b7280; margin:0 0 2px;">📱 01572-902196</p>
+                    <p style="font-size:11px; color:#6b7280; margin:0 0 2px;">🌐 masudul2002.github.io</p>
+                    <p style="font-size:11px; color:#6b7280; margin:0;">🎓 SSTU, Bangladesh</p>
+                </td>
+                <!-- Bill To (payer) -->
+                <td style="width:4%;"></td>
+                <td style="width:48%; vertical-align:top;">
+                    <p
+                        style="font-size:9px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.1em; margin:0 0 8px;">
+                        Invoice Details</p>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="font-size:11px; color:#6b7280; padding:2px 0;">Date &amp; Time:</td>
+                            <td style="font-size:11px; color:#111827; font-weight:600; padding:2px 0; text-align:right;"
+                                id="report-date"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:11px; color:#6b7280; padding:2px 0;">Method:</td>
+                            <td style="font-size:11px; color:#111827; font-weight:600; padding:2px 0; text-align:right;"
+                                id="report-method">—</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:11px; color:#6b7280; padding:2px 0;">Reference:</td>
+                            <td style="font-size:11px; color:#111827; font-weight:600; padding:2px 0; text-align:right;"
+                                id="report-ref"></td>
                         </tr>
                     </table>
-                </td>
-                <td style="width: 30%; text-align: right; vertical-align: top;">
-                    <h2 style="font-size: 16px; font-weight: bold; color: #1f2937; margin: 0 0 8px 0; padding: 0;">
-                        TRANSACTION REPORT</h2>
-                    <span
-                        style="background-color: #fee2e2; color: #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 9px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; display: inline-block;">(CONFIDENTIAL)</span>
-                    <p style="font-size: 11px; color: #6b7280; margin: 10px 0 0 0; padding: 0;">Generation Time: <span
-                            id="report-time"></span></p>
                 </td>
             </tr>
         </table>
 
-        <!-- Merchant Info -->
-        <div style="margin-bottom: 30px;">
-            <h3
-                style="font-size: 13px; font-weight: bold; color: #374151; margin: 0 0 15px 0; padding: 0; text-transform: uppercase; letter-spacing: 0.05em;">
-                Merchant Information</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td style="padding: 8px 0; font-size: 13px; color: #6b7280; width: 180px;">Merchant Name:</td>
-                    <td style="padding: 8px 0; font-size: 13px; font-weight: bold; color: #1f2937;">MASUDUL_01572902196
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px 0; font-size: 13px; color: #6b7280;">Merchant Wallet:</td>
-                    <td style="padding: 8px 0; font-size: 13px; font-weight: bold; color: #1f2937;">01572902196</td>
-                </tr>
-            </table>
-        </div>
+        <!-- Divider -->
+        <div style="height:1px; background:#e5e7eb; margin-bottom:24px;"></div>
 
         <!-- Transaction Table -->
-        <div style="margin-bottom: 30px;">
-            <h3
-                style="font-size: 13px; font-weight: bold; color: #374151; margin: 0 0 15px 0; padding: 0; text-transform: uppercase; letter-spacing: 0.05em;">
-                Transaction Details</h3>
-            <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
-                <thead>
-                    <tr style="background-color: #f9fafb;">
-                        <th
-                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
-                            Date & Time</th>
-                        <th
-                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
-                            Transaction ID</th>
-                        <th
-                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
-                            Type</th>
-                        <th
-                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: left;">
-                            Reference</th>
-                        <th
-                            style="padding: 12px; border-bottom: 1px solid #e5e7eb; font-size: 10px; font-weight: bold; color: #6b7280; text-transform: uppercase; text-align: right;">
-                            Amount (BDT)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;"
-                            id="report-date"></td>
-                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151; font-family: 'Courier New', monospace;"
-                            id="report-trx-id">SKR-177122808191</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;">
-                            Payment</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; color: #374151;"
-                            id="report-ref">PORTFOLIO-23</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #f3f4f6; font-size: 12px; font-weight: bold; color: #1f2937; text-align: right;"
-                            id="report-amount">500.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table
+            style="width:100%; border-collapse:collapse; margin-bottom:28px; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden;">
+            <thead>
+                <tr style="background:#f8fafc;">
+                    <th
+                        style="padding:11px 14px; font-size:9px; font-weight:700; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; text-align:left; border-bottom:1px solid #e5e7eb;">
+                        Description</th>
+                    <th
+                        style="padding:11px 14px; font-size:9px; font-weight:700; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; text-align:left; border-bottom:1px solid #e5e7eb;">
+                        Transaction ID</th>
+                    <th
+                        style="padding:11px 14px; font-size:9px; font-weight:700; color:#6b7280; text-transform:uppercase; letter-spacing:0.08em; text-align:right; border-bottom:1px solid #e5e7eb;">
+                        Amount (BDT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding:14px; font-size:12px; color:#1f2937; border-bottom:1px solid #f3f4f6;"
+                        id="report-desc">Payment</td>
+                    <td style="padding:14px; font-size:11px; color:#6b7280; font-family:'Courier New',monospace; border-bottom:1px solid #f3f4f6;"
+                        id="report-trx-id-table">—</td>
+                    <td style="padding:14px; font-size:13px; font-weight:700; color:#1f2937; text-align:right; border-bottom:1px solid #f3f4f6;"
+                        id="report-amount">0.00</td>
+                </tr>
+            </tbody>
+        </table>
 
-        <!-- Summary Box -->
-        <table style="width: 100%; margin-bottom: 40px;">
+        <!-- Summary -->
+        <table style="width:100%; margin-bottom:40px;">
             <tr>
-                <td style="width: 60%;"></td>
-                <td style="width: 40%;">
+                <td style="width:55%;"></td>
+                <td style="width:45%;">
                     <table
-                        style="width: 100%; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; border-collapse: collapse;">
+                        style="width:100%; border-collapse:collapse; background:#f8fafc; border:1px solid #e5e7eb; border-radius:8px; overflow:hidden;">
                         <tr>
-                            <td style="padding: 12px; font-size: 13px; color: #6b7280;">Subtotal</td>
-                            <td style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937; text-align: right;"
-                                id="report-subtotal">500.00</td>
+                            <td
+                                style="padding:11px 14px; font-size:12px; color:#6b7280; border-bottom:1px solid #e5e7eb;">
+                                Subtotal</td>
+                            <td style="padding:11px 14px; font-size:12px; font-weight:600; color:#1f2937; text-align:right; border-bottom:1px solid #e5e7eb;"
+                                id="report-subtotal">0.00</td>
                         </tr>
                         <tr>
-                            <td style="padding: 12px; font-size: 13px; color: #6b7280;">Charge</td>
                             <td
-                                style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937; text-align: right;">
+                                style="padding:11px 14px; font-size:12px; color:#6b7280; border-bottom:1px solid #e5e7eb;">
+                                Convenience Charge</td>
+                            <td
+                                style="padding:11px 14px; font-size:12px; font-weight:600; color:#1f2937; text-align:right; border-bottom:1px solid #e5e7eb;">
                                 0.00</td>
                         </tr>
-                        <tr>
-                            <td colspan="2" style="padding: 0; border-top: 1px solid #e5e7eb;"></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 12px; font-size: 13px; font-weight: bold; color: #1f2937;">Total Amount
-                                Paid</td>
-                            <td style="padding: 12px; font-size: 16px; font-weight: bold; color: #2563eb; text-align: right;"
-                                id="report-total">500.00</td>
+                        <tr style="background:#0f172a;">
+                            <td style="padding:12px 14px; font-size:13px; font-weight:700; color:#fff;">Total Paid (BDT)
+                            </td>
+                            <td style="padding:12px 14px; font-size:16px; font-weight:900; color:#00f2ff; text-align:right;"
+                                id="report-total">0.00</td>
                         </tr>
                     </table>
                 </td>
@@ -532,19 +551,18 @@
         </table>
 
         <!-- Signature -->
-        <div style="margin-bottom: 60px; text-align: right; padding-right: 40px;">
-            <p style="font-size: 11px; color: #6b7280; margin: 0 0 8px 0; padding: 0;">Authorized Signature</p>
-            <p style="font-family: 'Great Vibes', cursive; font-size: 28px; color: #374151; margin: 0; padding: 0;">
-                Masudul Hasan</p>
-            <div style="width: 180px; height: 1px; background-color: #d1d5db; margin: 5px 0 0 auto;"></div>
+        <div style="text-align:right; padding-right:20px; margin-bottom:40px;">
+            <p style="font-family:'Great Vibes',cursive; font-size:30px; color:#374151; margin:0;">Masudul Hasan</p>
+            <div style="width:160px; height:1px; background:#d1d5db; margin:4px 0 4px auto;"></div>
+            <p style="font-size:10px; color:#9ca3af; margin:0;">Authorized Signature</p>
         </div>
 
         <!-- Footer -->
-        <div style="text-align: center; margin-top: 80px;">
-            <p style="font-size: 11px; color: #9ca3af; margin: 0 0 8px 0; padding: 0;">[Software generated statement, a
-                signature is not required]</p>
-            <div style="height: 1px; background-color: #f3f4f6; width: 100%; margin-bottom: 8px;"></div>
-            <p style="font-size: 9px; color: #9ca3af; margin: 0; padding: 0;">Page 1 of 1</p>
+        <div style="border-top:1px solid #e5e7eb; padding-top:16px; text-align:center;">
+            <p style="font-size:10px; color:#9ca3af; margin:0 0 4px;">This is a software-generated invoice. No physical
+                signature required.</p>
+            <p style="font-size:9px; color:#d1d5db; margin:0;">masudul2002.github.io · 01572-902196 · SSTU, Bangladesh
+            </p>
         </div>
     </div>
 
@@ -653,72 +671,86 @@
             }, 300);
         }
 
-        // Process Payment & Gen PDF
+        // Process Payment & Generate PDF
         function processPayment() {
-            const btn = document.querySelector('#action-area button');
+            const btn = document.querySelector('#action-area button.w-full');
             const originalContent = btn.innerHTML;
 
-            // 1. Loading State
             btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
             btn.disabled = true;
 
-            // 2. Simulate Delay
             setTimeout(() => {
-                // 3. Populate Report Data
-                const amount = parseFloat(document.getElementById('amount-input').value).toFixed(2);
+                const amount = parseFloat(document.getElementById('amount-input').value || 0).toFixed(2);
                 const purpose = document.getElementById('payment-purpose').value;
                 const now = new Date();
-
-                // Generate Random Transaction ID (SKR-XXXXXXXXXXXXX format)
-                const randomId = 'SKR-' + Math.floor(Math.random() * 900000000000) + 100000000000;
-
-                // Format date and time
-                const dateTimeString = now.toLocaleString('en-GB', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true
+                const randomId = 'TXN-' + Math.floor(Math.random() * 9000000000 + 1000000000);
+                const dateStr = now.toLocaleString('en-GB', {
+                    day: '2-digit', month: 'short', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
                 });
 
-                document.getElementById('report-time').innerText = dateTimeString;
-                document.getElementById('report-date').innerText = dateTimeString;
-                document.getElementById('report-trx-id').innerText = randomId;
-                document.getElementById('report-amount').innerText = amount;
-                document.getElementById('report-subtotal').innerText = amount;
-                document.getElementById('report-total').innerText = amount;
-                document.getElementById('report-ref').innerText = purpose;
+                // Populate template fields
+                const tmpl = document.getElementById('payment-report');
+                tmpl.querySelector('#report-date').innerText = dateStr;
+                tmpl.querySelector('#report-trx-id').innerText = randomId;
+                tmpl.querySelector('#report-trx-id-table').innerText = randomId;
+                tmpl.querySelector('#report-ref').innerText = purpose;
+                tmpl.querySelector('#report-desc').innerText = purpose;
+                tmpl.querySelector('#report-method').innerText = selectedMethod || '—';
+                tmpl.querySelector('#report-amount').innerText = amount;
+                tmpl.querySelector('#report-subtotal').innerText = amount;
+                tmpl.querySelector('#report-total').innerText = amount;
 
-                // 4. Generate PDF
-                const element = document.getElementById('payment-report');
+                // Make element renderable: position it far above viewport, width = A4
+                tmpl.style.cssText = [
+                    'display:block',
+                    'position:absolute',
+                    'top:-29700px',
+                    'left:0',
+                    'width:794px',
+                    'min-height:1123px',
+                    'padding:40px',
+                    'box-sizing:border-box',
+                    'background:white',
+                    'color:black',
+                    'font-family:Inter,Arial,sans-serif',
+                    'z-index:-1'
+                ].join(';');
+
                 const opt = {
-                    margin: 10,
-                    filename: `Transaction_Report_${randomId}.pdf`,
+                    margin: 0,
+                    filename: `Invoice_${randomId}.pdf`,
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: {
                         scale: 2,
                         useCORS: true,
                         logging: false,
-                        letterRendering: true
+                        allowTaint: true,
+                        scrollX: 0,
+                        scrollY: -window.scrollY   // account for page scroll
                     },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    jsPDF: { unit: 'px', format: [794, 1123], orientation: 'portrait' }
                 };
 
-                // Generate and Save
-                html2pdf().from(element).set(opt).save().then(() => {
-                    // 5. Reset Button
-                    btn.innerHTML = '<i class="fas fa-check"></i> Success';
-                    setTimeout(() => {
-                        alert('Payment Successful! Receipt downloaded.');
+                html2pdf().set(opt).from(tmpl).save()
+                    .then(() => {
+                        tmpl.style.cssText = 'display:none';
+                        btn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                            btn.disabled = false;
+                        }, 1500);
+                    })
+                    .catch(() => {
+                        tmpl.style.cssText = 'display:none';
                         btn.innerHTML = originalContent;
                         btn.disabled = false;
-                    }, 1000);
-                });
+                        alert('PDF generation failed. Please try again.');
+                    });
 
-            }, 2000);
+            }, 1500);
         }
+
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>

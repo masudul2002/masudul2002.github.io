@@ -483,13 +483,58 @@ html.light #theme-toggle .toggle-thumb {
     color: #00f2ff;
 }
 
-/* Mobile Menu Transition */
+/* Mobile Menu — top to bottom slide */
 #mobile-menu {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #mobile-menu.open {
-    transform: translateX(0);
+    transform: translateY(0) !important;
+}
+
+/* Stagger animation for mobile links */
+#mobile-menu.open .mobile-link {
+    animation: mobileItemIn 0.4s ease-out both;
+}
+
+#mobile-menu.open .mobile-link:nth-child(2) {
+    animation-delay: 0.05s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(3) {
+    animation-delay: 0.10s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(4) {
+    animation-delay: 0.15s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(5) {
+    animation-delay: 0.20s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(6) {
+    animation-delay: 0.25s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(7) {
+    animation-delay: 0.30s;
+}
+
+#mobile-menu.open .mobile-link:nth-child(8) {
+    animation-delay: 0.35s;
+}
+
+@keyframes mobileItemIn {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===== CUSTOM CURSOR ===== */
@@ -754,4 +799,169 @@ body.cursor-click #cursor-glow {
 .cs-tag-pulse,
 .cs-dot-loader span {
     transition: none !important;
+}
+
+/* ================================================================
+   VIBE CARD ANIMATIONS — post-education sections
+   ================================================================ */
+
+/* 1. Subtle card float (continuous) */
+@keyframes cardFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* 2. Hover shimmer sweep across card */
+@keyframes shimmerSweep {
+    0% {
+        left: -80%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+/* 3. Border glow pulse */
+@keyframes borderGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0px transparent;
+    }
+
+    50% {
+        box-shadow: 0 0 18px var(--card-glow, rgba(0, 242, 255, 0.18));
+    }
+}
+
+/* 4. Logo icon breathe */
+@keyframes iconBreathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+/* ── Floating card classes (staggered) ── */
+.vibe-card {
+    --card-glow: rgba(0, 242, 255, 0.15);
+    animation: cardFloat 5s ease-in-out infinite, borderGlow 4s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.vibe-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.06) 50%,
+            transparent 100%);
+    transform: skewX(-15deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.vibe-card:hover::after {
+    opacity: 1;
+    animation: shimmerSweep 0.7s ease forwards;
+}
+
+/* Stagger delays for grid children */
+.vibe-card:nth-child(1) {
+    animation-delay: 0s, 0s;
+}
+
+.vibe-card:nth-child(2) {
+    animation-delay: 0.5s, 0.4s;
+}
+
+.vibe-card:nth-child(3) {
+    animation-delay: 1.0s, 0.8s;
+}
+
+.vibe-card:nth-child(4) {
+    animation-delay: 1.5s, 1.2s;
+}
+
+.vibe-card:nth-child(5) {
+    animation-delay: 0.75s, 0.6s;
+}
+
+.vibe-card:nth-child(6) {
+    animation-delay: 1.25s, 1.0s;
+}
+
+/* Logo icon breathe */
+.vibe-icon {
+    animation: iconBreathe 3.5s ease-in-out infinite;
+}
+
+.vibe-card:nth-child(2) .vibe-icon {
+    animation-delay: 0.6s;
+}
+
+.vibe-card:nth-child(3) .vibe-icon {
+    animation-delay: 1.2s;
+}
+
+.vibe-card:nth-child(4) .vibe-icon {
+    animation-delay: 1.8s;
+}
+
+.vibe-card:nth-child(5) .vibe-icon {
+    animation-delay: 0.9s;
+}
+
+.vibe-card:nth-child(6) .vibe-icon {
+    animation-delay: 1.5s;
+}
+
+/* Per-section glow colour overrides */
+#experience .vibe-card {
+    --card-glow: rgba(99, 102, 241, 0.20);
+}
+
+#leadership .vibe-card {
+    --card-glow: rgba(0, 242, 255, 0.15);
+}
+
+#cp .vibe-card {
+    --card-glow: rgba(0, 242, 255, 0.18);
+}
+
+#projects .vibe-card {
+    --card-glow: rgba(0, 242, 255, 0.15);
+}
+
+/* Disable float on hover so the hover-lift takes over cleanly */
+.vibe-card:hover {
+    animation-play-state: paused;
+}
+
+/* Keep animation running overrides (prevent global transition from killing it) */
+.vibe-card,
+.vibe-icon {
+    transition: transform 0.3s cubic-bezier(.4, 0, .2, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease,
+        background-color 0.3s ease !important;
 }

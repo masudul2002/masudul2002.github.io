@@ -53,10 +53,46 @@ var PROFILE_DATA = {
     ],
     experience: [
         {
+            key: "treasurer",
+            role: "Treasurer",
+            org: "Computer Club, Sunamganj Science and Technology University (SSTU)",
+            period: "2026 – Present (6 mos)",
+            status: "Current",
+            link: "#",
+            color: "cyan",
+            logo: "PNG/sstucc.png",
+            fallbackIcon: "fas fa-wallet",
+            bullets: [
+                "Managed financial accounts, membership fees, and budget allocations for all club activities and programming events.",
+                "Collaborated with department heads and university administrators to secure sponsorships and funding for annual hackathons and seminars.",
+                "Prepared detailed financial reports and balance sheets, ensuring accountability and transparency in all expenditures."
+            ],
+            cvBullets: [
+                "Managing budget allocations, accounts, hackathon funding, and financial reporting."
+            ]
+        },
+        {
+            key: "phitron",
+            role: "Phitronista (Campus Ambassador)",
+            org: "Phitron",
+            period: "2025 – Present (1 yr)",
+            status: "Current",
+            link: "https://phitron.io",
+            color: "indigo",
+            logo: "PNG/Phitron.png",
+            fallbackIcon: "fas fa-graduation-cap",
+            bullets: [
+                "Representing Phitron on campus – promoting structured programming education, inspiring peers to join industry-focused courses and driving tech community engagement."
+            ],
+            cvBullets: [
+                "Promoting programming curriculums and coordinating technical engagement sessions."
+            ]
+        },
+        {
             key: "ph",
             role: "Campus Hero",
             org: "Programming Hero",
-            period: "2026 – Present",
+            period: "2026 – Present (6 mos)",
             status: "Current",
             link: "https://web.programming-hero.com",
             color: "red",
@@ -65,13 +101,16 @@ var PROFILE_DATA = {
             bullets: [
                 "Representing Programming Hero on campus, promoting coding education and structured learning paths.",
                 "Organizing peer learning sessions, coding bootcamp awareness, and student onboarding events."
+            ],
+            cvBullets: [
+                "Organized programming study circles and coding bootcamp enrollment campaigns."
             ]
         },
         {
             key: "yun",
             role: "Campus Coordinator — Sunamganj District",
             org: "Youth Upskill Network (YUNet)",
-            period: "Jan 2026 – Present",
+            period: "Jan 2026 – Present (6 mos)",
             status: "Current",
             link: "https://www.yunet.asia",
             color: "teal",
@@ -81,13 +120,16 @@ var PROFILE_DATA = {
                 "Led campus-wide technical and leadership engagement initiatives for university students.",
                 "Organized workshops, outreach campaigns, and student programs focused on skill development.",
                 "Acted as liaison between students and the organization to improve participation and communication."
+            ],
+            cvBullets: [
+                "Directed student workshops and upskilling webinars, acting as key campus liaison."
             ]
         },
         {
             key: "ilc",
             role: "District Coordinator — Sunamganj District",
             org: "International Leadership Competition",
-            period: "Nov 2025 – Present",
+            period: "Nov 2025 – Present (8 mos)",
             status: "Ongoing",
             link: "https://ilc.ysditrust.com",
             color: "rose",
@@ -96,13 +138,16 @@ var PROFILE_DATA = {
             bullets: [
                 "Coordinated district-level operations, student participation, and event execution across venues.",
                 "Managed volunteer teams and supported competition logistics, outreach, and resource planning."
+            ],
+            cvBullets: [
+                "Supervised venue arrangements, logistics, and volunteer teams for leadership events."
             ]
         },
         {
             key: "it",
             role: "Director of IT",
             org: "Anto Huzrapur Jubo Shangho",
-            period: "2024 – Present",
+            period: "2024 – Present (2 yrs)",
             status: "Ongoing",
             link: "#",
             color: "blue",
@@ -112,36 +157,9 @@ var PROFILE_DATA = {
                 "Managed organizational IT systems, digital platforms, and technical operations end-to-end.",
                 "Led technical teams supporting digital transformation and online content management initiatives.",
                 "Maintained workflow automation scripts to improve operational reliability and team productivity."
-            ]
-        },
-        {
-            key: "treasurer",
-            role: "Treasurer",
-            org: "Computer Club, Sunamganj Science and Technology University (SSTU)",
-            period: "2026 – Present",
-            status: "Current",
-            link: "#",
-            color: "cyan",
-            logo: "",
-            fallbackIcon: "fas fa-wallet",
-            bullets: [
-                "Managed financial accounts, membership fees, and budget allocations for all club activities and programming events.",
-                "Collaborated with department heads and university administrators to secure sponsorships and funding for annual hackathons and seminars.",
-                "Prepared detailed financial reports and balance sheets, ensuring accountability and transparency in all expenditures."
-            ]
-        },
-        {
-            key: "phitron",
-            role: "Phitronista (Campus Ambassador)",
-            org: "Phitron",
-            period: "2025 – Present",
-            status: "Current",
-            link: "https://phitron.io",
-            color: "indigo",
-            logo: "PNG/Phitron.png",
-            fallbackIcon: "fas fa-graduation-cap",
-            bullets: [
-                "Representing Phitron on campus – promoting structured programming education, inspiring peers to join industry-focused courses and driving tech community engagement."
+            ],
+            cvBullets: [
+                "Managed organizational IT networks, live digital broadcasts, and automation scripts."
             ]
         }
     ],

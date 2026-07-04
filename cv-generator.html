@@ -816,8 +816,6 @@
                     </div>
                 </div><!-- /cv-body -->
                 
-                <!-- Last Updated Timestamp (Bottom Right Corner of Page) -->
-                <div class="cv-last-updated" id="cv-timestamp" style="position: absolute; bottom: 15px; right: 54px; font-size: 8px; color: #888; font-style: italic;"></div>
             </div><!-- /#cv -->
         </main>
     </div>
@@ -864,10 +862,13 @@
                 const expItem = document.createElement('div');
                 expItem.className = 'exp-item';
 
-                // Check for overrides in experienceBullets
-                const bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key]) 
+                // Check for overrides in experienceBullets, fallback to cvBullets, then bullets
+                let bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key]) 
                     ? targetPos.experienceBullets[exp.key] 
-                    : exp.bullets;
+                    : (exp.cvBullets || exp.bullets);
+                
+                // Sliced to 1 bullet for page space optimization
+                bullets = bullets.slice(0, 1);
 
                 expItem.innerHTML = `
                     <div class="exp-hd">
@@ -951,14 +952,7 @@
             document.getElementById('scoreNum').textContent = targetPos.score;
             document.getElementById('sfill').style.width = targetPos.score + '%';
 
-            // Last Updated Timestamp
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const stampEl = document.getElementById('cv-timestamp');
-            if (stampEl) {
-                stampEl.textContent = `Last Updated: ${new Date().toLocaleDateString('en-US', options)}`;
-            }
-
-            showToast('✅ CV generated — ' + targetPos.title);
+            showToast('✅ Profile updated — ' + targetPos.title);
         }
 
         function dlPDF() { gen(); setTimeout(() => window.print(), 300); }
@@ -972,9 +966,10 @@
             
             // Experience formatting
             const expLines = PROFILE_DATA.experience.map(exp => {
-                const bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key])
+                let bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key])
                     ? targetPos.experienceBullets[exp.key]
-                    : exp.bullets;
+                    : (exp.cvBullets || exp.bullets);
+                bullets = bullets.slice(0, 1);
                 return `${exp.org} | ${exp.role} | ${exp.period}\n${bullets.map(b => '• ' + b).join('\n')}`;
             }).join('\n\n');
 
@@ -993,9 +988,6 @@
 
             // Activities formatting
             const actLines = (targetPos.activities || PROFILE_DATA.activities).map(b => '• ' + b).join('\n');
-
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const lastUpdatedText = `Last Updated: ${new Date().toLocaleDateString('en-US', options)}`;
 
             const txt =
 `${personal.name} — ${targetPos.title}
@@ -1021,9 +1013,7 @@ PROJECTS
 ${projLines}
 
 ACTIVITIES & INTERESTS
-${actLines}
-
-${lastUpdatedText}`;
+${actLines}`;
 
             navigator.clipboard.writeText(txt)
                 .then(() => showToast('📋 Copied to clipboard!'))

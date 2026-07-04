@@ -965,3 +965,41 @@ body.cursor-click #cursor-glow {
         border-color 0.3s ease,
         background-color 0.3s ease !important;
 }
+
+/* Animated gradient border on hover for Mango Star card */
+.mango-gradient-border {
+    position: relative;
+}
+
+.mango-gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px; /* Border width */
+    background: linear-gradient(90deg, #00f2ff, #4d4dff, #00f2ff);
+    background-size: 200% auto;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.mango-gradient-border:hover::before {
+    opacity: 1;
+    animation: borderPan 3s linear infinite;
+}
+
+@keyframes borderPan {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}

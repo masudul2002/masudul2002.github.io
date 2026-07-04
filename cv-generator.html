@@ -355,7 +355,7 @@
             height: 1123px;
             background: #fff;
             margin: 0 auto;
-            padding: 46px 54px 38px 54px;
+            padding: 30px 54px 25px 54px;
             font-family: 'Computer Modern', 'Latin Modern', Georgia, 'Times New Roman', serif;
             color: #111;
             display: flex;
@@ -414,7 +414,7 @@
 
         /* ── SECTION ── */
         .cs {
-            margin-top: 11px;
+            margin-top: 7px;
             flex-shrink: 0;
         }
 
@@ -425,23 +425,23 @@
         /* last section fills remaining page */
 
         .cs-title {
-            font-size: 13px;
+            font-size: 11.5px;
             font-weight: 700;
             color: #111;
             letter-spacing: .2px;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .cs-line {
             height: 0.8px;
             background: #444;
-            margin-bottom: 7px;
+            margin-bottom: 4px;
         }
 
         /* Summary */
         .cv-summary-text {
             font-size: 10px;
-            line-height: 1.68;
+            line-height: 1.40;
             color: #222;
             text-align: justify;
         }
@@ -453,7 +453,7 @@
 
         .sk-row-item {
             font-size: 10px;
-            line-height: 1.7;
+            line-height: 1.40;
             color: #222;
         }
 
@@ -464,7 +464,7 @@
 
         /* Experience */
         .exp-item {
-            margin-bottom: 9px;
+            margin-bottom: 6px;
         }
 
         .exp-item:last-child {
@@ -505,13 +505,13 @@
         .exp-ul li {
             font-size: 10px;
             color: #222;
-            line-height: 1.62;
-            margin-bottom: 1.5px;
+            line-height: 1.40;
+            margin-bottom: 1px;
         }
 
         /* Education */
         .edu-item {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .edu-item:last-child {
@@ -646,7 +646,7 @@
                 height: 100vh !important;
                 box-shadow: none !important;
                 margin: 0 !important;
-                padding: 18mm 18mm 14mm 18mm !important;
+                padding: 10mm 15mm 8mm 15mm !important;
             }
 
             @page {
@@ -952,7 +952,7 @@
             document.getElementById('scoreNum').textContent = targetPos.score;
             document.getElementById('sfill').style.width = targetPos.score + '%';
 
-            showToast('✅ Profile updated — ' + targetPos.title);
+
         }
 
         function dlPDF() { gen(); setTimeout(() => window.print(), 300); }

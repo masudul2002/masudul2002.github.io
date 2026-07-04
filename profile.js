@@ -1,7 +1,7 @@
 // Centralized Profile Data Model
 // Single Source of Truth for Portfolio & ATS CV Generator
 
-const PROFILE_DATA = {
+var PROFILE_DATA = {
     personal: {
         name: "MD. MASUDUL HASAN",
         title: "Software Engineer | FinTech Enthusiast",

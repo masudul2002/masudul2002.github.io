@@ -1129,7 +1129,7 @@
         (function() {
             // Render Skills
             const skillsContainer = document.getElementById('skills-container');
-            if (skillsContainer && window.PROFILE_DATA && PROFILE_DATA.skills) {
+            if (skillsContainer && typeof PROFILE_DATA !== 'undefined' && PROFILE_DATA.skills) {
                 skillsContainer.innerHTML = PROFILE_DATA.skills.map((skill, index) => `
                     <div class="glass-card p-6 rounded-xl border border-glass-border flex flex-col items-center hover:bg-white/5 transition-all group"
                         data-aos="fade-up" data-aos-delay="${(index + 1) * 100}">
@@ -1141,14 +1141,14 @@
 
             // Render Experience
             const expContainer = document.getElementById('experience-container');
-            if (expContainer && window.PROFILE_DATA && PROFILE_DATA.experience) {
+            if (expContainer && typeof PROFILE_DATA !== 'undefined' && PROFILE_DATA.experience) {
                 expContainer.innerHTML = PROFILE_DATA.experience.map((exp, index) => {
                     const statusTag = exp.status === 'Current' 
                         ? `<span class="bg-${exp.color}-500/15 text-${exp.color}-400 text-xs font-bold px-3 py-1 rounded-full inline-block border border-${exp.color}-500/20">Current</span>`
                         : `<span class="bg-${exp.color}-500/15 text-${exp.color}-400 text-xs font-bold px-3 py-1 rounded-full inline-block border border-${exp.color}-500/20">Ongoing</span>`;
 
                     const logoHtml = exp.logo 
-                        ? `<img src="${exp.logo}" alt="${exp.org} Logo" class="w-8 h-8 object-contain vibe-icon" onerror="this.outerHTML='<i class=\x22${exp.fallbackIcon} text-${exp.color}-400 text-lg vibe-icon\x22></i>'">`
+                        ? `<img src="${exp.logo}" alt="${exp.org} Logo" class="w-8 h-8 object-contain vibe-icon" onerror="this.onerror=null; this.outerHTML=\x60<i class=\x27${exp.fallbackIcon} text-${exp.color}-400 text-lg vibe-icon\x27></i>\x60">`
                         : `<i class="${exp.fallbackIcon} text-${exp.color}-400 text-lg vibe-icon"></i>`;
 
                     const externalLink = exp.link && exp.link !== '#'
@@ -1186,7 +1186,7 @@
 
             // Render Projects
             const projectsContainer = document.getElementById('projects-container');
-            if (projectsContainer && window.PROFILE_DATA && PROFILE_DATA.projects) {
+            if (projectsContainer && typeof PROFILE_DATA !== 'undefined' && PROFILE_DATA.projects) {
                 projectsContainer.innerHTML = PROFILE_DATA.projects.map((proj, index) => {
                     if (proj.isPlaceholder) {
                         return `
@@ -1291,7 +1291,7 @@
 
             // Render Organizational Roles list
             const orgRolesList = document.getElementById('org-roles-list');
-            if (orgRolesList && window.PROFILE_DATA && PROFILE_DATA.organizationalRoles) {
+            if (orgRolesList && typeof PROFILE_DATA !== 'undefined' && PROFILE_DATA.organizationalRoles) {
                 orgRolesList.innerHTML = PROFILE_DATA.organizationalRoles.map(role => `
                     <li class="flex items-start gap-2">
                         <span class="w-1.5 h-1.5 bg-primary rounded-full mt-1.5 flex-shrink-0"></span>

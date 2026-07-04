@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATS CV Generator | MD. Masudul Hasan</title>
+    <script src="profile.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -764,24 +765,14 @@
 
             <!-- ════════════ CV DOCUMENT ════════════ -->
             <div id="cv">
-
-                <!-- NAME & CONTACT -->
-                <div class="cv-name">Md Masudul Hasan</div>
-                <div class="cv-location">Sunamganj, Sylhet, Bangladesh</div>
-                <div class="cv-contact-line">
-                    masudul.2002@gmail.com
-                    <span class="cv-sep">—</span>
-                    +880 1572 902196
-                    <span class="cv-sep">—</span>
-                    linkedin.com/in/masudul2002
-                    <span class="cv-sep">—</span>
-                    github.com/masudul2002
-                </div>
+                <!-- Name & Contact -->
+                <div class="cv-name" id="cv-name"></div>
+                <div class="cv-location" id="cv-location"></div>
+                <div class="cv-contact-line" id="cv-contact"></div>
                 <div class="cv-hline"></div>
 
-                <!-- BODY -->
+                <!-- Body -->
                 <div class="cv-body">
-
                     <!-- Professional Summary -->
                     <div class="cs">
                         <div class="cs-title">Professional Summary</div>
@@ -800,125 +791,33 @@
                     <div class="cs">
                         <div class="cs-title">Experience</div>
                         <div class="cs-line"></div>
-
-                        <!-- 1. Campus Hero — Programming Hero (newest/top) -->
-                        <div class="exp-item">
-                            <div class="exp-hd">
-                                <span class="exp-org">Programming Hero</span>
-                                <span class="exp-date">2026 – Present</span>
-                            </div>
-                            <div class="exp-role">Campus Hero</div>
-                            <ul class="exp-ul" id="exp-ph"></ul>
-                        </div>
-
-                        <!-- 2. Campus Coordinator — YUNet -->
-                        <div class="exp-item">
-                            <div class="exp-hd">
-                                <span class="exp-org">Youth Upskill Network (YUNet)</span>
-                                <span class="exp-date">Jan 2026 – Present</span>
-                            </div>
-                            <div class="exp-role">Campus Coordinator — Sunamganj District</div>
-                            <ul class="exp-ul">
-                                <li>Led campus-wide technical and leadership engagement initiatives for university
-                                    students.</li>
-                                <li>Organized workshops, outreach campaigns, and student programs focused on skill
-                                    development.</li>
-                                <li>Acted as liaison between students and the organization to improve participation and
-                                    communication.</li>
-                            </ul>
-                        </div>
-
-                        <!-- 3. District Coordinator — International Leadership Competition -->
-                        <div class="exp-item">
-                            <div class="exp-hd">
-                                <span class="exp-org">International Leadership Competition</span>
-                                <span class="exp-date">Nov 2025 – Present</span>
-                            </div>
-                            <div class="exp-role">District Coordinator — Sunamganj District</div>
-                            <ul class="exp-ul">
-                                <li>Coordinated district-level operations, student participation, and event execution
-                                    across venues.</li>
-                                <li>Managed volunteer teams and supported competition logistics, outreach, and resource
-                                    planning.</li>
-                            </ul>
-                        </div>
-
-                        <!-- 4. Director of IT — Anto Huzrapur Jubo Shangho -->
-                        <div class="exp-item">
-                            <div class="exp-hd">
-                                <span class="exp-org">Anto Huzrapur Jubo Shangho</span>
-                                <span class="exp-date">2024 – Present</span>
-                            </div>
-                            <div class="exp-role">Director of IT</div>
-                            <ul class="exp-ul" id="exp-it"></ul>
-                        </div>
+                        <div id="cv-experience"></div>
                     </div>
 
                     <!-- Education -->
                     <div class="cs">
                         <div class="cs-title">Education</div>
                         <div class="cs-line"></div>
-
-                        <div class="edu-item">
-                            <div class="edu-hd">
-                                <span class="edu-inst">Sunamganj Science and Technology University</span>
-                                <span class="edu-date">Nov 2024 – Nov 2028</span>
-                            </div>
-                            <div class="edu-deg">Bachelor of Science in Computer Science and Engineering (CSE)</div>
-                            <div class="edu-gpa">CGPA: 2.94 / 4.00 (1st Semester)</div>
-                        </div>
-
-                        <div class="edu-item">
-                            <div class="edu-hd">
-                                <span class="edu-inst">Shahid Buddhijibi Govt. College, Rajshahi</span>
-                                <span class="edu-date">Mar 2022 – Nov 2023</span>
-                            </div>
-                            <div class="edu-deg">Higher Secondary Certificate (HSC) — Science</div>
-                            <div class="edu-gpa">GPA: 4.58 / 5.00 &nbsp;|&nbsp; Rajshahi Board</div>
-                        </div>
-
-                        <div class="edu-item">
-                            <div class="edu-hd">
-                                <span class="edu-inst">Al Helal Islami Academy &amp; College, Naogaon</span>
-                                <span class="edu-date">Jan 2016 – Nov 2021</span>
-                            </div>
-                            <div class="edu-deg">Secondary School Certificate (SSC) — Science</div>
-                            <div class="edu-gpa">GPA: 5.00 / 5.00 (Golden A+) &nbsp;|&nbsp; Rajshahi Board</div>
-                        </div>
+                        <div id="cv-education"></div>
                     </div>
 
                     <!-- Projects -->
                     <div class="cs">
                         <div class="cs-title">Projects</div>
                         <div class="cs-line"></div>
-
-                        <div class="proj-item">
-                            <div class="proj-hd">
-                                <span class="proj-name">Clubify — Club Management Web Application</span>
-                                <span class="proj-date">2024</span>
-                            </div>
-                            <div class="proj-stack">HTML · CSS · JavaScript · Firebase</div>
-                            <ul class="proj-ul" id="proj-c"></ul>
-                        </div>
-
-                        <div class="proj-item">
-                            <div class="proj-hd">
-                                <span class="proj-name">Mess Management System</span>
-                                <span class="proj-date">2024</span>
-                            </div>
-                            <div class="proj-stack">JavaScript · HTML · CSS</div>
-                            <ul class="proj-ul" id="proj-m"></ul>
-                        </div>
+                        <div id="cv-projects"></div>
                     </div>
 
-                    <!-- Activities — last, fills remaining height -->
+                    <!-- Activities & Interests -->
                     <div class="cs last">
                         <div class="cs-title">Activities &amp; Interests</div>
                         <div class="cs-line"></div>
-                        <ul class="act-list" id="cv-act"></ul>
+                        <ul class="act-list" id="cv-activities"></ul>
                     </div>
-
                 </div><!-- /cv-body -->
+                
+                <!-- Last Updated Timestamp (Bottom Right Corner of Page) -->
+                <div class="cv-last-updated" id="cv-timestamp" style="position: absolute; bottom: 15px; right: 54px; font-size: 8px; color: #888; font-style: italic;"></div>
             </div><!-- /#cv -->
         </main>
     </div>
@@ -926,237 +825,205 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        const R = {
-            se: {
-                title: 'Software Engineer', score: 92,
-                kw: ['C++', 'Python', 'JavaScript', 'OOP', 'Algorithms', 'Git', 'Full-Stack'],
-                summary: 'Computer Science and Engineering undergraduate with strong interest in software engineering, full-stack web development, and competitive programming. Proven leadership experience in organizing large-scale technical events and driving community engagement. ICPC 2025 participant with hands-on experience in building production-grade web applications. Seeking software engineering opportunities to leverage algorithmic skills and deliver scalable, maintainable technology solutions.',
-                skills: [
-                    ['Programming & CS Foundations', 'C++, Python, JavaScript, Data Structures, Algorithms, OOP, Problem Solving'],
-                    ['Software Engineering', 'Full-Stack Development, System Design, Debugging, Code Review, REST APIs'],
-                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
-                    ['Tools & Platforms', 'Git/GitHub, Firebase, Linux, VS Code, Online Judges, Technical Documentation'],
-                ],
-                it: ['Managed organizational IT systems, digital platforms, and technical operations end-to-end.',
-                    'Led technical teams supporting digital transformation and online content management initiatives.',
-                    'Maintained workflow automation scripts to improve operational reliability and team productivity.'],
-                clubify: ['Designed and developed a full-featured club management system for members, events, and activities.',
-                    'Implemented Firebase authentication, real-time database sync, and responsive layout for 100+ users.'],
-                mess: ['Built a web-based financial management tool with expense tracking, billing, and balance reports.',
-                    'Applied modular JS architecture with localStorage persistence and clean responsive interface.'],
-                act: ['Competitive Programming — Codeforces (Target: ICPC 2025)',
-                    'Member, Computer Club & Debating Club — SSTU',
-                    'Open-source web development and personal project portfolio building',
-                    'Regular algorithm practice on LeetCode and Codeforces problem sets'],
-                ph: ['Representing Programming Hero on campus, promoting coding education and structured learning paths.',
-                    'Organizing peer learning sessions, coding bootcamp awareness, and student onboarding events.'],
-            },
-            ft: {
-                title: 'FinTech Developer', score: 95,
-                kw: ['Payment APIs', 'bKash', 'Security', 'Firebase', 'JavaScript', 'FinTech', 'REST APIs'],
-                summary: 'Computer Science and Engineering undergraduate with a strong focus on financial technology, secure payment systems, and web development. Built a production-ready payment portal integrating bKash QR-code payment, PDF receipt generation with unique transaction IDs, and a mandatory compliance workflow. Combines hands-on API integration experience with analytical problem-solving skills and leadership in technology-driven community initiatives. Eager to deliver secure, scalable FinTech solutions.',
-                skills: [
-                    ['FinTech & Payments', 'bKash API, QR Payment, Transaction Management, PDF Receipt Generation, Security'],
-                    ['Programming & Engineering', 'JavaScript, C++, Python, REST APIs, Firebase, SQL, Data Validation'],
-                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
-                    ['Tools & Platforms', 'Git/GitHub, Firebase, VS Code, Linux, Technical Documentation'],
-                ],
-                it: ['Architected and deployed secure digital payment workflows and mobile financial transaction systems.',
-                    'Integrated bKash financial API enabling QR-based and link-based mobile payment processing.',
-                    'Built PDF receipt engine with unique transaction IDs, timestamps, and digital signature output.'],
-                clubify: ['Implemented Firebase security rules and real-time database ensuring data accountability and compliance.',
-                    'Designed audit trail and activity logging to support transparency and data governance.'],
-                mess: ['Developed real-time expense tracker with automated balance calculation and PDF invoice generation.',
-                    'Applied input validation, data sanitization, and access-control patterns for financial data security.'],
-                ph: ['Promoted Programming Hero FinTech learning paths and secure coding fundamentals among campus peers.',
-                    'Connected students with industry-relevant programming resources and mentorship opportunities.'],
-                act: ['Competitive Programming — Codeforces (focus on security & optimization algorithms)',
-                    'Studying MFS regulations, mobile banking security, and secure API design patterns',
-                    'Member, Computer Club — SSTU',
-                    'Exploring blockchain fundamentals and decentralized finance (DeFi) concepts'],
-            },
-            be: {
-                title: 'Backend Developer', score: 88,
-                kw: ['Python', 'SQL', 'Firebase', 'Linux', 'REST APIs', 'Git', 'C++'],
-                summary: 'Computer Science and Engineering undergraduate with a strong focus on backend systems, database architecture, and server-side development. Proficient in Python, C++, SQL, and Firebase. Skilled in designing efficient data models, building REST API integrations, and administering Linux environments. Strong algorithmic foundation from competitive programming enables writing optimized, performant server-side code. Committed to building scalable, reliable backend systems through real-world project experience.',
-                skills: [
-                    ['Programming & CS Foundations', 'Python, C++, JavaScript, SQL, Data Structures, Algorithms, OOP'],
-                    ['Backend & Database', 'Firebase, REST APIs, Database Design, Linux Administration, Server Scripting'],
-                    ['Leadership & Communication', 'Event Management, Team Coordination, Community Building, Public Speaking'],
-                    ['Tools & Platforms', 'Git/GitHub, Linux, VS Code, Firebase Console, Technical Documentation'],
-                ],
-                it: ['Designed and maintained backend data systems supporting multi-user digital operations and reporting.',
-                    'Developed Python scripts with SQL queries to automate data aggregation and operational workflows.',
-                    'Administered Linux environments ensuring system reliability, uptime, and structured data integrity.'],
-                clubify: ['Designed Firestore schema with normalized collections, efficient queries, and real-time listeners.',
-                    'Implemented role-based access control and server-side validation for secure data management.'],
-                mess: ['Architected backend data model with validation, Firebase persistence, and structured error handling.',
-                    'Built modular, loosely-coupled JavaScript back-end logic applying separation-of-concerns principles.'],
-                ph: ['Advocating Programming Hero backend and systems programming curriculum among university students.',
-                    'Facilitating peer code reviews and study groups focused on backend development practices.'],
-                act: ['Competitive Programming — Codeforces (algorithm optimization focus)',
-                    'Exploring Node.js and Express.js for production-grade REST backend development',
-                    'Member, Computer Club — SSTU',
-                    'Studying cloud deployment with Firebase and Linux server administration patterns'],
-            },
-            cp: {
-                title: 'Competitive Programmer', score: 90,
-                kw: ['C++', 'Algorithms', 'Dynamic Programming', 'Graph Theory', 'Codeforces', 'ICPC', 'Python'],
-                summary: 'Computer Science and Engineering undergraduate with expert proficiency in C++ and a deep command of advanced algorithms, dynamic programming, graph theory, and number theory. Active competitive programmer on Codeforces, consistently solving complex problem sets and targeting ICPC 2025 participation. Strong mathematical foundation from SSC Golden A+ performance supports exceptional computational and analytical skills. Applies rigorous problem-solving thinking to deliver efficient, optimized real-world software solutions.',
-                skills: [
-                    ['Programming & Algorithms', 'C++, Python, Dynamic Programming, Graph Theory, Binary Search, Greedy Algorithms'],
-                    ['CS Foundations', 'Data Structures, Number Theory, Segment Trees, OOP, Problem Decomposition'],
-                    ['Leadership & Communication', 'Event Management, Team Coordination, Mentoring, Community Building'],
-                    ['Tools & Platforms', 'Codeforces, LeetCode, AtCoder, Git/GitHub, Linux, Online Judges'],
-                ],
-                it: ['Applied algorithmic optimization techniques to automate and accelerate organizational IT processes.',
-                    'Developed Python scripts using hash-map and sorting algorithms, improving workflow efficiency by 60%.',
-                    'Mentored team members on structured problem decomposition and systematic debugging methodology.'],
-                clubify: ['Designed an optimized search & filter algorithm for member lookup achieving O(log n) complexity.',
-                    'Applied data structure best practices to handle real-time concurrent data operations efficiently.'],
-                mess: ['Applied map/sort data structures to build O(n log n) financial tracking and balance reconciliation.',
-                    'Optimized runtime and memory usage for performance in browser-constrained environments.'],
-                ph: ['Representing Programming Hero competitive programming track on campus — inspiring peers to compete.',
-                    'Hosting informal algorithm study sessions and practice contests for fellow students.'],
-                act: ['Competitive Programming — Codeforces (Target: ICPC 2025)',
-                    'Regular study: advanced DP, segment trees, graph algorithms, and competitive math',
-                    'Member, Computer Club & Debating Club — SSTU',
-                    'Practising on LeetCode and AtCoder to broaden algorithmic problem-solving exposure'],
-            },
-            it: {
-                title: 'IT & Digital Marketing Specialist', score: 89,
-                kw: ['Digital Marketing', 'Social Media', 'Live Streaming', 'IT Management', 'Web Dev', 'SEO', 'Content Strategy'],
-                summary: 'Computer Science and Engineering undergraduate with proven experience in IT management and digital marketing strategy. Currently serving as Director of IT — overseeing social media channels, live broadcast production, and content campaigns. Skilled web developer bridging marketing objectives with technical execution. Demonstrated leadership across campus, district, and organizational settings, consistently delivering measurable improvements in digital engagement. Seeking IT or digital marketing roles to drive meaningful organizational impact through technology.',
-                skills: [
-                    ['Digital Marketing', 'Social Media Management, Content Strategy, SEO, Campaign Planning, Analytics'],
-                    ['IT & Development', 'Web Development, HTML5, CSS3, JavaScript, Firebase, IT Systems Management'],
-                    ['Leadership & Communication', 'Event Management, Team Coordination, Live Streaming, Public Speaking'],
-                    ['Tools & Platforms', 'Git/GitHub, Firebase, VS Code, Content Creation Tools, Meta Business Suite'],
-                ],
-                it: ['Directed full-scale digital strategy — managed social media presence, live streaming, and content publishing.',
-                    'Produced and moderated live broadcast events, growing online audience engagement by 35%.',
-                    'Executed targeted content campaigns that strengthened organizational brand visibility and community reach.'],
-                clubify: ['Designed promotional materials and social media content to drive 40% increase in club enrollment.',
-                    'Applied UX/UI and digital branding principles to deliver an intuitive, on-brand web experience.'],
-                mess: ['Managed full digital project lifecycle — requirements, design, development, deployment, and user feedback.',
-                    'Created user documentation and promotional materials to drive system adoption among non-technical users.'],
-                ph: ['Promoting Programming Hero digital skills and IT career tracks across campus channels and events.',
-                    'Leveraging social media skills to amplify Programming Hero brand presence among students.'],
-                act: ['Studying Google Digital Marketing fundamentals and Meta Blueprint advertising',
-                    'Live streaming production and social media community moderation',
-                    'Member, Computer Club & Debating Club — SSTU',
-                    'Exploring data analytics for measuring and improving digital campaign effectiveness'],
-            },
-        };
-
         function gen() {
             const k = document.getElementById('roleSelect').value;
-            const d = R[k];
+            const targetPos = PROFILE_DATA.targetPositions[k];
+            const personal = PROFILE_DATA.personal;
 
-            // Summary
-            document.getElementById('cv-summary').textContent = d.summary;
+            // Name & Contact
+            document.getElementById('cv-name').textContent = personal.name;
+            document.getElementById('cv-location').textContent = personal.location;
+            document.getElementById('cv-contact').innerHTML = `
+                ${personal.altEmail || personal.email}
+                <span class="cv-sep">—</span>
+                ${personal.phone}
+                <span class="cv-sep">—</span>
+                ${personal.linkedin}
+                <span class="cv-sep">—</span>
+                ${personal.github}
+            `;
 
-            // Skills — bold label: values
+            // Professional Summary
+            document.getElementById('cv-summary').textContent = targetPos.summary || personal.summary;
+
+            // Skills
             const skEl = document.getElementById('cv-skills');
             skEl.innerHTML = '';
-            d.skills.forEach(([label, vals]) => {
+            const skillsToRender = targetPos.skills || [];
+            skillsToRender.forEach(([label, vals]) => {
                 const p = document.createElement('p');
                 p.className = 'sk-row-item';
                 p.innerHTML = `<strong>${label}:</strong> ${vals}`;
                 skEl.appendChild(p);
             });
 
-            // Programming Hero (Campus Hero) bullets
-            const phEl = document.getElementById('exp-ph');
-            phEl.innerHTML = '';
-            d.ph.forEach(b => { const li = document.createElement('li'); li.textContent = b; phEl.appendChild(li); });
+            // Experience
+            const expEl = document.getElementById('cv-experience');
+            expEl.innerHTML = '';
+            PROFILE_DATA.experience.forEach(exp => {
+                const expItem = document.createElement('div');
+                expItem.className = 'exp-item';
 
-            // IT bullets
-            const itEl = document.getElementById('exp-it');
-            itEl.innerHTML = '';
-            d.it.forEach(b => { const li = document.createElement('li'); li.textContent = b; itEl.appendChild(li); });
+                // Check for overrides in experienceBullets
+                const bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key]) 
+                    ? targetPos.experienceBullets[exp.key] 
+                    : exp.bullets;
+
+                expItem.innerHTML = `
+                    <div class="exp-hd">
+                        <span class="exp-org">${exp.org}</span>
+                        <span class="exp-date">${exp.period}</span>
+                    </div>
+                    <div class="exp-role">${exp.role}</div>
+                    <ul class="exp-ul">
+                        ${bullets.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                `;
+                expEl.appendChild(expItem);
+            });
+
+            // Education
+            const eduEl = document.getElementById('cv-education');
+            eduEl.innerHTML = '';
+            PROFILE_DATA.education.forEach(edu => {
+                const eduItem = document.createElement('div');
+                eduItem.className = 'edu-item';
+                eduItem.innerHTML = `
+                    <div class="edu-hd">
+                        <span class="edu-inst">${edu.institution}</span>
+                        <span class="edu-date">${edu.period}</span>
+                    </div>
+                    <div class="edu-deg">${edu.degree}</div>
+                    <div class="edu-gpa">${edu.gpa}</div>
+                `;
+                eduEl.appendChild(eduItem);
+            });
 
             // Projects
-            const cEl = document.getElementById('proj-c');
-            cEl.innerHTML = '';
-            d.clubify.forEach(b => { const li = document.createElement('li'); li.textContent = b; cEl.appendChild(li); });
+            const projEl = document.getElementById('cv-projects');
+            projEl.innerHTML = '';
+            PROFILE_DATA.projects.forEach(proj => {
+                if (proj.isPlaceholder) return; // skip "coming soon"
 
-            const mEl = document.getElementById('proj-m');
-            mEl.innerHTML = '';
-            d.mess.forEach(b => { const li = document.createElement('li'); li.textContent = b; mEl.appendChild(li); });
+                const projItem = document.createElement('div');
+                projItem.className = 'proj-item';
 
-            // Activities
-            const aEl = document.getElementById('cv-act');
-            aEl.innerHTML = '';
-            d.act.forEach(b => { const li = document.createElement('li'); li.textContent = b; aEl.appendChild(li); });
+                // Check for overrides in projectBullets
+                const bullets = (targetPos.projectBullets && targetPos.projectBullets[proj.key])
+                    ? targetPos.projectBullets[proj.key]
+                    : proj.bullets;
+
+                projItem.innerHTML = `
+                    <div class="proj-hd">
+                        <span class="proj-name">${proj.title}</span>
+                        <span class="proj-date">2024</span>
+                    </div>
+                    <div class="proj-stack">${proj.techStack.join(' · ')}</div>
+                    <ul class="proj-ul">
+                        ${bullets.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                `;
+                projEl.appendChild(projItem);
+            });
+
+            // Activities & Interests
+            const actEl = document.getElementById('cv-activities');
+            actEl.innerHTML = '';
+            const activities = targetPos.activities || PROFILE_DATA.activities;
+            activities.forEach(act => {
+                const li = document.createElement('li');
+                li.textContent = act;
+                actEl.appendChild(li);
+            });
 
             // Keywords panel
             const kwEl = document.getElementById('kws');
             kwEl.innerHTML = '';
-            d.kw.forEach(k => { const b = document.createElement('span'); b.className = 'kw'; b.textContent = k; kwEl.appendChild(b); });
+            const keywords = targetPos.keywords || [];
+            keywords.forEach(k => {
+                const b = document.createElement('span');
+                b.className = 'kw';
+                b.textContent = k;
+                kwEl.appendChild(b);
+            });
 
-            document.getElementById('scoreNum').textContent = d.score;
-            document.getElementById('sfill').style.width = d.score + '%';
+            // Score
+            document.getElementById('scoreNum').textContent = targetPos.score;
+            document.getElementById('sfill').style.width = targetPos.score + '%';
 
-            showToast('✅ CV generated — ' + d.title);
+            // Last Updated Timestamp
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const stampEl = document.getElementById('cv-timestamp');
+            if (stampEl) {
+                stampEl.textContent = `Last Updated: ${new Date().toLocaleDateString('en-US', options)}`;
+            }
+
+            showToast('✅ CV generated — ' + targetPos.title);
         }
 
         function dlPDF() { gen(); setTimeout(() => window.print(), 300); }
 
         function cpy() {
             const k = document.getElementById('roleSelect').value;
-            const d = R[k];
-            const skLines = d.skills.map(([l, v]) => `${l}: ${v}`).join('\n');
+            const targetPos = PROFILE_DATA.targetPositions[k];
+            const personal = PROFILE_DATA.personal;
+
+            const skLines = (targetPos.skills || []).map(([l, v]) => `${l}: ${v}`).join('\n');
+            
+            // Experience formatting
+            const expLines = PROFILE_DATA.experience.map(exp => {
+                const bullets = (targetPos.experienceBullets && targetPos.experienceBullets[exp.key])
+                    ? targetPos.experienceBullets[exp.key]
+                    : exp.bullets;
+                return `${exp.org} | ${exp.role} | ${exp.period}\n${bullets.map(b => '• ' + b).join('\n')}`;
+            }).join('\n\n');
+
+            // Education formatting
+            const eduLines = PROFILE_DATA.education.map(edu => {
+                return `${edu.institution} | ${edu.period}\n${edu.degree}\n${edu.gpa}`;
+            }).join('\n\n');
+
+            // Projects formatting
+            const projLines = PROFILE_DATA.projects.filter(p => !p.isPlaceholder).map(proj => {
+                const bullets = (targetPos.projectBullets && targetPos.projectBullets[proj.key])
+                    ? targetPos.projectBullets[proj.key]
+                    : proj.bullets;
+                return `${proj.title} (2024) | ${proj.techStack.join(' · ')}\n${bullets.map(b => '• ' + b).join('\n')}`;
+            }).join('\n\n');
+
+            // Activities formatting
+            const actLines = (targetPos.activities || PROFILE_DATA.activities).map(b => '• ' + b).join('\n');
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const lastUpdatedText = `Last Updated: ${new Date().toLocaleDateString('en-US', options)}`;
+
             const txt =
-                `Md Masudul Hasan — ${d.title}
-Sunamganj, Sylhet, Bangladesh
-masudul.2002@gmail.com — +880 1572 902196 — linkedin.com/in/masudul2002 — github.com/masudul2002
+`${personal.name} — ${targetPos.title}
+${personal.location}
+${personal.altEmail || personal.email} — ${personal.phone} — ${personal.linkedin} — ${personal.github}
 
 PROFESSIONAL SUMMARY
-${d.summary}
+${targetPos.summary || personal.summary}
 
 SKILLS
 ${skLines}
 
 EXPERIENCE
 
-Programming Hero | Campus Hero | 2026 – Present
-${d.ph.map(b => '• ' + b).join('\n')}
-
-Youth Upskill Network (YUNet) | Campus Coordinator — Sunamganj District | Jan 2026 – Present
-• Led campus-wide technical and leadership engagement initiatives for university students.
-• Organized workshops, outreach campaigns, and student programs focused on skill development.
-• Acted as liaison between students and the organization to improve participation.
-
-International Leadership Competition | District Coordinator — Sunamganj | Nov 2025 – Present
-• Coordinated district-level operations, student participation, and event execution.
-• Managed volunteer teams and supported competition logistics and outreach.
-
-Anto Huzrapur Jubo Shangho | Director of IT | 2024 – Present
-${d.it.map(b => '• ' + b).join('\n')}
+${expLines}
 
 EDUCATION
 
-Sunamganj Science and Technology University | Nov 2024 – Nov 2028
-Bachelor of Science in Computer Science and Engineering (CSE)
-CGPA: 2.94/4.00 (1st Semester)
-
-Shahid Buddhijibi Govt. College, Rajshahi | Mar 2022 – Nov 2023
-Higher Secondary Certificate (HSC) — Science | GPA: 4.58/5.00 | Rajshahi Board
-
-Al Helal Islami Academy & College, Naogaon | Jan 2016 – Nov 2021
-Secondary School Certificate (SSC) — Science | GPA: 5.00/5.00 (Golden A+) | Rajshahi Board
+${eduLines}
 
 PROJECTS
 
-Clubify — Club Management Web Application (2024) | HTML · CSS · JavaScript · Firebase
-${d.clubify.map(b => '• ' + b).join('\n')}
-
-Mess Management System (2024) | JavaScript · HTML · CSS
-${d.mess.map(b => '• ' + b).join('\n')}
+${projLines}
 
 ACTIVITIES & INTERESTS
-${d.act.map(b => '• ' + b).join('\n')}`;
+${actLines}
+
+${lastUpdatedText}`;
 
             navigator.clipboard.writeText(txt)
                 .then(() => showToast('📋 Copied to clipboard!'))

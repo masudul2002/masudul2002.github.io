@@ -5,3 +5,17 @@ desktop.ini
 
 # macOS
 .DS_Store
+
+# Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# Env
+.env*.local
+.env
+
+# Misc
+npm-debug.log*

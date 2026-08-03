@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseClient } from "@/lib/supabase/client";
+import { revalidatePublicSite } from "@/app/actions/revalidate";
 import type { CmsEntity } from "@/lib/cms";
 
 interface Row {
@@ -57,6 +58,8 @@ export default function CmsEditor({
     }
     setEditing(null);
     router.refresh();
+    // Revalidate the public site so edits appear live immediately
+    await revalidatePublicSite();
   }
 
   async function removeRow(id: string) {
@@ -68,6 +71,34 @@ export default function CmsEditor({
       return;
     }
     router.refresh();
+    // Revalidate the public site so deletions appear live immediately
+    await revalidatePublicSite();
+  }
+
+  // Swap sort_order with the adjacent row to reorder (priority) visually
+  async function moveRow(id: string, dir: -1 | 1) {
+    if (!supabaseClient) return;
+    const idx = rows.findIndex((r) => r.id === id);
+    const other = rows[idx + dir];
+    if (!other) return;
+    const a = Number(rows[idx].sort_order ?? idx);
+    const b = Number(other.sort_order ?? idx + dir);
+    // Swap the two sort_order values atomically
+    const { error: e1 } = await supabaseClient
+      .from(cms.table)
+      .update({ sort_order: b })
+      .eq("id", id);
+    const { error: e2 } = await supabaseClient
+      .from(cms.table)
+      .update({ sort_order: a })
+      .eq("id", other.id);
+    if (e1 || e2) {
+      console.error("Reorder failed:", e1?.message ?? e2?.message);
+      alert("Reorder failed. Please try again.");
+      return;
+    }
+    router.refresh();
+    await revalidatePublicSite();
   }
 
   function startEdit(row: Row | null) {
@@ -203,6 +234,24 @@ export default function CmsEditor({
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1 mr-3 align-middle">
+                      <button
+                        onClick={() => moveRow(r.id, -1)}
+                        disabled={rows.indexOf(r) === 0}
+                        className="w-6 h-6 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-primary disabled:opacity-30 text-[10px] flex items-center justify-center transition-colors"
+                        title="Move up"
+                      >
+                        <i className="fas fa-chevron-up"></i>
+                      </button>
+                      <button
+                        onClick={() => moveRow(r.id, 1)}
+                        disabled={rows.indexOf(r) === rows.length - 1}
+                        className="w-6 h-6 rounded bg-white/5 border border-white/10 text-gray-400 hover:text-primary disabled:opacity-30 text-[10px] flex items-center justify-center transition-colors"
+                        title="Move down"
+                      >
+                        <i className="fas fa-chevron-down"></i>
+                      </button>
+                    </span>
                     <button
                       onClick={() => startEdit(r)}
                       className="text-xs font-semibold text-primary hover:text-white transition-colors mr-4"

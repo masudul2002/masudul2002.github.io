@@ -42,6 +42,23 @@ html.light .vibe-card {
   --card-glow: rgba(0, 242, 255, 0.10);
 }
 
+/* ===== LIGHT MODE: full color harmony — no invisible text ===== */
+html.light .text-white { color: #111827 !important; }
+html.light .text-gray-100, html.light .text-gray-200, html.light .text-gray-300 { color: #374151 !important; }
+html.light .text-gray-400, html.light .text-gray-500 { color: #6b7280 !important; }
+html.light .text-gray-600, html.light .text-gray-700 { color: #4b5563 !important; }
+html.light .text-primary { color: #0891b2 !important; }
+html.light .text-secondary { color: #4d4dff !important; }
+html.light .bg-black\/30, html.light .bg-black\/20 { background: #eef2f7 !important; }
+html.light .bg-black\/80 { background: rgba(255,255,255,0.9) !important; }
+html.light .bg-black\/50 { background: rgba(255,255,255,0.8) !important; }
+html.light .bg-black\/95, html.light .bg-black\/97 { background: #f8fafc !important; }
+html.light .bg-\[#0f1523\] { background: #eef2f7 !important; }
+html.light .bg-\[#1a233a\] { background: #e2e8f0 !important; }
+html.light .bg-black\/30 { background: #eef2f7 !important; }
+html.light .border-white\/10, html.light .border-glass-border { border-color: rgba(0,0,0,0.12) !important; }
+html.light .bg-white\/5 { background: rgba(0,0,0,0.05) !important; }
+
 /* ===== Navbar — glass transparency, theme-adaptive ===== */
 #navbar {
   background: rgba(0, 0, 0, 0.30);

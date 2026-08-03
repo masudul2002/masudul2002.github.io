@@ -144,11 +144,11 @@ if (heroSection && profileContainer) {
     });
 }
 
-// WhatsApp Contact Logic
+// Contact Logic — save message to Supabase, then open WhatsApp
 const sendBtn = document.getElementById('send-btn');
 
 if (sendBtn) {
-    sendBtn.addEventListener('click', () => {
+    sendBtn.addEventListener('click', async () => {
         const name = document.getElementById('contact-name').value;
         const email = document.getElementById('contact-email').value;
         const subject = document.getElementById('contact-subject').value;
@@ -156,6 +156,22 @@ if (sendBtn) {
 
         const phoneNumber = '8801572902196';
 
+        // 1) Save the message to the Supabase contact_messages table (anon insert)
+        //    If this fails (offline, DB down), the site still works exactly as before.
+        let dbOk = false;
+        if (window.supabase) {
+            try {
+                const { error } = await window.supabase
+                    .from('contact_messages')
+                    .insert([{ name, email, subject, message }]);
+                dbOk = !error;
+                if (error) console.error('Supabase insert failed:', error.message);
+            } catch (err) {
+                console.error('Supabase insert error:', err);
+            }
+        }
+
+        // 2) WhatsApp behavior is always preserved (previous behavior)
         // Formatting the message for WhatsApp
         // Using encodeURIComponent is better for handling special characters
         const formattedMessage = `*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n*Message:* ${message}`;
@@ -164,6 +180,8 @@ if (sendBtn) {
         const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
         window.open(whatsappURL, '_blank');
+
+        if (dbOk) console.log('Message saved to Supabase.');
     });
 }
 

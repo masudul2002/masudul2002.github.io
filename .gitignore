@@ -17,5 +17,10 @@ build/
 .env*.local
 .env
 
+# Credentials (never commit)
+ADMIN_CREDENTIALS.txt
+
 # Misc
 npm-debug.log*
+.vercel
+.env*

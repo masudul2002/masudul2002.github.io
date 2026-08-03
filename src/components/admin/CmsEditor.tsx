@@ -47,6 +47,25 @@ export default function CmsEditor({
       }
     }
 
+    // New rows: auto-assign the next sort_order if not provided,
+    // and fill required-ish defaults so inserts never fail.
+    if (!editing) {
+      if (payload.sort_order === 0 || payload.sort_order === undefined) {
+        payload.sort_order = rows.length; // append at the end
+      }
+      // key is UNIQUE on experience/projects/cv_targets — generate one if empty
+      if (cms.fields.some((f) => f.name === "key") && !draft["key"]) {
+        payload.key =
+          "item-" + Date.now().toString(36).slice(-6);
+      }
+      // JSON fields default to [] / {} so NOT NULL jsonb never fails
+      for (const f of cms.fields) {
+        if (f.type === "json" && (payload[f.name] === undefined || payload[f.name] === null)) {
+          payload[f.name] = [];
+        }
+      }
+    }
+
     const { error } = editing
       ? await supabaseClient.from(cms.table).update(payload).eq("id", editing.id)
       : await supabaseClient.from(cms.table).insert(payload);

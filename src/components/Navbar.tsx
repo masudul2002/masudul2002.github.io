@@ -87,10 +87,20 @@ export function Navbar() {
             </a>
           ))}
 
-          {/* Theme Toggle */}
+          {/* Theme Toggle — switch style (from the original site) */}
           <button id="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme" title="Toggle Light / Dark mode"
-            className="w-10 h-10 rounded-full bg-glass-bg border border-glass-border flex items-center justify-center text-primary hover:bg-white/10 transition-colors">
-            <span className="toggle-thumb">
+            className="w-14 h-7 rounded-full border border-glass-border relative transition-colors duration-300"
+            style={{
+              background: theme === "dark" ? "rgba(0,242,255,0.15)" : "rgba(0,0,0,0.1)",
+            }}>
+            <span
+              className="absolute top-0.5 left-0.5 w-6 h-6 rounded-full flex items-center justify-center text-[11px] transition-transform duration-300"
+              style={{
+                transform: theme === "dark" ? "translateX(0)" : "translateX(28px)",
+                background: theme === "dark" ? "#0f172a" : "#ffffff",
+                color: theme === "dark" ? "#00f2ff" : "#334155",
+                boxShadow: "0 1px 4px rgba(0,0,0,0.4)",
+              }}>
               <i className={theme === "dark" ? "fas fa-moon" : "fas fa-sun"} id="toggle-icon"></i>
             </span>
           </button>

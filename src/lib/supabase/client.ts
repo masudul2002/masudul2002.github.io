@@ -1,11 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
-// Public (anon) client used on the client side.
-// RLS in the database is what protects the data.
+// Browser (anon) client using @supabase/ssr's createBrowserClient.
+// This stores the session in COOKIES (same mechanism the server client
+// and middleware read), which is what makes /admin login work end-to-end.
 export const supabaseClient =
   supabaseUrl && supabaseAnonKey
-    ? createClient(supabaseUrl, supabaseAnonKey)
+    ? createBrowserClient(supabaseUrl, supabaseAnonKey)
     : null;

@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { STATIC_FALLBACK, type ProfileData } from "@/lib/profile-data";
 
-export default function CvGenerator() {
-  const dataRef = useRef<ProfileData>(STATIC_FALLBACK);
+export default function CvGenerator({ data }: { data?: ProfileData }) {
+  const dataRef = useRef<ProfileData>(data ?? STATIC_FALLBACK);
   const [roleKey, setRoleKey] = useState("se");
 
   const render = useCallback(() => {
@@ -215,7 +215,7 @@ ${actLines}`;
             onChange={(e) => setRoleKey(e.target.value)}
             className="ml-3 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary text-sm"
           >
-            {Object.entries(STATIC_FALLBACK.targetPositions).map(([k, v]) => (
+            {Object.entries(data?.targetPositions ?? STATIC_FALLBACK.targetPositions).map(([k, v]) => (
               <option key={k} value={k} className="bg-bg">
                 {v.title} — Match {v.score}%
               </option>

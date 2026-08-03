@@ -1,4 +1,4 @@
-import { STATIC_FALLBACK } from "@/lib/profile-data";
+import { getProfileData } from "@/lib/data";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
@@ -11,8 +11,8 @@ import Contact from "@/components/sections/Contact";
 
 export const revalidate = 3600;
 
-export default function Home() {
-  const data = STATIC_FALLBACK;
+export default async function Home() {
+  const data = await getProfileData();
 
   return (
     <>

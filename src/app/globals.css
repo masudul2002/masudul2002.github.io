@@ -29,6 +29,184 @@ html.light {
   --color-glass-border: rgba(0, 0, 0, 0.08);
 }
 
+html.light body {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+html.light .glass-card {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+html.light .vibe-card {
+  --card-glow: rgba(0, 242, 255, 0.10);
+}
+
+/* ===== Glassmorphism Utilities (from legacy style.css) ===== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hover-neon:hover {
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.1);
+  border-color: rgba(0, 242, 255, 0.5);
+}
+
+/* ===== Animation Utilities (from legacy style.css) ===== */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes float-delayed {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-float-delayed { animation: float-delayed 5s ease-in-out infinite; }
+
+.typed-cursor { color: #00f2ff; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #00f2ff; }
+
+/* ===== Coming Soon card animations (from legacy) ===== */
+.cs-pulse { position: absolute; border-radius: 50%; animation: csPulseRing 2.5s ease-out infinite; pointer-events: none; }
+.cs-pulse-1 { width: 100px; height: 100px; border: 1.5px solid rgba(0, 242, 255, 0.25); animation-delay: 0s; }
+.cs-pulse-2 { width: 160px; height: 160px; border: 1px solid rgba(0, 242, 255, 0.12); animation-delay: 0.8s; }
+@keyframes csPulseRing {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.cs-orbit { position: absolute; width: 80px; height: 80px; border-radius: 50%; border: 1.5px dashed rgba(0, 242, 255, 0.25); animation: csOrbit 3s linear infinite; animation-fill-mode: both; }
+.cs-orbit-dot { position: absolute; top: -4px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: #00f2ff; border-radius: 50%; box-shadow: 0 0 8px #00f2ff, 0 0 16px rgba(0, 242, 255, 0.6); }
+@keyframes csOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.cs-core { position: absolute; width: 44px; height: 44px; border-radius: 50%; background: rgba(0, 242, 255, 0.08); border: 1.5px solid rgba(0, 242, 255, 0.35); display: flex; align-items: center; justify-content: center; animation: csCorePulse 2s ease-in-out infinite alternate; animation-fill-mode: both; }
+@keyframes csCorePulse {
+  from { box-shadow: 0 0 8px rgba(0, 242, 255, 0.3); }
+  to { box-shadow: 0 0 22px rgba(0, 242, 255, 0.7), 0 0 40px rgba(0, 242, 255, 0.2); }
+}
+.cs-blink { animation: csBlink 1s step-end infinite; animation-fill-mode: both; display: inline-block; }
+@keyframes csBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cs-tag-pulse { animation: csTagPulse 2s ease-in-out infinite alternate; animation-fill-mode: both; }
+@keyframes csTagPulse {
+  from { box-shadow: none; }
+  to { box-shadow: 0 0 8px rgba(0, 242, 255, 0.5); }
+}
+.cs-dot-loader { display: inline-flex; gap: 3px; align-items: center; }
+.cs-dot-loader span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: csDotBounce 1.2s ease-in-out infinite; animation-fill-mode: both; }
+.cs-dot-loader span:nth-child(1) { animation-delay: 0s; }
+.cs-dot-loader span:nth-child(2) { animation-delay: 0.2s; }
+.cs-dot-loader span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes csDotBounce {
+  0%, 80%, 100% { transform: scaleY(1); opacity: 0.4; }
+  40% { transform: scaleY(1.6); opacity: 1; }
+}
+.cs-orbit, .cs-orbit-dot, .cs-pulse, .cs-core, .cs-blink, .cs-tag-pulse, .cs-dot-loader span {
+  transition: none !important;
+}
+
+/* ===== VIBE CARD ANIMATIONS (from legacy) ===== */
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes shimmerSweep {
+  0% { left: -80%; }
+  100% { left: 150%; }
+}
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 0px transparent; }
+  50% { box-shadow: 0 0 18px var(--card-glow, rgba(0, 242, 255, 0.18)); }
+}
+@keyframes iconBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+.vibe-card {
+  --card-glow: rgba(0, 242, 255, 0.15);
+  animation: cardFloat 5s ease-in-out infinite, borderGlow 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.vibe-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.06) 50%, transparent 100%);
+  transform: skewX(-15deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.vibe-card:hover::after {
+  opacity: 1;
+  animation: shimmerSweep 0.7s ease forwards;
+}
+.vibe-card:nth-child(1) { animation-delay: 0s, 0s; }
+.vibe-card:nth-child(2) { animation-delay: 0.5s, 0.4s; }
+.vibe-card:nth-child(3) { animation-delay: 1.0s, 0.8s; }
+.vibe-card:nth-child(4) { animation-delay: 1.5s, 1.2s; }
+.vibe-card:nth-child(5) { animation-delay: 0.75s, 0.6s; }
+.vibe-card:nth-child(6) { animation-delay: 1.25s, 1.0s; }
+.vibe-icon { animation: iconBreathe 3.5s ease-in-out infinite; }
+.vibe-card:nth-child(2) .vibe-icon { animation-delay: 0.6s; }
+.vibe-card:nth-child(3) .vibe-icon { animation-delay: 1.2s; }
+.vibe-card:nth-child(4) .vibe-icon { animation-delay: 1.8s; }
+.vibe-card:nth-child(5) .vibe-icon { animation-delay: 0.9s; }
+.vibe-card:nth-child(6) .vibe-icon { animation-delay: 1.5s; }
+#experience .vibe-card { --card-glow: rgba(99, 102, 241, 0.20); }
+#leadership .vibe-card { --card-glow: rgba(0, 242, 255, 0.15); }
+#cp .vibe-card { --card-glow: rgba(0, 242, 255, 0.18); }
+#projects .vibe-card { --card-glow: rgba(0, 242, 255, 0.15); }
+.vibe-card:hover { animation-play-state: paused; }
+.vibe-card, .vibe-icon {
+  transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
+}
+
+/* Animated gradient border on hover for Mango Star card */
+.mango-gradient-border { position: relative; }
+.mango-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(90deg, #00f2ff, #4d4dff, #00f2ff);
+  background-size: 200% auto;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 30;
+}
+.mango-gradient-border:hover::before {
+  opacity: 1;
+  animation: borderPan 3s linear infinite;
+}
+@keyframes borderPan {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
 /* Custom cursor */
 #cursor-dot {
   position: fixed;

@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <>
       <Hero personal={data.personal} />
-      <About personal={data.personal} />
+      <About />
       <Skills skills={data.skills} />
       <Education education={data.education} />
       <Experience experience={data.experience} />

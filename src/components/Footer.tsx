@@ -23,11 +23,13 @@ export function Footer() {
   const year = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <footer className="border-t border-white/10 py-8 text-center text-sm text-gray-400">
-      <p>
-        © {year} <span className="text-white font-semibold">MD. MASUDUL HASAN</span>. All
-        rights reserved.
-      </p>
+    <footer className="py-8 border-t border-glass-border bg-black/50 backdrop-blur text-center relative z-10">
+      <div className="container mx-auto px-6">
+        <p className="text-gray-500 text-sm">
+          &copy; {year} <span className="text-primary font-bold">MD. MASUDUL HASAN</span>. All rights
+          reserved.
+        </p>
+      </div>
     </footer>
   );
 }

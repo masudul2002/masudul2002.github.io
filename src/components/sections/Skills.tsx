@@ -1,20 +1,27 @@
 import type { Skill } from "@/lib/profile-data";
-import Reveal from "@/components/ui/Reveal";
-import SectionHeading from "@/components/ui/SectionHeading";
 
 export default function Skills({ skills }: { skills: Skill[] }) {
   return (
-    <section id="skills" className="py-20 px-4 max-w-5xl mx-auto">
-      <SectionHeading eyebrow="Skills" title="My Toolbox" />
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {skills.map((skill, i) => (
-          <Reveal key={skill.name} delay={i * 0.05}>
-            <div className="rounded-xl bg-glass-bg border border-glass-border p-6 text-center hover:border-primary/50 hover:shadow-neon transition-all">
-              <i className={`${skill.icon} ${skill.iconColor} text-4xl mb-3`}></i>
-              <h3 className="font-semibold text-white text-sm">{skill.name}</h3>
+    <section id="skills" className="py-24 bg-black/30">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col items-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
+            <i className="fas fa-code text-primary"></i> Technical Skills
+          </h2>
+          <div className="h-1 w-20 bg-primary rounded-full"></div>
+        </div>
+
+        <div id="skills-container" className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {skills.map((skill) => (
+            <div
+              key={skill.name}
+              className="glass-card p-6 rounded-xl border border-glass-border hover:border-primary/50 hover-neon transition-all text-center"
+            >
+              <i className={`${skill.icon} ${skill.iconColor} text-5xl mb-4`}></i>
+              <h3 className="text-lg font-bold">{skill.name}</h3>
             </div>
-          </Reveal>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -61,6 +61,7 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   isPlaceholder?: boolean;
+  extraInteractivity?: boolean;
   bullets: string[];
 }
 

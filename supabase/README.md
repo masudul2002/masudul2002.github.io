@@ -74,8 +74,10 @@ erDiagram
 | Role          | SELECT | INSERT | UPDATE | DELETE |
 |---------------|--------|--------|--------|--------|
 | `anon` (visitors) | ❌ denied | ✅ allowed (`WITH CHECK (true)`) | ❌ denied | ❌ denied |
-| `authenticated` (admin) | ✅ only `auth.uid() = user_id` | ❌ denied (admin never inserts via UI) | ✅ only own rows | ✅ only own rows |
+| `authenticated` (admin) | ✅ all rows | ❌ denied (admin never inserts via UI) | ✅ all rows | ✅ all rows |
 | `service_role` (Supabase backend) | ✅ full access (bypasses RLS) | ✅ | ✅ | ✅ |
+
+> **Why "all rows" for the admin:** Public signup is disabled, so there is exactly one authenticated user — the admin. Messages are inserted as `anon` with no owner, so an `auth.uid() = user_id` policy would require a manual claim step. Granting `authenticated` full access keeps the page zero-maintenance while remaining admin-only by construction. Revisit only if more users are ever added.
 
 ## Auth configuration
 
@@ -93,14 +95,7 @@ erDiagram
 2. RLS allows the insert; `user_id` stays NULL.
 3. WhatsApp opens as before (existing behavior preserved; fallback if the DB call fails).
 4. Admin opens `admin.html` (unlisted URL) → email/password login.
-5. Admin loads messages: `select * from contact_messages order by created_at desc`.
-6. To see messages on the admin page, they must be **claimed**: rows need `user_id` = admin's `auth.uid()`. Run once after creating the admin account:
-   ```sql
-   UPDATE public.contact_messages
-   SET user_id = auth.uid()
-   WHERE user_id IS NULL;
-   ```
-   (Do this inside the Supabase dashboard SQL editor — you will be logged in as yourself, so `auth.uid()` resolves correctly.)
+5. Admin loads messages: `select * from contact_messages order by created_at desc` — all rows visible, no manual claim needed.
 
 ## Deploy & rollback
 

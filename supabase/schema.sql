@@ -33,8 +33,16 @@ CREATE INDEX IF NOT EXISTS contact_messages_user_id_idx
 --    This site is static (GitHub Pages), so the anon key is
 --    public. RLS is what actually protects the data:
 --      - anon (visitors):        INSERT only
---      - authenticated (admin):  SELECT / UPDATE / DELETE
---                                only rows owned by them
+--      - authenticated (admin):  SELECT / UPDATE / DELETE all rows
+--
+--    Why "all rows" instead of auth.uid() = user_id:
+--    There is exactly ONE authenticated user (public signup is
+--    DISABLED, only the admin account exists). The contact form
+--    inserts rows as the anon role with no owner, so requiring
+--    row ownership would force a manual "claim" step. Since the
+--    authenticated role is effectively the owner by construction,
+--    granting it full access = admin-only access, with no manual
+--    maintenance. If other users are ever added, revisit this.
 -- ------------------------------------------------------------
 ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 
@@ -45,33 +53,24 @@ CREATE POLICY "allow_public_insert"
     FOR INSERT TO anon
     WITH CHECK (true);
 
--- Logged-in admin may read only their own messages.
-DROP POLICY IF EXISTS "allow_owner_select" ON public.contact_messages;
-CREATE POLICY "allow_owner_select"
+-- Logged-in admin (the only authenticated user) may read all messages.
+DROP POLICY IF EXISTS "allow_admin_select" ON public.contact_messages;
+CREATE POLICY "allow_admin_select"
     ON public.contact_messages
     FOR SELECT TO authenticated
-    USING (auth.uid() = user_id);
+    USING (true);
 
--- Logged-in admin may delete only their own messages.
-DROP POLICY IF EXISTS "allow_owner_delete" ON public.contact_messages;
-CREATE POLICY "allow_owner_delete"
+-- Logged-in admin may delete any message.
+DROP POLICY IF EXISTS "allow_admin_delete" ON public.contact_messages;
+CREATE POLICY "allow_admin_delete"
     ON public.contact_messages
     FOR DELETE TO authenticated
-    USING (auth.uid() = user_id);
+    USING (true);
 
--- Logged-in admin may update (mark as read) only their own messages.
-DROP POLICY IF EXISTS "allow_owner_update" ON public.contact_messages;
-CREATE POLICY "allow_owner_update"
+-- Logged-in admin may update any message (mark as read).
+DROP POLICY IF EXISTS "allow_admin_update" ON public.contact_messages;
+CREATE POLICY "allow_admin_update"
     ON public.contact_messages
     FOR UPDATE TO authenticated
-    USING (auth.uid() = user_id)
-    WITH CHECK (auth.uid() = user_id);
-
--- ------------------------------------------------------------
--- 3. Helper: claim anonymous messages as the admin user
---    Run this once after creating your admin account:
---      UPDATE public.contact_messages
---      SET user_id = auth.uid()
---      WHERE user_id IS NULL;
---    (Also run it whenever you want to claim new messages.)
--- ------------------------------------------------------------
+    USING (true)
+    WITH CHECK (true);

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCmsEntity } from "@/lib/cms";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminUser } from "@/lib/supabase/guard";
 import CmsEditor from "@/components/admin/CmsEditor";
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default async function EntityPage({
   const { entity } = await params;
   const cms = getCmsEntity(entity);
   if (!cms) notFound();
+  await requireAdminUser();
 
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase

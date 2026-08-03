@@ -42,6 +42,63 @@ html.light .vibe-card {
   --card-glow: rgba(0, 242, 255, 0.10);
 }
 
+/* ===== Navbar — glass transparency, theme-adaptive ===== */
+#navbar {
+  background: rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+#navbar.scrolled {
+  background: rgba(0, 0, 0, 0.80);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+html.light #navbar {
+  background: rgba(255, 255, 255, 0.75);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+}
+html.light #navbar.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+}
+html.light #navbar a {
+  color: #374151;
+}
+html.light #navbar a:hover {
+  color: #000;
+}
+
+/* ===== Footer — glass transparency, theme-adaptive ===== */
+footer {
+  background: rgba(0, 0, 0, 0.50);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+html.light footer {
+  background: rgba(255, 255, 255, 0.80);
+  border-top: 1px solid rgba(0, 0, 0, 0.10);
+}
+html.light footer p {
+  color: #6b7280;
+}
+
+/* Light mode heading/link fixes */
+html.light h1, html.light h2, html.light h3, html.light h4 {
+  color: #111827;
+}
+html.light .text-gray-300, html.light .text-gray-400 {
+  color: #4b5563;
+}
+html.light .glass-card p, html.light .glass-card li {
+  color: #4b5563;
+}
+html.light #navbar .text-primary,
+html.light footer .text-primary {
+  color: #00b8c9;
+}
+
 /* ===== Glassmorphism Utilities (from legacy style.css) ===== */
 .glass-card {
   background: rgba(255, 255, 255, 0.03);

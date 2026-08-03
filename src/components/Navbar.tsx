@@ -65,9 +65,7 @@ export function Navbar() {
   return (
     <nav
       id="navbar"
-      className={`fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-glass-border ${
-        scrolled ? "bg-black/80 shadow-lg" : "bg-black/30"
-      }`}
+      className={`fixed w-full z-50 ${scrolled ? "scrolled" : ""}`}
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold font-mono text-white flex items-center gap-2 group">

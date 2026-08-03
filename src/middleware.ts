@@ -4,6 +4,11 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
 
+  // Only guard admin pages EXCEPT the login page (which handles its own auth)
+  if (request.nextUrl.pathname === "/admin/login") {
+    return response;
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? "",
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
@@ -23,25 +28,14 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: Do not run code between createServerClient and supabase.auth.getUser()
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAdminPath = request.nextUrl.pathname.startsWith("/admin");
-
-  // Redirect unauthenticated /admin traffic to login
-  if (isAdminPath && !user) {
+  // Unauthenticated admin traffic (other than login) → login page
+  if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
-    url.searchParams.set("next", request.nextUrl.pathname);
-    return NextResponse.redirect(url);
-  }
-
-  // Logged-in users shouldn't see the login page
-  if (request.nextUrl.pathname === "/admin/login" && user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/admin";
     return NextResponse.redirect(url);
   }
 

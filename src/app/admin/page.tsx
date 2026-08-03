@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireAdminUser } from "@/lib/supabase/guard";
 import MessageList from "@/components/admin/MessageList";
 import LogoutButton from "@/components/admin/LogoutButton";
 
@@ -10,11 +10,8 @@ export const metadata = {
 };
 
 export default async function AdminPage() {
+  const user = await requireAdminUser();
   const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/admin/login");
 
   const { data: messages, error } = await supabase
     .from("contact_messages")

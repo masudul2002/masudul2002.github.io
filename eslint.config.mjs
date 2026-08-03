@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Legacy static site is frozen — not part of the Next.js app
+    "legacy/**",
   ]),
 ]);
 

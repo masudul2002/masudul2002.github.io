@@ -6,7 +6,8 @@ export const metadata = {
   description: "Generate a tailored ATS-friendly CV for different roles.",
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function CvPage() {
   const data = await getProfileData();

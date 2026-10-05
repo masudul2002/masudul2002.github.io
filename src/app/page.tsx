@@ -9,7 +9,8 @@ import CpStats from "@/components/sections/CpStats";
 import Projects from "@/components/sections/Projects";
 import Contact from "@/components/sections/Contact";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function Home() {
   const data = await getProfileData();
@@ -22,7 +23,7 @@ export default async function Home() {
       <Education education={data.education} />
       <Experience experience={data.experience} />
       <Leadership roles={data.organizationalRoles} />
-      <CpStats />
+      <CpStats handles={data.personal.cpHandles} />
       <Projects projects={data.projects} />
       <Contact personal={data.personal} />
     </>

@@ -5,6 +5,14 @@
 // from which supabase/seed.sql is generated. Keep in sync.
 // ============================================================
 
+export interface CpHandles {
+  codeforces: string;
+  atcoder: string;
+  codechef: string;
+  leetcode: string;
+  hackerrank: string;
+}
+
 export interface Personal {
   name: string;
   title: string;
@@ -20,6 +28,7 @@ export interface Personal {
   summary: string;
   profileImage: string;
   whatsappNumber: string;
+  cpHandles?: CpHandles;
 }
 
 export interface Skill {
@@ -105,6 +114,13 @@ export const STATIC_FALLBACK: ProfileData = {
       "An ambitious dreamer and well-rounded leader seeking knowledge across disciplines. Passionate about building secure, scalable financial technology solutions.",
     profileImage: "/images/MASUDUL-HASAN.png",
     whatsappNumber: "8801572902196",
+    cpHandles: {
+      codeforces: "MASUDUL2002",
+      atcoder: "masudul2002",
+      codechef: "masudul2002",
+      leetcode: "masudul2002",
+      hackerrank: "MASUDUL2002",
+    },
   },
 
   organizationalRoles: [
@@ -319,6 +335,60 @@ export const STATIC_FALLBACK: ProfileData = {
         "Built a web-based financial management system designed to track daily mess activities, meals, and expenditures.",
         "Created modular JavaScript calculations for automated balance splitting and financial reporting.",
         "Implemented localStorage persistence and lightweight CSS layouts for smooth performance.",
+      ],
+    },
+    {
+      key: "campuspay",
+      title: "CampusPay",
+      category: "FinTech & Student Banking",
+      status: "Production Ready",
+      image: "/images/bKash.png",
+      fallbackIcon: "fas fa-credit-card",
+      techStack: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Supabase", "REST API"],
+      description:
+        "CampusPay is an integrated student financial services and campus payment gateway platform. Enables seamless digital tuition payments, hall fees, transaction history, and financial record auditing.",
+      liveUrl: "https://campus-pay-taupe.vercel.app",
+      githubUrl: "https://github.com/masudul2002/CampusPay",
+      bullets: [
+        "Architected a unified campus digital payment solution with real-time transaction tracking and fee management.",
+        "Engineered secure authentication, audit trails, and role-based permissions using Next.js, Supabase, and TypeScript.",
+        "Designed modern responsive mobile-first UI with dark/light themes and automated payment receipt generation.",
+      ],
+    },
+    {
+      key: "cpkit",
+      title: "CPKit",
+      category: "Competitive Programming Hub",
+      status: "Live",
+      image: "",
+      fallbackIcon: "fas fa-laptop-code",
+      techStack: ["TypeScript", "React", "Tailwind CSS", "Algorithms", "REST API"],
+      description:
+        "Everything a Competitive Programmer Needs in one place. Features live contest reminders across Codeforces, AtCoder & CodeChef, problem difficulty analyzers, rating prediction, and fast C++ algorithmic templates.",
+      liveUrl: "https://cpkit.vercel.app",
+      githubUrl: "https://github.com/masudul2002/cpkit",
+      bullets: [
+        "Created an all-in-one competitive programming platform aggregating live contests, problem analytics, and code templates.",
+        "Integrated Codeforces, AtCoder, and CodeChef APIs to display real-time contest schedules and user metrics.",
+        "Built high-performance algorithmic cheat-sheets and interactive problem tracker with responsive design.",
+      ],
+    },
+    {
+      key: "paysa",
+      title: "Paysa",
+      category: "Personal Finance Manager",
+      status: "In Dev",
+      image: "",
+      fallbackIcon: "fas fa-wallet",
+      techStack: ["Flutter", "Dart", "SQLite", "Finance"],
+      description:
+        "A modern offline-first personal finance and expense manager built with Flutter. Provides expense tracking, daily budgeting, wallet analytics, and data sovereignty without requiring cloud dependency.",
+      liveUrl: "#",
+      githubUrl: "https://github.com/masudul2002/Paysa",
+      bullets: [
+        "Developed an offline-first mobile personal finance application with SQLite local storage.",
+        "Designed interactive expense categorization, budgeting goals, and monthly cashflow visualizer.",
+        "Built privacy-focused architecture ensuring user financial data never leaves the local device.",
       ],
     },
     {

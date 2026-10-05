@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import type { CpHandles } from "@/lib/profile-data";
 
 interface CpState {
   cfRating: string;
@@ -23,33 +24,45 @@ const PLACEHOLDER: CpState = {
   ccRating: "1470",
   ccStars: "1★",
   acSolved: "12",
-  lcSolved: "42",
-  lcEasy: "25",
-  lcMed: "17",
+  lcSolved: "63",
+  lcEasy: "45",
+  lcMed: "18",
   lcHard: "0",
   updatedAt: "",
 };
 
-export default function CpStats() {
+export default function CpStats({ handles }: { handles?: CpHandles }) {
   const [stats, setStats] = useState<CpState>(PLACEHOLDER);
 
-  async function load() {
+  const cfUser = handles?.codeforces || "MASUDUL2002";
+  const acUser = handles?.atcoder || "masudul2002";
+  const ccUser = handles?.codechef || "masudul2002";
+  const lcUser = handles?.leetcode || "masudul2002";
+  const hrUser = handles?.hackerrank || "MASUDUL2002";
+
+  const load = useCallback(async () => {
     const s = { ...PLACEHOLDER };
     const now = new Date().toLocaleString();
 
-    // Codeforces
+    // 1. Codeforces API (dynamic handle)
     try {
-      const info = await fetch("https://codeforces.com/api/user.info?handles=masudul2002").then((r) => r.json());
+      const info = await fetch(
+        `https://codeforces.com/api/user.info?handles=${encodeURIComponent(cfUser)}`
+      ).then((r) => r.json());
       if (info?.result?.[0]) {
         const u = info.result[0];
         s.cfRating = String(u.rating ?? "--");
-        s.cfRank = u.rank ?? "Loading...";
+        s.cfRank = u.rank ?? "newbie";
       }
-      const status = await fetch("https://codeforces.com/api/user.status?handle=masudul2002").then((r) => r.json());
+      const status = await fetch(
+        `https://codeforces.com/api/user.status?handle=${encodeURIComponent(cfUser)}&from=1&count=1000`
+      ).then((r) => r.json());
       if (Array.isArray(status?.result)) {
-        const solved = new Set();
-        status.result.forEach((sub: { problem?: { contestId?: number; index?: string } }) => {
-          if (sub.problem) solved.add(`${sub.problem.contestId}-${sub.problem.index}`);
+        const solved = new Set<string>();
+        status.result.forEach((sub: { verdict?: string; problem?: { contestId?: number; index?: string } }) => {
+          if (sub.verdict === "OK" && sub.problem?.contestId && sub.problem?.index) {
+            solved.add(`${sub.problem.contestId}-${sub.problem.index}`);
+          }
         });
         s.cfSolved = String(solved.size);
       }
@@ -57,32 +70,38 @@ export default function CpStats() {
       console.error("Codeforces fetch failed:", e);
     }
 
-    // AtCoder
+    // 2. AtCoder API (dynamic handle)
     try {
-      const ac = await fetch("https://kenkoooo.com/atcoder/atcoder-api/v3/user/ac_rank?user=masudul2002").then((r) => r.json());
-      if (ac && typeof ac.count === "number") s.acSolved = String(ac.count);
+      const ac = await fetch(
+        `https://kenkoooo.com/atcoder/atcoder-api/v3/user/ac_rank?user=${encodeURIComponent(acUser)}`
+      ).then((r) => r.json());
+      if (ac && typeof ac.count === "number") {
+        s.acSolved = String(ac.count);
+      }
     } catch (e) {
       console.error("AtCoder fetch failed:", e);
     }
 
-    // CodeChef
+    // 3. CodeChef API (dynamic handle)
     try {
-      const cc = await fetch("https://codechef-api.vercel.app/masudul2002").then((r) => r.json());
+      const cc = await fetch(`https://codechef-api.vercel.app/${encodeURIComponent(ccUser)}`).then((r) => r.json());
       if (cc && cc.rating !== undefined) {
         s.ccRating = String(cc.rating ?? "1470");
         s.ccStars = cc.stars ?? "1★";
       }
     } catch (e) {
-      console.error("CodeChef fetch failed:", e);
+      // Keep solid fallback if CodeChef server is throttled
+      s.ccRating = "1470";
+      s.ccStars = "1★";
     }
 
-    // LeetCode
+    // 4. LeetCode API (dynamic handle)
     try {
-      const lc = await fetch("https://alfa-leetcode-api.onrender.com/masudul2002/solved").then((r) => r.json());
+      const lc = await fetch(`https://alfa-leetcode-api.onrender.com/${encodeURIComponent(lcUser)}/solved`).then((r) => r.json());
       if (lc) {
-        s.lcSolved = String(lc.totalSolved ?? "42");
-        s.lcEasy = String(lc.easySolved ?? "25");
-        s.lcMed = String(lc.mediumSolved ?? "17");
+        s.lcSolved = String(lc.solvedProblem ?? lc.totalSolved ?? "63");
+        s.lcEasy = String(lc.easySolved ?? "45");
+        s.lcMed = String(lc.mediumSolved ?? "18");
         s.lcHard = String(lc.hardSolved ?? "0");
       }
     } catch (e) {
@@ -91,12 +110,11 @@ export default function CpStats() {
 
     s.updatedAt = now;
     setStats(s);
-  }
+  }, [cfUser, acUser, ccUser, lcUser]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
-  }, []);
+  }, [load]);
 
   const card = "glass-card vibe-card p-5 rounded-xl border border-glass-border hover:border-primary/60 transition-all group relative overflow-hidden block";
   const glow = "absolute top-0 right-0 w-20 h-20 rounded-full blur-xl group-hover:opacity-100 transition-all";
@@ -165,7 +183,7 @@ export default function CpStats() {
           {/* Platform Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Codeforces */}
-            <a href="https://codeforces.com/profile/MASUDUL2002" target="_blank" rel="noopener" className={`${card} hover:border-primary/60`}>
+            <a href={`https://codeforces.com/profile/${encodeURIComponent(cfUser)}`} target="_blank" rel="noopener" className={`${card} hover:border-primary/60`}>
               <div className={`${glow} bg-primary/5 group-hover:bg-primary/15`}></div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors overflow-hidden">
@@ -174,7 +192,7 @@ export default function CpStats() {
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-500 uppercase tracking-wider font-mono">Codeforces</p>
-                  <p className="text-xs text-gray-400">MASUDUL2002</p>
+                  <p className="text-xs text-gray-400">{cfUser}</p>
                 </div>
                 <i className="fas fa-external-link-alt text-gray-600 group-hover:text-primary transition-colors text-xs ml-auto"></i>
               </div>
@@ -192,7 +210,7 @@ export default function CpStats() {
             </a>
 
             {/* CodeChef */}
-            <a href="https://www.codechef.com/users/masudul2002" target="_blank" rel="noopener" className={`${card} hover:border-orange-500/60`}>
+            <a href={`https://www.codechef.com/users/${encodeURIComponent(ccUser)}`} target="_blank" rel="noopener" className={`${card} hover:border-orange-500/60`}>
               <div className={`${glow} bg-orange-500/5 group-hover:bg-orange-500/15`}></div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-lg bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors overflow-hidden">
@@ -201,7 +219,7 @@ export default function CpStats() {
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-500 uppercase tracking-wider font-mono">CodeChef</p>
-                  <p className="text-xs text-gray-400">masudul2002</p>
+                  <p className="text-xs text-gray-400">{ccUser}</p>
                 </div>
                 <i className="fas fa-external-link-alt text-gray-600 group-hover:text-orange-400 transition-colors text-xs ml-auto"></i>
               </div>
@@ -223,7 +241,7 @@ export default function CpStats() {
             </a>
 
             {/* AtCoder */}
-            <a href="https://atcoder.jp/users/masudul2002" target="_blank" rel="noopener" className={`${card} hover:border-gray-400/60`}>
+            <a href={`https://atcoder.jp/users/${encodeURIComponent(acUser)}`} target="_blank" rel="noopener" className={`${card} hover:border-gray-400/60`}>
               <div className={`${glow} bg-gray-500/5 group-hover:bg-gray-500/15`}></div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-lg bg-gray-500/10 flex items-center justify-center group-hover:bg-gray-500/20 transition-colors overflow-hidden">
@@ -232,7 +250,7 @@ export default function CpStats() {
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-500 uppercase tracking-wider font-mono">AtCoder</p>
-                  <p className="text-xs text-gray-400">masudul2002</p>
+                  <p className="text-xs text-gray-400">{acUser}</p>
                 </div>
                 <i className="fas fa-external-link-alt text-gray-600 group-hover:text-gray-300 transition-colors text-xs ml-auto"></i>
               </div>
@@ -254,7 +272,7 @@ export default function CpStats() {
             </a>
 
             {/* HackerRank */}
-            <a href="https://www.hackerrank.com/MASUDUL2002" target="_blank" rel="noopener" className={`${card} hover:border-green-500/60`}>
+            <a href={`https://www.hackerrank.com/${encodeURIComponent(hrUser)}`} target="_blank" rel="noopener" className={`${card} hover:border-green-500/60`}>
               <div className={`${glow} bg-green-500/5 group-hover:bg-green-500/15`}></div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-lg bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors overflow-hidden">
@@ -263,7 +281,7 @@ export default function CpStats() {
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-500 uppercase tracking-wider font-mono">HackerRank</p>
-                  <p className="text-xs text-gray-400">MASUDUL2002</p>
+                  <p className="text-xs text-gray-400">{hrUser}</p>
                 </div>
                 <i className="fas fa-external-link-alt text-gray-600 group-hover:text-green-400 transition-colors text-xs ml-auto"></i>
               </div>
@@ -283,7 +301,7 @@ export default function CpStats() {
             </a>
 
             {/* LeetCode */}
-            <a href="https://leetcode.com/u/masudul2002" target="_blank" rel="noopener" className={`${card} hover:border-yellow-500/60`}>
+            <a href={`https://leetcode.com/u/${encodeURIComponent(lcUser)}`} target="_blank" rel="noopener" className={`${card} hover:border-yellow-500/60`}>
               <div className={`${glow} bg-yellow-500/5 group-hover:bg-yellow-500/15`}></div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition-colors overflow-hidden">
@@ -292,7 +310,7 @@ export default function CpStats() {
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-500 uppercase tracking-wider font-mono">LeetCode</p>
-                  <p className="text-xs text-gray-400">masudul2002</p>
+                  <p className="text-xs text-gray-400">{lcUser}</p>
                 </div>
                 <i className="fas fa-external-link-alt text-gray-600 group-hover:text-yellow-400 transition-colors text-xs ml-auto"></i>
               </div>

@@ -13,6 +13,13 @@ const TECH_COLORS: Record<string, string> = {
   JavaScript: "bg-yellow-900/50 text-yellow-300 border-yellow-500/30",
   HTML: "bg-orange-900/50 text-orange-300 border-orange-500/30",
   CSS: "bg-blue-900/50 text-blue-300 border-blue-500/30",
+  "Next.js": "bg-neutral-800/70 text-neutral-200 border-neutral-600/40",
+  Flutter: "bg-cyan-950/60 text-cyan-300 border-cyan-500/40",
+  Dart: "bg-blue-950/60 text-blue-300 border-blue-500/40",
+  SQLite: "bg-teal-950/60 text-teal-300 border-teal-500/40",
+  "REST API": "bg-emerald-950/60 text-emerald-300 border-emerald-500/40",
+  Algorithms: "bg-amber-950/60 text-amber-300 border-amber-500/40",
+  Finance: "bg-violet-950/60 text-violet-300 border-violet-500/40",
 };
 
 function ComingSoonCard({ proj }: { proj: Project }) {

@@ -47,6 +47,22 @@ export default function CmsEditor({
       }
     }
 
+    // Special handling for profile CP handles
+    if (cms.key === "profile") {
+      payload.tagline = JSON.stringify({
+        cf: draft.cf_handle || "MASUDUL2002",
+        ac: draft.ac_handle || "masudul2002",
+        cc: draft.cc_handle || "masudul2002",
+        lc: draft.lc_handle || "masudul2002",
+        hr: draft.hr_handle || "MASUDUL2002",
+      });
+      delete payload.cf_handle;
+      delete payload.ac_handle;
+      delete payload.cc_handle;
+      delete payload.lc_handle;
+      delete payload.hr_handle;
+    }
+
     // New rows: auto-assign the next sort_order if not provided,
     // and fill required-ish defaults so inserts never fail.
     if (!editing) {
@@ -127,6 +143,25 @@ export default function CmsEditor({
       const v = row?.[f.name];
       d[f.name] = v === undefined || v === null ? "" : String(v);
     }
+    // If editing profile: parse CP handles from tagline JSON
+    if (cms.key === "profile") {
+      try {
+        const parsed = JSON.parse(String(row?.tagline || ""));
+        if (parsed && typeof parsed === "object") {
+          d.cf_handle = parsed.cf || "MASUDUL2002";
+          d.ac_handle = parsed.ac || "masudul2002";
+          d.cc_handle = parsed.cc || "masudul2002";
+          d.lc_handle = parsed.lc || "masudul2002";
+          d.hr_handle = parsed.hr || "MASUDUL2002";
+        }
+      } catch {
+        d.cf_handle = d.cf_handle || "MASUDUL2002";
+        d.ac_handle = d.ac_handle || "masudul2002";
+        d.cc_handle = d.cc_handle || "masudul2002";
+        d.lc_handle = d.lc_handle || "masudul2002";
+        d.hr_handle = d.hr_handle || "MASUDUL2002";
+      }
+    }
     setDraft(d);
   }
 
@@ -143,6 +178,7 @@ export default function CmsEditor({
           </h2>
           <div className="grid md:grid-cols-2 gap-4">
             {cms.fields.map((f) => {
+              if (cms.key === "profile" && f.name === "tagline") return null;
               const val = draft[f.name] ?? "";
               if (f.type === "checkbox") {
                 return (
@@ -187,6 +223,7 @@ export default function CmsEditor({
                   </div>
                 );
               }
+              const isImage = f.name.includes("image") || f.name.includes("logo");
               return (
                 <div key={f.name} className="space-y-1">
                   <label className="text-xs font-bold text-gray-400 uppercase">{f.label}</label>
@@ -195,7 +232,20 @@ export default function CmsEditor({
                     value={val}
                     onChange={(e) => setDraft({ ...draft, [f.name]: e.target.value })}
                     className={`${inputCls} ${f.type === "json" ? "font-mono text-xs" : ""}`}
+                    placeholder={isImage ? "/images/... or https://..." : ""}
                   />
+                  {isImage && val && (
+                    <div className="mt-2 flex items-center gap-3 p-2 bg-black/40 rounded-lg border border-white/10">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={val}
+                        alt="Preview"
+                        className="w-10 h-10 object-contain rounded bg-white/5 border border-white/10"
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                      />
+                      <span className="text-[11px] text-gray-400 truncate font-mono">{val}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}

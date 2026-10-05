@@ -49,6 +49,24 @@ export async function getProfileData(): Promise<ProfileData> {
         }
       | null;
 
+    let cpHandles = fallback.personal.cpHandles;
+    if (personal?.tagline) {
+      try {
+        const parsed = JSON.parse(personal.tagline);
+        if (parsed && typeof parsed === "object") {
+          cpHandles = {
+            codeforces: parsed.cf || fallback.personal.cpHandles?.codeforces || "MASUDUL2002",
+            atcoder: parsed.ac || fallback.personal.cpHandles?.atcoder || "masudul2002",
+            codechef: parsed.cc || fallback.personal.cpHandles?.codechef || "masudul2002",
+            leetcode: parsed.lc || fallback.personal.cpHandles?.leetcode || "masudul2002",
+            hackerrank: parsed.hr || fallback.personal.cpHandles?.hackerrank || "MASUDUL2002",
+          };
+        }
+      } catch {
+        // Plain text tagline or fallback
+      }
+    }
+
     return {
       personal: {
         name: personal?.name ?? fallback.personal.name,
@@ -65,6 +83,7 @@ export async function getProfileData(): Promise<ProfileData> {
         summary: personal?.summary ?? fallback.personal.summary,
         profileImage: personal?.profile_image ?? fallback.personal.profileImage,
         whatsappNumber: personal?.whatsapp_number ?? fallback.personal.whatsappNumber,
+        cpHandles,
       },
       organizationalRoles: (orgRes.data as { role: string }[])?.length
         ? (orgRes.data as { role: string }[]).map((r) => r.role)

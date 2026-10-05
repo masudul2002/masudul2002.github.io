@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/admin/LogoutButton";
+import ChangePasswordModal from "@/components/admin/ChangePasswordModal";
 
 export const metadata = {
   robots: { index: false, follow: false },
@@ -41,6 +42,7 @@ export default async function AdminLayout({
                 <span className="text-gray-200">{user.email}</span>
               </span>
             )}
+            <ChangePasswordModal />
             <LogoutButton />
           </div>
         </div>

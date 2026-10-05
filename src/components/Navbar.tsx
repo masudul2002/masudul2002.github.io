@@ -68,7 +68,13 @@ export function Navbar() {
       className={`fixed w-full z-50 ${scrolled ? "scrolled" : ""}`}
     >
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold font-mono text-white flex items-center gap-2 group">
+        <Link href="/" className="text-2xl font-bold font-mono text-white flex items-center gap-2.5 group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/icon-192.png"
+            alt="MH Logo"
+            className="w-9 h-9 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(0,242,255,0.5)]"
+          />
           <span className="text-primary group-hover:drop-shadow-[0_0_8px_rgba(0,242,255,0.8)] transition-all">
             &lt;MH /&gt;
           </span>

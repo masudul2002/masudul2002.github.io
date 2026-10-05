@@ -30,6 +30,12 @@ export default async function AdminLayout({
         style={{ background: "rgba(5,5,5,0.9)", backdropFilter: "blur(12px)" }}>
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/icon-192.png"
+              alt="MH"
+              className="w-7 h-7 object-contain drop-shadow-[0_0_6px_rgba(0,242,255,0.4)]"
+            />
             <span className="text-primary font-mono font-bold text-lg">&lt;MH /&gt;</span>
             <span className="text-xs text-gray-500 uppercase tracking-wider border-l border-white/10 pl-3">
               Admin Panel

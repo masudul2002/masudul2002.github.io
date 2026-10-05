@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -18,11 +18,70 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#00f2ff",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "MD. MASUDUL HASAN | Software Engineer",
+  metadataBase: new URL("https://www.masudulhasan.me"),
+  title: {
+    default: "MD. MASUDUL HASAN | Software Engineer",
+    template: "%s | MD. MASUDUL HASAN",
+  },
   description:
     "Software Engineer | FinTech Enthusiast. Portfolio of MD. MASUDUL HASAN — competitive programmer, campus leader, full-stack developer.",
-  icons: { icon: "/favicon.ico" },
+  keywords: [
+    "MD. Masudul Hasan",
+    "Masudul Hasan",
+    "Software Engineer",
+    "FinTech",
+    "Competitive Programmer",
+    "Full-Stack Developer",
+    "Portfolio",
+  ],
+  authors: [{ name: "MD. MASUDUL HASAN", url: "https://www.masudulhasan.me" }],
+  creator: "MD. MASUDUL HASAN",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/site.webmanifest",
+  openGraph: {
+    title: "MD. MASUDUL HASAN | Software Engineer",
+    description:
+      "Software Engineer | FinTech Enthusiast. Portfolio of MD. MASUDUL HASAN — competitive programmer, campus leader, full-stack developer.",
+    url: "https://www.masudulhasan.me",
+    siteName: "MD. MASUDUL HASAN Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MD. MASUDUL HASAN Logo & Branding",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MD. MASUDUL HASAN | Software Engineer",
+    description:
+      "Software Engineer | FinTech Enthusiast. Portfolio of MD. MASUDUL HASAN",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({

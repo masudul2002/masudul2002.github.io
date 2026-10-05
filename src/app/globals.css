@@ -21,60 +21,115 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Light mode — same token swap as the legacy site, driven by html.light */
+/* ===== LIGHT MODE: Soft / Low-Light Blue Theme ===== */
 html.light {
-  --color-bg: #f8fafc;
-  --color-text: #1e293b;
-  --color-glass-bg: rgba(0, 0, 0, 0.03);
-  --color-glass-border: rgba(0, 0, 0, 0.08);
+  --color-bg: #edf3fa;
+  --color-primary: #0284c7;
+  --color-secondary: #4338ca;
+  --color-text: #0f172a;
+  --color-glass-bg: rgba(255, 255, 255, 0.72);
+  --color-glass-border: rgba(186, 212, 240, 0.55);
 }
 
 html.light body {
-  background: #f8fafc;
-  color: #1e293b;
+  background-color: #edf3fa;
+  background-image: 
+    radial-gradient(at 12% 15%, rgba(186, 215, 247, 0.60) 0px, transparent 50%),
+    radial-gradient(at 88% 22%, rgba(199, 222, 250, 0.50) 0px, transparent 48%),
+    radial-gradient(at 50% 75%, rgba(180, 212, 246, 0.45) 0px, transparent 58%),
+    linear-gradient(180deg, #e4effb 0%, #edf3fa 35%, #e6f0f9 100%);
+  background-attachment: fixed;
+  color: #0f172a;
 }
 
 html.light .glass-card {
-  background: rgba(0, 0, 0, 0.02);
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-color: rgba(186, 212, 240, 0.60) !important;
+  box-shadow: 0 4px 20px -2px rgba(148, 175, 205, 0.16), 0 2px 6px -1px rgba(186, 212, 240, 0.15) !important;
 }
 
 html.light .vibe-card {
-  --card-glow: rgba(0, 242, 255, 0.10);
+  --card-glow: rgba(2, 132, 199, 0.15);
 }
 
-/* ===== LIGHT MODE: full color harmony — no invisible text ===== */
-html.light .text-white { color: #111827 !important; }
-html.light .text-gray-100, html.light .text-gray-200, html.light .text-gray-300 { color: #374151 !important; }
-html.light .text-gray-400, html.light .text-gray-500 { color: #6b7280 !important; }
-html.light .text-gray-600, html.light .text-gray-700 { color: #4b5563 !important; }
-html.light .text-primary { color: #0891b2 !important; }
-html.light .text-secondary { color: #4d4dff !important; }
-html.light .bg-black\/30, html.light .bg-black\/20 { background: #eef2f7 !important; }
-html.light .bg-black\/80 { background: rgba(255,255,255,0.9) !important; }
-html.light .bg-black\/50 { background: rgba(255,255,255,0.8) !important; }
-html.light .bg-black\/95, html.light .bg-black\/97 { background: #f8fafc !important; }
-html.light .bg-\[#0f1523\] { background: #eef2f7 !important; }
-html.light .bg-\[#1a233a\] { background: #e2e8f0 !important; }
-html.light .bg-black\/30 { background: #eef2f7 !important; }
-html.light .border-white\/10, html.light .border-glass-border { border-color: rgba(0,0,0,0.12) !important; }
-html.light .bg-white\/5 { background: rgba(0,0,0,0.05) !important; }
+/* Light Mode Typography & Color Harmony */
+html.light .text-white { color: #0f172a !important; }
+html.light .text-gray-100, 
+html.light .text-gray-200, 
+html.light .text-gray-300 { color: #1e293b !important; }
+html.light .text-gray-400, 
+html.light .text-gray-500 { color: #475569 !important; }
+html.light .text-gray-600, 
+html.light .text-gray-700 { color: #334155 !important; }
+html.light .text-primary { color: #0284c7 !important; }
+html.light .text-secondary { color: #4338ca !important; }
 
-/* Light mode — Contact Info panel (from-gray-900 to-black gradient) */
-html.light .from-gray-900 { --tw-gradient-from: #eef2f7 !important; }
-html.light .to-black { --tw-gradient-to: #cfd8dc !important; }
+/* Hero Text Gradient Overrides for Light Mode */
+html.light .from-white { --tw-gradient-from: #0f172a !important; }
+html.light .via-gray-200 { --tw-gradient-via: #1e293b !important; }
+html.light .to-gray-400 { --tw-gradient-to: #334155 !important; }
+
+/* Light Mode Section Backgrounds (Gentle Low-Light Cool Blue Alternation) */
+html.light .bg-black\/20,
+html.light .bg-black\/30 { 
+  background: rgba(222, 235, 249, 0.60) !important; 
+}
+html.light .bg-black\/40 { 
+  background: rgba(212, 228, 246, 0.70) !important; 
+}
+html.light .bg-black\/50 { 
+  background: rgba(230, 240, 251, 0.82) !important; 
+}
+html.light .bg-black\/80 { 
+  background: rgba(238, 245, 252, 0.94) !important; 
+}
+html.light .bg-black\/95, 
+html.light .bg-black\/97 { 
+  background: #eaf1f8 !important; 
+}
+html.light .bg-\[\#0f1523\] { 
+  background: rgba(232, 242, 252, 0.88) !important; 
+}
+html.light .bg-\[\#1a233a\] { 
+  background: rgba(216, 232, 248, 0.80) !important; 
+}
+
+/* Light Mode Borders & Soft Dividers */
+html.light .border-white\/5,
+html.light .border-white\/10, 
+html.light .border-glass-border { 
+  border-color: rgba(186, 212, 240, 0.55) !important; 
+}
+html.light .bg-white\/5 { 
+  background: rgba(255, 255, 255, 0.60) !important; 
+}
+
+/* Light mode — Contact Info panel */
+html.light .from-gray-900 { --tw-gradient-from: #dceaf8 !important; }
+html.light .to-black { --tw-gradient-to: #c8def8 !important; }
+
+/* Light mode input elements */
+html.light input,
+html.light textarea {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  color: #0f172a !important;
+  border-color: rgba(186, 212, 240, 0.80) !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #64748b !important;
+}
 
 /* Light mode — Projects image slot */
-html.light .bg-gray-800 { background: #e2e8f0 !important; }
-html.light .bg-gray-900 { background: #e5e7eb !important; }
-html.light .bg-gray-700 { background: #d1d5db !important; }
-html.light .text-gray-600 { color: #4b5563 !important; }
+html.light .bg-gray-800 { background: #dceaf8 !important; }
+html.light .bg-gray-900 { background: #d3e4f7 !important; }
+html.light .bg-gray-700 { background: #c5dbf5 !important; }
+html.light .text-gray-600 { color: #334155 !important; }
 html.light .text-emerald-300 { color: #059669 !important; }
-html.light .bg-emerald-900\/50 { background: rgba(209,250,229,0.6) !important; }
-html.light .border-emerald-500\/30 { border-color: rgba(5,150,105,0.4) !important; }
-
-/* Light mode — all section backgrounds that were dark-tinted */
-html.light .bg-black\/30, html.light .bg-black\/20 { background: #eef2f7 !important; }
-html.light .bg-black\/40 { background: #e8edf3 !important; }
+html.light .bg-emerald-900\/50 { background: rgba(209, 250, 229, 0.7) !important; }
+html.light .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.4) !important; }
 
 /* ===== Navbar — glass transparency, theme-adaptive ===== */
 #navbar {
@@ -89,18 +144,18 @@ html.light .bg-black\/40 { background: #e8edf3 !important; }
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 html.light #navbar {
-  background: rgba(255, 255, 255, 0.75);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(234, 242, 250, 0.82) !important;
+  border-bottom: 1px solid rgba(186, 212, 240, 0.55) !important;
 }
 html.light #navbar.scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+  background: rgba(234, 242, 250, 0.95) !important;
+  box-shadow: 0 4px 20px rgba(148, 175, 205, 0.15) !important;
 }
 html.light #navbar a {
-  color: #374151;
+  color: #1e293b;
 }
 html.light #navbar a:hover {
-  color: #000;
+  color: #0284c7;
 }
 
 /* ===== Footer — glass transparency, theme-adaptive ===== */
@@ -111,26 +166,26 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 html.light footer {
-  background: rgba(255, 255, 255, 0.80);
-  border-top: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(226, 237, 248, 0.90) !important;
+  border-top: 1px solid rgba(186, 212, 240, 0.55) !important;
 }
 html.light footer p {
-  color: #6b7280;
+  color: #475569;
 }
 
 /* Light mode heading/link fixes */
 html.light h1, html.light h2, html.light h3, html.light h4 {
-  color: #111827;
+  color: #0f172a !important;
 }
 html.light .text-gray-300, html.light .text-gray-400 {
-  color: #4b5563;
+  color: #334155;
 }
 html.light .glass-card p, html.light .glass-card li {
-  color: #4b5563;
+  color: #334155;
 }
 html.light #navbar .text-primary,
 html.light footer .text-primary {
-  color: #00b8c9;
+  color: #0284c7;
 }
 
 /* ===== Glassmorphism Utilities (from legacy style.css) ===== */
@@ -167,6 +222,10 @@ html.light footer .text-primary {
 ::-webkit-scrollbar-track { background: #050505; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #00f2ff; }
+
+html.light ::-webkit-scrollbar-track { background: #edf3fa; }
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #0284c7; }
 
 /* ===== Coming Soon card animations (from legacy) ===== */
 .cs-pulse { position: absolute; border-radius: 50%; animation: csPulseRing 2.5s ease-out infinite; pointer-events: none; }

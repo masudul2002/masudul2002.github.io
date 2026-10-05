@@ -72,16 +72,16 @@ function domainOf(url: string) {
 
 export default function Experience({ experience }: { experience: ExperienceItem[] }) {
   return (
-    <section id="experience" className="py-24 bg-black/20">
+    <section id="experience" className="py-20 bg-black/20">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center mb-12">
+        <div className="flex flex-col items-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
             <i className="fas fa-briefcase text-primary"></i> Experience
           </h2>
           <div className="h-1 w-20 bg-primary rounded-full"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
           {experience.map((exp) => {
             const b = BRAND[exp.brandColor] ?? BRAND.cyan;
             return (
@@ -90,57 +90,77 @@ export default function Experience({ experience }: { experience: ExperienceItem[
                 href={exp.link !== "#" ? exp.link : "#experience"}
                 target={exp.link !== "#" ? "_blank" : undefined}
                 rel={exp.link !== "#" ? "noopener" : undefined}
-                className={`glass-card vibe-card p-6 rounded-xl border border-glass-border ${b.hoverBorder} transition-all duration-300 group relative overflow-hidden block hover:-translate-y-1`}
+                className={`glass-card vibe-card p-4 rounded-xl border border-glass-border ${b.hoverBorder} transition-all duration-300 group relative overflow-hidden flex flex-col hover:-translate-y-1 shadow-sm`}
               >
-                <div className={`absolute top-0 right-0 w-32 h-32 ${b.glow1} rounded-full blur-2xl transition-all duration-500`}></div>
-                <div className={`absolute bottom-0 left-0 w-20 h-20 ${b.glow2} rounded-full blur-xl transition-all duration-500`}></div>
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div
-                      className={`w-11 h-11 rounded-xl bg-${b.color}/10 flex items-center justify-center group-hover:bg-${b.color}/25 transition-colors duration-300 overflow-hidden flex-shrink-0 border border-${b.color}/20 group-hover:border-${b.color}/50`}
-                    >
-                      {exp.logo ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={exp.logo}
-                          alt={`${exp.org} Logo`}
-                          className="w-8 h-8 object-contain vibe-icon"
-                          onError={(e) => {
-                            const el = e.currentTarget;
-                            el.style.display = "none";
-                            const parent = el.parentElement;
-                            if (parent) {
-                              const ic = document.createElement("i");
-                              ic.className = `${exp.fallbackIcon} text-lg vibe-icon text-${b.color}`;
-                              parent.appendChild(ic);
-                            }
-                          }}
-                        />
-                      ) : (
-                        <i className={`${exp.fallbackIcon} text-lg vibe-icon text-${b.color}`}></i>
-                      )}
-                    </div>
-                    <div className="flex-1">
+                {/* Compact ambient glow */}
+                <div className={`absolute top-0 right-0 w-20 h-20 ${b.glow1} rounded-full blur-xl transition-all duration-500 pointer-events-none`}></div>
+                <div className={`absolute bottom-0 left-0 w-14 h-14 ${b.glow2} rounded-full blur-lg transition-all duration-500 pointer-events-none`}></div>
+
+                <div className="relative z-10 flex flex-col flex-1">
+                  {/* Top Bar: Clean Logo + Status Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div
+                        className="w-9 h-9 rounded-lg bg-white shadow-xs ring-1 ring-black/5 dark:ring-white/10 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300 overflow-hidden flex-shrink-0"
+                      >
+                        {exp.logo ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={exp.logo}
+                            alt={`${exp.org} Logo`}
+                            className="w-6 h-6 object-contain vibe-icon"
+                            onError={(e) => {
+                              const el = e.currentTarget;
+                              el.style.display = "none";
+                              const parent = el.parentElement;
+                              if (parent) {
+                                const ic = document.createElement("i");
+                                ic.className = `${exp.fallbackIcon} text-sm vibe-icon text-${b.color}`;
+                                parent.appendChild(ic);
+                              }
+                            }}
+                          />
+                        ) : (
+                          <i className={`${exp.fallbackIcon} text-sm vibe-icon text-${b.color}`}></i>
+                        )}
+                      </div>
                       <span
-                        className={`bg-${b.color}/15 text-${b.color} text-xs font-bold px-3 py-1 rounded-full inline-block border border-${b.color}/20`}
+                        className={`bg-${b.color}/15 text-${b.color} text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-block border border-${b.color}/25 truncate`}
                       >
                         {exp.status}
                       </span>
                     </div>
+
                     {exp.link !== "#" && (
-                      <i className={`fas fa-external-link-alt text-gray-600 group-hover:text-${b.color} transition-colors text-xs`}></i>
+                      <i className={`fas fa-external-link-alt text-gray-500 group-hover:text-${b.color} transition-colors text-[10px] shrink-0`}></i>
                     )}
                   </div>
-                  <h4 className={`text-xl font-bold mb-1 group-hover:text-${b.light} transition-colors duration-300`}>
+
+                  {/* Role & Org */}
+                  <h4 className={`text-sm sm:text-base font-bold mb-0.5 group-hover:text-${b.light} transition-colors duration-300 truncate`}>
                     {exp.role}
                   </h4>
-                  <p className={`text-${b.color}/90 text-sm font-semibold mb-3`}>{exp.org}</p>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <p className={`text-${b.color}/90 text-xs font-semibold truncate`}>{exp.org}</p>
+                    {exp.period && (
+                      <span className="text-[10px] font-mono text-gray-500 shrink-0">{exp.period.split(" (")[0]}</span>
+                    )}
+                  </div>
+
+                  {/* Description - 2 lines compact */}
+                  <p className="text-gray-400 text-xs leading-relaxed line-clamp-2 mb-2.5">
                     {exp.bullets[0]}
                   </p>
-                  {exp.link !== "#" && (
-                    <div className={`mt-3 flex items-center gap-1 text-xs font-mono ${b.link} transition-colors`}>
-                      <i className="fas fa-link text-[10px]"></i> {domainOf(exp.link) || exp.org}
+
+                  {/* Compact Domain / Link Tag */}
+                  {exp.link !== "#" ? (
+                    <div className={`mt-auto pt-2 border-t border-glass-border/40 flex items-center gap-1 text-[10px] font-mono ${b.link} transition-colors truncate`}>
+                      <i className="fas fa-link text-[9px]"></i>
+                      <span className="truncate">{domainOf(exp.link) || exp.org}</span>
+                    </div>
+                  ) : (
+                    <div className="mt-auto pt-2 border-t border-glass-border/40 text-[10px] font-mono text-gray-500">
+                      <span>{exp.period}</span>
                     </div>
                   )}
                 </div>

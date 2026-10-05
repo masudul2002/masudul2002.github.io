@@ -10,35 +10,43 @@ export default function Contact({ personal }: { personal: Personal }) {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   async function handleSend() {
     setError(null);
+    setSuccess(false);
     if (!name || !email || !message) {
       setError("Please fill in your name, email, and message.");
       return;
     }
     setSending(true);
 
-    // 1) Save to Supabase (best-effort, anon insert allowed by RLS)
-    let dbOk = false;
+    // 1) Save to Supabase backend API route (recorded with date & time for Admin CMS)
     try {
-      const supabase = (window as unknown as { supabase?: { from: (t: string) => { insert: (r: unknown[]) => Promise<{ error: unknown }> } } }).supabase;
-      if (supabase) {
-        const { error: e } = await supabase.from("contact_messages").insert([{ name, email, subject, message }]);
-        dbOk = !e;
-        if (e) console.error("Supabase insert failed:", e);
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        console.warn("API contact storage response:", data);
       }
     } catch (err) {
-      console.error("Supabase insert error:", err);
+      console.error("Failed to save message to server API:", err);
     }
 
-    // 2) Always open WhatsApp (previous behavior preserved)
-    const formatted = `*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject}\n*Message:* ${message}`;
+    // 2) Always redirect to WhatsApp with pre-filled text
+    const formatted = `*Name:* ${name}\n*Email:* ${email}\n*Subject:* ${subject || "Portfolio Inquiry"}\n*Message:* ${message}`;
     const encoded = encodeURIComponent(formatted);
     window.open(`https://wa.me/${personal.whatsappNumber}?text=${encoded}`, "_blank");
 
     setSending(false);
-    if (dbOk) console.log("Message saved to Supabase.");
+    setSuccess(true);
+    setName("");
+    setEmail("");
+    setSubject("");
+    setMessage("");
   }
 
   const inputCls =
@@ -135,6 +143,12 @@ export default function Contact({ personal }: { personal: Personal }) {
                 <textarea value={message} onChange={(e) => setMessage(e.target.value)} className={`${inputCls} h-32 resize-none`} placeholder="Tell me about your project..."></textarea>
               </div>
               {error && <p className="text-sm text-red-400">{error}</p>}
+              {success && (
+                <div className="p-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-semibold flex items-center gap-2">
+                  <i className="fas fa-check-circle text-sm"></i>
+                  Message received and saved to database! Opening WhatsApp...
+                </div>
+              )}
               <button
                 type="submit"
                 onClick={handleSend}

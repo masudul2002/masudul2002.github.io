@@ -73,12 +73,20 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <a
+                  href={`mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject || "Your Message on portfolio")}&body=Hi ${encodeURIComponent(m.name)},%0D%0A%0D%0AThank you for reaching out.%0D%0A%0D%0ABest regards,%0D%0AMD. Masudul Hasan`}
+                  className="bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-black text-xs font-semibold py-1.5 px-3 rounded-lg transition-all inline-flex items-center gap-1.5"
+                  title={`Send an email directly to ${m.email}`}
+                >
+                  <i className="fas fa-reply text-xs"></i>
+                  Reply by Email
+                </a>
                 <button
                   onClick={() => toggleRead(m.id, m.is_read)}
                   className="bg-white/5 border border-white/10 text-gray-300 text-xs font-semibold py-1.5 px-3 rounded-lg hover:bg-white/10 transition-colors"
                 >
-                  {m.is_read ? "Unread" : "Mark read"}
+                  {m.is_read ? "Mark Unread" : "Mark Read"}
                 </button>
                 <button
                   onClick={() => remove(m.id)}
@@ -88,9 +96,16 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                 </button>
               </div>
             </div>
-            <div className="space-y-2">
-              {m.subject && <div className="text-sm font-semibold text-primary">{m.subject}</div>}
-              <p className="text-sm text-gray-300 whitespace-pre-wrap">{m.message}</p>
+            <div className="space-y-2 pt-2 border-t border-glass-border/40">
+              {m.subject && (
+                <div className="text-sm font-semibold text-primary flex items-center gap-1.5">
+                  <i className="fas fa-tag text-xs text-primary/70"></i>
+                  <span>Subject: {m.subject}</span>
+                </div>
+              )}
+              <div className="p-3.5 rounded-lg bg-black/10 dark:bg-white/[0.02] border border-glass-border/30">
+                <p className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">{m.message}</p>
+              </div>
             </div>
           </div>
         );

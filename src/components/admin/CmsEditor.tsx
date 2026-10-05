@@ -11,6 +11,44 @@ interface Row {
   [key: string]: unknown;
 }
 
+function detectSkillFromUrl(url: string): { name?: string; fallbackIcon?: string; color?: string } {
+  const u = url.toLowerCase();
+  if (u.includes("cplusplus") || u.includes("c++") || u.includes("cpp")) return { name: "C++", fallbackIcon: "fab fa-cuttlefish", color: "text-blue-500" };
+  if (u.includes("python")) return { name: "Python", fallbackIcon: "fab fa-python", color: "text-yellow-300" };
+  if (u.includes("javascript") || u.includes("/js") || u.includes("js.")) return { name: "JavaScript", fallbackIcon: "fab fa-js", color: "text-yellow-400" };
+  if (u.includes("typescript") || u.includes("/ts") || u.includes("ts.")) return { name: "TypeScript", fallbackIcon: "fab fa-js", color: "text-blue-400" };
+  if (u.includes("react")) return { name: "React", fallbackIcon: "fab fa-react", color: "text-cyan-400" };
+  if (u.includes("nextjs") || u.includes("next-js") || u.includes("next.js")) return { name: "Next.js", fallbackIcon: "fas fa-code", color: "text-white" };
+  if (u.includes("tailwind")) return { name: "Tailwind CSS", fallbackIcon: "fab fa-css3-alt", color: "text-cyan-400" };
+  if (u.includes("html")) return { name: "HTML5", fallbackIcon: "fab fa-html5", color: "text-orange-500" };
+  if (u.includes("css")) return { name: "CSS3", fallbackIcon: "fab fa-css3-alt", color: "text-blue-500" };
+  if (u.includes("github")) return { name: "GitHub", fallbackIcon: "fab fa-github", color: "text-white" };
+  if (u.includes("git")) return { name: "Git", fallbackIcon: "fab fa-git-alt", color: "text-red-500" };
+  if (u.includes("node")) return { name: "Node.js", fallbackIcon: "fab fa-node-js", color: "text-green-500" };
+  if (u.includes("docker")) return { name: "Docker", fallbackIcon: "fab fa-docker", color: "text-blue-400" };
+  if (u.includes("postgres")) return { name: "PostgreSQL", fallbackIcon: "fas fa-database", color: "text-blue-400" };
+  if (u.includes("mysql")) return { name: "MySQL", fallbackIcon: "fas fa-database", color: "text-blue-500" };
+  if (u.includes("sql")) return { name: "SQL", fallbackIcon: "fas fa-database", color: "text-cyan-500" };
+  if (u.includes("firebase")) return { name: "Firebase", fallbackIcon: "fas fa-fire", color: "text-orange-400" };
+  if (u.includes("supabase")) return { name: "Supabase", fallbackIcon: "fas fa-bolt", color: "text-emerald-400" };
+  if (u.includes("kotlin")) return { name: "Kotlin", fallbackIcon: "fab fa-android", color: "text-purple-400" };
+  if (u.includes("android")) return { name: "Android", fallbackIcon: "fab fa-android", color: "text-green-500" };
+  if (u.includes("java")) return { name: "Java", fallbackIcon: "fab fa-java", color: "text-red-500" };
+  if (u.includes("flutter")) return { name: "Flutter", fallbackIcon: "fas fa-mobile-alt", color: "text-blue-400" };
+  if (u.includes("dart")) return { name: "Dart", fallbackIcon: "fas fa-code", color: "text-cyan-400" };
+  if (u.includes("linux")) return { name: "Linux", fallbackIcon: "fab fa-linux", color: "text-yellow-400" };
+  if (u.includes("mongo")) return { name: "MongoDB", fallbackIcon: "fas fa-database", color: "text-green-500" };
+
+  try {
+    const parts = new URL(url).pathname.split("/").filter(Boolean);
+    const last = parts[parts.length - 1]?.replace(/[-_](original|plain|wordmark|logo)?\.(svg|png|jpg|webp)$/i, "");
+    if (last && last.length > 1) {
+      return { name: last.charAt(0).toUpperCase() + last.slice(1), fallbackIcon: "fas fa-code", color: "text-primary" };
+    }
+  } catch {}
+  return {};
+}
+
 export default function CmsEditor({
   cms,
   rows,
@@ -217,10 +255,24 @@ export default function CmsEditor({
       {(editing || isCreating) && (
         <div className="rounded-xl bg-glass-bg border border-primary/50 p-6 mb-8 shadow-xl">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-glass-border">
-            <h2 className="font-bold text-lg text-text flex items-center gap-2">
-              <i className={`fas ${isCreating ? "fa-plus-circle text-emerald-400" : "fa-edit text-primary"}`}></i>
-              {isCreating ? `Add New ${cms.singular}` : `Edit ${cms.singular}`}
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="font-bold text-lg text-text flex items-center gap-2">
+                <i className={`fas ${isCreating ? "fa-plus-circle text-emerald-400" : "fa-edit text-primary"}`}></i>
+                {isCreating ? `Add New ${cms.singular}` : `Edit ${cms.singular}`}
+              </h2>
+              {cms.key === "skills" && (
+                <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/25 text-xs font-semibold text-text">
+                  <span className="text-[10px] uppercase font-mono text-primary font-bold">Preview:</span>
+                  {draft.icon && (draft.icon.startsWith("http") || draft.icon.startsWith("/")) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={draft.icon} alt="" className="w-5 h-5 object-contain" onError={(e) => (e.currentTarget.style.display = "none")} />
+                  ) : (
+                    <i className={`${draft.icon || "fas fa-code"} ${draft.icon_color || "text-primary"} text-sm`}></i>
+                  )}
+                  <span>{draft.name || "Skill Name"}</span>
+                </div>
+              )}
+            </div>
             <button
               onClick={cancelForm}
               className="text-text-muted hover:text-text transition-colors p-1"
@@ -276,39 +328,86 @@ export default function CmsEditor({
                   </div>
                 );
               }
-              const isImage = f.name.includes("image") || f.name.includes("logo");
+              const isSkillIcon = cms.key === "skills" && f.name === "icon";
+              const isImage = f.name.includes("image") || f.name.includes("logo") || (isSkillIcon && (val.startsWith("http") || val.startsWith("/")));
               const isJsonArray = f.type === "json";
               return (
                 <div key={f.name} className="space-y-1">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-text-muted uppercase tracking-wider">{f.label}</label>
+                    <label className="text-xs font-bold text-text-muted uppercase tracking-wider">
+                      {isSkillIcon ? "Icon (Image/SVG URL or FA class)" : f.label}
+                    </label>
                     {isJsonArray && (
                       <span className="text-[10px] text-text-muted">Comma-separated or JSON</span>
+                    )}
+                    {isSkillIcon && (
+                      <span className="text-[10px] text-primary font-mono">Paste URL or FA class</span>
                     )}
                   </div>
                   <input
                     type="text"
                     value={val}
-                    onChange={(e) => setDraft({ ...draft, [f.name]: e.target.value })}
+                    onChange={(e) => {
+                      const newVal = e.target.value;
+                      if (isSkillIcon && (newVal.startsWith("http") || newVal.startsWith("/"))) {
+                        const detected = detectSkillFromUrl(newVal);
+                        const nextDraft = { ...draft, [f.name]: newVal };
+                        if (detected.name && (!draft.name || draft.name.trim() === "" || draft.name === "New Skill")) {
+                          nextDraft.name = detected.name;
+                        }
+                        if (detected.color && (!draft.icon_color || draft.icon_color.trim() === "")) {
+                          nextDraft.icon_color = detected.color;
+                        }
+                        setDraft(nextDraft);
+                      } else {
+                        setDraft({ ...draft, [f.name]: newVal });
+                      }
+                    }}
                     className={`${inputCls} ${isJsonArray ? "text-xs" : ""}`}
                     placeholder={
-                      isImage
+                      isSkillIcon
+                        ? "e.g. https://.../python.svg or fab fa-python"
+                        : isImage
                         ? "/images/... or https://..."
                         : isJsonArray
                         ? "e.g. React, TypeScript, Tailwind"
                         : ""
                     }
                   />
+
+                  {/* Image Preview for image/logo fields or URL icons */}
                   {isImage && val && (
-                    <div className="mt-2 flex items-center gap-3 p-2 bg-black/5 dark:bg-black/40 rounded-lg border border-glass-border">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={val}
-                        alt="Preview"
-                        className="w-10 h-10 object-contain rounded bg-white/5 border border-glass-border"
-                        onError={(e) => (e.currentTarget.style.display = "none")}
-                      />
-                      <span className="text-[11px] text-text-muted truncate font-mono">{val}</span>
+                    <div className="mt-2 flex items-center gap-3 p-2.5 bg-black/5 dark:bg-black/40 rounded-lg border border-glass-border">
+                      <div className="w-10 h-10 rounded-lg bg-white p-1 flex items-center justify-center shadow-xs border border-glass-border flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={val}
+                          alt="Preview"
+                          className="max-h-full max-w-full object-contain"
+                          onError={(e) => (e.currentTarget.style.display = "none")}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-semibold text-emerald-500 flex items-center gap-1">
+                          <i className="fas fa-check-circle text-[10px]"></i> Image Icon Active
+                        </div>
+                        <div className="text-[11px] text-text-muted truncate font-mono">{val}</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* FontAwesome Preview for Skill Icon */}
+                  {isSkillIcon && val && !val.startsWith("http") && !val.startsWith("/") && (
+                    <div className="mt-2 flex items-center gap-3 p-2.5 bg-black/5 dark:bg-black/40 rounded-lg border border-glass-border">
+                      <div className="w-10 h-10 rounded-lg bg-black/5 dark:bg-white/5 flex items-center justify-center border border-glass-border flex-shrink-0">
+                        <i className={`${val} ${draft.icon_color || "text-primary"} text-2xl`}></i>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs font-semibold text-primary flex items-center gap-1">
+                          <i className="fas fa-icons text-[10px]"></i> FontAwesome Icon Preview
+                        </div>
+                        <div className="text-[11px] text-text-muted truncate font-mono">{val}</div>
+                      </div>
                     </div>
                   )}
                 </div>

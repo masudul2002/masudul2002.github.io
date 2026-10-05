@@ -5,7 +5,7 @@
 
 -- Profile (single row)
 INSERT INTO public.profile (id, name, title, tagline, location, email, alt_email, phone, linkedin, linkedin_url, github, github_url, summary, profile_image, whatsapp_number, sort_order) VALUES
-(gen_random_uuid(), 'MD. MASUDUL HASAN', 'Software Engineer | FinTech Enthusiast', 'Software Engineer', 'Sunamganj, Sylhet, Bangladesh', '23240442@sstu.ac.bd', 'masudul.2002@gmail.com', '+880 1572 902196', 'linkedin.com/in/masudul2002', 'https://www.linkedin.com/in/masudul2002', 'github.com/masudul2002', 'https://github.com/masudul2002', 'An ambitious dreamer and well-rounded leader seeking knowledge across disciplines. Passionate about building secure, scalable financial technology solutions.', '/images/MASUDUL-HASAN.png', '8801572902196', 0)
+(gen_random_uuid(), 'MD. MASUDUL HASAN', 'Software Engineer | FinTech Enthusiast', 'Software Engineer', 'Sunamganj, Sylhet, Bangladesh', 'info@masudulhasan.me', 'admin@masudulhasan.me', '+880 1572 902196', 'linkedin.com/in/masudul2002', 'https://www.linkedin.com/in/masudul2002', 'github.com/masudul2002', 'https://github.com/masudul2002', 'An ambitious dreamer and well-rounded leader seeking knowledge across disciplines. Passionate about building secure, scalable financial technology solutions.', '/images/MASUDUL-HASAN.png', '8801572902196', 0)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.skills (id, name, icon, icon_color, sort_order) VALUES

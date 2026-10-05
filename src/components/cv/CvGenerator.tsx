@@ -23,7 +23,7 @@ export default function CvGenerator({ data }: { data?: ProfileData }) {
     set("cv-location", personal.location);
     set(
       "cv-contact",
-      `${personal.altEmail || personal.email} — ${personal.phone} — ${personal.linkedin} — ${personal.github}`
+      `${personal.email || personal.altEmail} — ${personal.phone} — ${personal.linkedin} — ${personal.github}`
     );
     set("cv-summary", targetPos.summary || personal.summary);
 
@@ -171,7 +171,7 @@ export default function CvGenerator({ data }: { data?: ProfileData }) {
 
     const txt = `${personal.name} — ${targetPos.title}
 ${personal.location}
-${personal.altEmail || personal.email} — ${personal.phone} — ${personal.linkedin} — ${personal.github}
+${personal.email || personal.altEmail} — ${personal.phone} — ${personal.linkedin} — ${personal.github}
 
 PROFESSIONAL SUMMARY
 ${targetPos.summary || personal.summary}

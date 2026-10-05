@@ -5,7 +5,7 @@
 [![Portfolio Live](https://img.shields.io/badge/🌐_Live_Demo-GitHub_Pages-00f2ff?style=for-the-badge)](https://masudul2002.github.io)
 [![GitHub](https://img.shields.io/badge/GitHub-masudul2002-181717?style=for-the-badge&logo=github)](https://github.com/masudul2002)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-masudul2002-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/masudul2002)
-[![Email](https://img.shields.io/badge/Email-23240442@sstu.ac.bd-D14836?style=for-the-badge&logo=gmail)](mailto:23240442@sstu.ac.bd)
+[![Email](https://img.shields.io/badge/Email-info@masudulhasan.me-D14836?style=for-the-badge&logo=gmail)](mailto:info@masudulhasan.me)
 
 > **⚠️ COPYRIGHT NOTICE:** This repository and all its contents are protected under copyright law.  
 > Copying, reusing, or redistributing any part of this project without explicit written permission is strictly prohibited.  
@@ -123,7 +123,7 @@ start index.html
 
 | Platform | Link |
 |---|---|
-| 📧 Email | [23240442@sstu.ac.bd](mailto:23240442@sstu.ac.bd) |
+| 📧 Email | [info@masudulhasan.me](mailto:info@masudulhasan.me) |
 | 💼 LinkedIn | [linkedin.com/in/masudul2002](https://www.linkedin.com/in/masudul2002) |
 | 🐙 GitHub | [github.com/masudul2002](https://github.com/masudul2002) |
 

@@ -277,30 +277,21 @@ export const STATIC_FALLBACK: ProfileData = {
 
   projects: [
     {
-      key: "mangostar",
-      title: "Mango Star",
-      category: "E-Commerce Platform",
+      key: "zero-pay",
+      title: "Zero-Pay",
+      category: "FinTech & Automated Payments",
       status: "Production Ready",
-      image: "/images/Mango Star.png",
-      techStack: [
-        "React",
-        "TypeScript",
-        "Supabase",
-        "Tailwind CSS",
-        "TanStack Query",
-        "Node.js",
-        "Express.js",
-        "PostgreSQL",
-        "Stripe",
-      ],
+      image: "/images/zero-pay.png",
+      fallbackIcon: "fas fa-shield-alt",
+      techStack: ["Kotlin", "Android", "FinTech", "Webhooks", "REST API"],
       description:
-        "A modern full-stack e-commerce platform built for seamless online shopping with secure authentication, real-time database integration, product management, shopping cart, order tracking, and responsive user experience.",
-      liveUrl: "https://mangostar.store",
-      githubUrl: "https://github.com/masudul2002",
+        "Enterprise-grade automated payment ingestion and real-time webhook forwarding engine for Android. High-reliability financial event dispatcher.",
+      liveUrl: "https://github.com/masudul2002/ZeroPay_APK/releases",
+      githubUrl: "https://github.com/masudul2002/Zero-Pay",
       bullets: [
-        "Developed a modern full-stack e-commerce platform featuring secure user authentication, shopping cart, and Stripe payment integration.",
-        "Built real-time database transactions and database querying using PostgreSQL and Supabase.",
-        "Optimized front-end data fetching and state caching using React, Tailwind CSS, and TanStack Query, enhancing mobile responsiveness.",
+        "Engineered an automated Android SMS payment parser with real-time webhook dispatching.",
+        "Built background worker architecture ensuring 99.9% event delivery without battery throttle.",
+        "Implemented cryptographic HMAC verification and secure token management for API communication.",
       ],
     },
     {
@@ -309,11 +300,12 @@ export const STATIC_FALLBACK: ProfileData = {
       category: "Accounting & Member Management",
       status: "Live",
       image: "/images/DJS.jpg",
+      fallbackIcon: "fas fa-users",
       techStack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "TanStack Query"],
       description:
         "End-to-end accounting and member management platform for Dhipidanga Jubo Shongha. Features RBAC, financial dashboards, live alerts, responsive sidebar navigation, and Bengali report generation.",
       liveUrl: "https://djs-org.vercel.app",
-      githubUrl: "",
+      githubUrl: "https://github.com/masudul2002/djs-org",
       bullets: [
         "Designed and built an end-to-end accounting and member management platform featuring RBAC and financial dashboards.",
         "Integrated Supabase real-time auth and database listeners for live alerts and seamless synchronization.",
@@ -321,16 +313,17 @@ export const STATIC_FALLBACK: ProfileData = {
       ],
     },
     {
-      key: "mess",
-      title: "Mess Management System",
-      category: "Web Application Prototype",
-      status: "Prototype",
-      image: "",
+      key: "mealbook",
+      title: "MealBook",
+      category: "Daily Mess & Meal Management",
+      status: "Live",
+      image: "/images/mealbook.svg",
       fallbackIcon: "fas fa-utensils",
-      techStack: ["JavaScript", "HTML", "CSS"],
-      description: "A web-based system designed to manage mess activities and finances.",
-      liveUrl: "#",
-      githubUrl: "",
+      techStack: ["JavaScript", "HTML5", "CSS3", "Firebase", "Web App"],
+      description:
+        "Web-based financial management system designed to track daily mess activities, meals, market expenses, and automated balance splitting.",
+      liveUrl: "https://mess-manager-teal.vercel.app",
+      githubUrl: "https://github.com/masudul2002/MealBook",
       bullets: [
         "Built a web-based financial management system designed to track daily mess activities, meals, and expenditures.",
         "Created modular JavaScript calculations for automated balance splitting and financial reporting.",
@@ -338,72 +331,31 @@ export const STATIC_FALLBACK: ProfileData = {
       ],
     },
     {
-      key: "campuspay",
-      title: "CampusPay",
-      category: "FinTech & Student Banking",
+      key: "mangostar",
+      title: "Mango Star",
+      category: "E-Commerce Platform",
       status: "Production Ready",
-      image: "/images/bKash.png",
-      fallbackIcon: "fas fa-credit-card",
-      techStack: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Supabase", "REST API"],
-      description:
-        "CampusPay is an integrated student financial services and campus payment gateway platform. Enables seamless digital tuition payments, hall fees, transaction history, and financial record auditing.",
-      liveUrl: "https://campus-pay-taupe.vercel.app",
-      githubUrl: "https://github.com/masudul2002/CampusPay",
-      bullets: [
-        "Architected a unified campus digital payment solution with real-time transaction tracking and fee management.",
-        "Engineered secure authentication, audit trails, and role-based permissions using Next.js, Supabase, and TypeScript.",
-        "Designed modern responsive mobile-first UI with dark/light themes and automated payment receipt generation.",
+      image: "/images/Mango Star.png",
+      fallbackIcon: "fas fa-shopping-bag",
+      techStack: [
+        "React",
+        "TypeScript",
+        "Supabase",
+        "Tailwind CSS",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL",
+        "Stripe",
       ],
-    },
-    {
-      key: "cpkit",
-      title: "CPKit",
-      category: "Competitive Programming Hub",
-      status: "Live",
-      image: "",
-      fallbackIcon: "fas fa-laptop-code",
-      techStack: ["TypeScript", "React", "Tailwind CSS", "Algorithms", "REST API"],
       description:
-        "Everything a Competitive Programmer Needs in one place. Features live contest reminders across Codeforces, AtCoder & CodeChef, problem difficulty analyzers, rating prediction, and fast C++ algorithmic templates.",
-      liveUrl: "https://cpkit.vercel.app",
-      githubUrl: "https://github.com/masudul2002/cpkit",
+        "A modern full-stack e-commerce platform built for seamless online shopping with secure authentication, real-time database integration, product management, shopping cart, order tracking, and responsive user experience.",
+      liveUrl: "https://mangostar.store",
+      githubUrl: "https://github.com/masudul2002/mangostar",
       bullets: [
-        "Created an all-in-one competitive programming platform aggregating live contests, problem analytics, and code templates.",
-        "Integrated Codeforces, AtCoder, and CodeChef APIs to display real-time contest schedules and user metrics.",
-        "Built high-performance algorithmic cheat-sheets and interactive problem tracker with responsive design.",
+        "Developed a modern full-stack e-commerce platform featuring secure user authentication, shopping cart, and Stripe payment integration.",
+        "Built real-time database transactions and database querying using PostgreSQL and Supabase.",
+        "Optimized front-end data fetching and state caching using React, Tailwind CSS, and TanStack Query, enhancing mobile responsiveness.",
       ],
-    },
-    {
-      key: "paysa",
-      title: "Paysa",
-      category: "Personal Finance Manager",
-      status: "In Dev",
-      image: "",
-      fallbackIcon: "fas fa-wallet",
-      techStack: ["Flutter", "Dart", "SQLite", "Finance"],
-      description:
-        "A modern offline-first personal finance and expense manager built with Flutter. Provides expense tracking, daily budgeting, wallet analytics, and data sovereignty without requiring cloud dependency.",
-      liveUrl: "#",
-      githubUrl: "https://github.com/masudul2002/Paysa",
-      bullets: [
-        "Developed an offline-first mobile personal finance application with SQLite local storage.",
-        "Designed interactive expense categorization, budgeting goals, and monthly cashflow visualizer.",
-        "Built privacy-focused architecture ensuring user financial data never leaves the local device.",
-      ],
-    },
-    {
-      key: "comingsoon",
-      title: "Coming Soon",
-      category: "P3",
-      status: "In Dev",
-      image: "",
-      techStack: [],
-      description:
-        "Details about an ongoing or planned project. Stay tuned for more amazing work.",
-      liveUrl: "#",
-      githubUrl: "",
-      isPlaceholder: true,
-      bullets: [],
     },
   ],
 
@@ -439,13 +391,21 @@ export const STATIC_FALLBACK: ProfileData = {
         ],
       },
       projectBullets: {
+        "zero-pay": [
+          "Architected Android automated payment receiver with background SMS parsing and webhook dispatch.",
+          "Implemented cryptographic signature validation and idempotent retry workers for high reliability.",
+        ],
         djs: [
           "Designed and built an end-to-end accounting and member management platform featuring RBAC and financial dashboards.",
-          "Implemented Firebase security rules and real-time database ensuring data accountability and compliance.",
+          "Implemented Supabase real-time database and auth listeners ensuring data accountability and compliance.",
         ],
-        mess: [
+        mealbook: [
           "Built a web-based financial management tool with expense tracking, billing, and balance reports.",
-          "Applied modular JS architecture with localStorage persistence and clean responsive interface.",
+          "Applied modular JS architecture with persistent calculations and clean responsive interface.",
+        ],
+        mangostar: [
+          "Developed full-stack e-commerce architecture with React, Supabase, and Stripe checkout.",
+          "Built responsive UI and real-time state caching with TanStack Query and Tailwind CSS.",
         ],
       },
     },
@@ -473,6 +433,10 @@ export const STATIC_FALLBACK: ProfileData = {
         ],
       },
       projectBullets: {
+        "zero-pay": [
+          "Developed automated Android payment capture and notification webhook service with 99.9% delivery rate.",
+          "Implemented cryptographic transaction validation, anti-fraud rate limiting, and instant notification triggers.",
+        ],
         mangostar: [
           "Developed a modern full-stack e-commerce platform featuring secure user authentication, shopping cart, and Stripe payment integration.",
           "Built real-time database transactions and database querying using PostgreSQL and Supabase.",
@@ -481,8 +445,8 @@ export const STATIC_FALLBACK: ProfileData = {
           "Implemented secure financial accounting and transactional dashboards with real-time audit trails.",
           "Designed audit trail and activity logging to support transparency and data governance.",
         ],
-        mess: [
-          "Developed real-time expense tracker with automated balance calculation and PDF invoice generation.",
+        mealbook: [
+          "Developed real-time expense tracker with automated balance calculation and financial reconciliations.",
           "Applied input validation, data sanitization, and access-control patterns for financial data security.",
         ],
       },
@@ -511,17 +475,21 @@ export const STATIC_FALLBACK: ProfileData = {
         ],
       },
       projectBullets: {
+        "zero-pay": [
+          "Built high-throughput Kotlin/Android webhook dispatching engine communicating with remote REST APIs.",
+          "Implemented background service workers with low latency and SQLite persistence for offline queueing.",
+        ],
         mangostar: [
           "Developed robust backend REST APIs using Node.js and Express.js with PostgreSQL database schema.",
-          "Designed Firestore schema with normalized collections, efficient queries, and real-time listeners.",
+          "Designed database models with normalized tables, efficient queries, and real-time listeners.",
         ],
         djs: [
           "Designed database models and backend listeners for real-time member updates using Supabase.",
           "Implemented role-based access control and server-side validation for secure data management.",
         ],
-        mess: [
-          "Architected backend data model with validation, Firebase persistence, and structured error handling.",
-          "Built modular, server-side JavaScript calculations applying separation-of-concerns principles.",
+        mealbook: [
+          "Architected backend data model with validation, persistence, and structured error handling.",
+          "Built modular JavaScript calculations applying separation-of-concerns principles.",
         ],
       },
     },
@@ -549,13 +517,16 @@ export const STATIC_FALLBACK: ProfileData = {
         ],
       },
       projectBullets: {
+        "zero-pay": [
+          "Optimized background worker queuing algorithms and concurrency controls to achieve zero event drops.",
+        ],
         djs: [
           "Designed an optimized search & filter algorithm for member lookup achieving O(log n) complexity.",
           "Applied data structure best practices to handle real-time concurrent data operations efficiently.",
         ],
-        mess: [
+        mealbook: [
           "Applied map/sort data structures to build O(n log n) financial tracking and balance reconciliation.",
-          "Optimized runtime and memory usage for performance in browser-constrained environments.",
+          "Optimized runtime and memory usage for performance in constrained browser environments.",
         ],
       },
     },
@@ -587,7 +558,7 @@ export const STATIC_FALLBACK: ProfileData = {
           "Designed promotional materials and social media content to drive 40% increase in club enrollment.",
           "Applied UX/UI and digital branding principles to deliver an intuitive, on-brand web experience.",
         ],
-        mess: [
+        mealbook: [
           "Managed full digital project lifecycle — requirements, design, development, deployment, and user feedback.",
           "Created user documentation and promotional materials to drive system adoption among non-technical users.",
         ],

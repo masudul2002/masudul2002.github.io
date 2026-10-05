@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="mbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="50%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="200" height="200" rx="42" fill="url(#mbBg)"/>
+  <!-- Circular Plate Backing -->
+  <circle cx="100" cy="100" r="62" fill="#ffffff" fill-opacity="0.18"/>
+  <circle cx="100" cy="100" r="50" fill="#ffffff" fill-opacity="0.95" filter="url(#shadow)"/>
+  <circle cx="100" cy="100" r="44" fill="none" stroke="#e0f2fe" stroke-width="2.5" stroke-dasharray="4 3"/>
+  <!-- Fork (Left) -->
+  <g fill="#0284c7">
+    <path d="M84 72v18c0 3.5 2.2 6.5 5.5 7.5v28.5c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5V97.5c3.3-1 5.5-4 5.5-7.5V72c0-1.1-.9-2-2-2s-2 .9-2 2v14h-2V72c0-1.1-.9-2-2-2s-2 .9-2 2v14h-2V72c0-1.1-.9-2-2-2s-2 .9-2 2z"/>
+  </g>
+  <!-- Knife (Right) -->
+  <g fill="#0284c7">
+    <path d="M112 70.5c-4.5 3-7 8.5-7 14.5v12c0 2 1.5 3.5 3.5 4v25c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5v-54c0-1.2-.7-2-1.5-1.5z"/>
+  </g>
+  <!-- Mini Cloche / Check spark -->
+  <circle cx="100" cy="62" r="3.5" fill="#f59e0b"/>
+</svg>

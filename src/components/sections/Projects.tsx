@@ -1,51 +1,31 @@
 import type { Project } from "@/lib/profile-data";
 
-const TECH_COLORS: Record<string, string> = {
-  React: "bg-blue-900/50 text-blue-300 border-blue-500/30",
-  TypeScript: "bg-purple-900/50 text-purple-300 border-purple-500/30",
-  Supabase: "bg-cyan-900/50 text-cyan-300 border-cyan-500/30",
-  "Tailwind CSS": "bg-sky-900/50 text-sky-300 border-sky-500/30",
-  "TanStack Query": "bg-indigo-900/50 text-indigo-300 border-indigo-500/30",
-  "Node.js": "bg-green-900/50 text-green-300 border-green-500/30",
-  "Express.js": "bg-gray-900/50 text-gray-300 border-gray-500/30",
-  PostgreSQL: "bg-sky-950/50 text-sky-200 border-sky-600/30",
-  Stripe: "bg-indigo-900/50 text-indigo-300 border-indigo-500/30",
-  JavaScript: "bg-yellow-900/50 text-yellow-300 border-yellow-500/30",
-  HTML: "bg-orange-900/50 text-orange-300 border-orange-500/30",
-  CSS: "bg-blue-900/50 text-blue-300 border-blue-500/30",
-  "Next.js": "bg-neutral-800/70 text-neutral-200 border-neutral-600/40",
-  Flutter: "bg-cyan-950/60 text-cyan-300 border-cyan-500/40",
-  Dart: "bg-blue-950/60 text-blue-300 border-blue-500/40",
-  SQLite: "bg-teal-950/60 text-teal-300 border-teal-500/40",
-  "REST API": "bg-emerald-950/60 text-emerald-300 border-emerald-500/40",
-  Algorithms: "bg-amber-950/60 text-amber-300 border-amber-500/40",
-  Finance: "bg-violet-950/60 text-violet-300 border-violet-500/40",
-};
-
 function ComingSoonCard({ proj }: { proj: Project }) {
   return (
-    <div className="group relative rounded-xl overflow-hidden glass-card vibe-card border border-glass-border hover-neon transition-all duration-300">
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10"></div>
-      <div className="h-48 bg-gray-900 relative flex items-center justify-center overflow-hidden">
+    <div className="group relative flex flex-col rounded-2xl overflow-hidden glass-card vibe-card border border-glass-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5">
+      <div className="h-36 relative overflow-hidden flex items-center justify-center p-3 bg-black/5 dark:bg-white/[0.02] border-b border-glass-border">
         <div className="cs-pulse cs-pulse-1"></div>
         <div className="cs-pulse cs-pulse-2"></div>
         <div className="cs-orbit"><div className="cs-orbit-dot"></div></div>
-        <div className="cs-core"><i className="fas fa-code text-primary text-lg"></i></div>
+        <div className="cs-core"><i className="fas fa-code text-primary text-base"></i></div>
       </div>
-      <div className="relative z-20 p-6 -mt-12">
-        <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors flex items-center gap-2">
-          {proj.title}
-          <span className="cs-blink text-primary text-xs font-mono">•</span>
-        </h4>
-        <div className="flex gap-2 my-3 flex-wrap">
-          <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">{proj.category}</span>
-          <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded border border-primary/20 cs-tag-pulse">{proj.status}</span>
+      <div className="p-4 flex flex-col flex-1">
+        <div className="flex items-center justify-between gap-2 mb-1">
+          <h4 className="text-base font-bold text-text group-hover:text-primary transition-colors truncate">
+            {proj.title}
+          </h4>
+          <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border border-primary/30 bg-primary/10 text-primary shrink-0 cs-tag-pulse">
+            {proj.status}
+          </span>
         </div>
-        <p className="text-sm text-gray-400 mb-4 line-clamp-3">{proj.description}</p>
-        <a href="#" className="text-sm font-bold text-primary/60 cursor-not-allowed flex items-center gap-1">
-          <span className="cs-dot-loader"><span></span><span></span><span></span></span>
-          In Progress
-        </a>
+        <p className="text-[11px] font-medium text-text-muted mb-2 truncate">{proj.category}</p>
+        <p className="text-xs text-text-muted line-clamp-2 mb-3 leading-relaxed">{proj.description}</p>
+        <div className="pt-3 mt-auto border-t border-glass-border text-xs">
+          <span className="text-xs font-bold text-primary/70 inline-flex items-center gap-1">
+            <span className="cs-dot-loader"><span></span><span></span><span></span></span>
+            In Progress
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -53,74 +33,114 @@ function ComingSoonCard({ proj }: { proj: Project }) {
 
 export default function Projects({ projects }: { projects: Project[] }) {
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="py-20">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center mb-16">
+        <div className="flex flex-col items-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-2 flex items-center gap-3">
             <i className="fas fa-folder text-primary"></i> Projects
           </h2>
           <div className="h-1 w-20 bg-primary rounded-full"></div>
         </div>
 
-        <div id="projects-container" className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="projects-container" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
           {projects.map((proj) => {
             if (proj.isPlaceholder) return <ComingSoonCard key={proj.key} proj={proj} />;
 
-            const techBadges = proj.techStack.map((tech) => (
-              <span key={tech} className={`text-xs ${TECH_COLORS[tech] ?? "bg-blue-900/50 text-blue-300 border-blue-500/30"} px-2 py-1 rounded border`}>
-                {tech}
-              </span>
-            ));
-
             const imageSlot = proj.image ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={proj.image} alt={proj.title} className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500 relative z-10" />
+              <img
+                src={proj.image}
+                alt={proj.title}
+                className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+              />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-600 bg-gray-900">
-                <i className={`${proj.fallbackIcon ?? "fas fa-code"} text-5xl`}></i>
-              </div>
+              <i className={`${proj.fallbackIcon || "fas fa-code"} text-3xl text-primary`}></i>
             );
 
             const liveBtn =
               proj.liveUrl && proj.liveUrl !== "#" ? (
-                <a href={proj.liveUrl} target="_blank" rel="noopener" className="text-sm font-bold text-primary flex items-center gap-1 hover:gap-2 transition-all hover:text-white">
-                  Live Demo <i className="fas fa-arrow-right"></i>
+                <a
+                  href={proj.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-bold text-primary hover:text-text transition-colors"
+                >
+                  <span>Live Demo</span>
+                  <i className="fas fa-arrow-right text-[10px]"></i>
                 </a>
               ) : null;
 
             const githubBtn =
               proj.githubUrl && proj.githubUrl !== "#" ? (
-                <a href={proj.githubUrl} target="_blank" rel="noopener" className="text-sm font-bold text-white flex items-center gap-1 hover:gap-2 transition-all hover:text-primary">
-                  GitHub <i className="fas fa-arrow-right text-primary"></i>
+                <a
+                  href={proj.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-semibold text-text hover:text-primary transition-colors"
+                >
+                  <i className="fab fa-github text-sm"></i>
+                  <span>Code</span>
                 </a>
               ) : null;
 
-            const gradientBorderClass = proj.extraInteractivity ? "mango-gradient-border" : "";
+            const isMango = proj.key === "mangostar";
 
             return (
               <div
                 key={proj.key}
-                className={`group relative rounded-xl overflow-hidden glass-card vibe-card border border-glass-border hover-neon ${gradientBorderClass} transition-all duration-300 hover:-translate-y-2`}
+                className={`group relative flex flex-col rounded-2xl overflow-hidden glass-card vibe-card border border-glass-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 ${
+                  isMango ? "mango-gradient-border" : ""
+                }`}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10"></div>
-                <div className="h-48 bg-gray-800 relative overflow-hidden flex items-center justify-center px-6 py-4">
-                  {proj.extraInteractivity && <div className="absolute w-24 h-24 rounded-full bg-primary/10 blur-2xl pointer-events-none"></div>}
-                  {imageSlot}
-                </div>
-                <div className="relative z-20 p-6 -mt-12">
-                  <h4 className="text-xl font-bold text-white group-hover:text-primary transition-colors">{proj.title}</h4>
-                  <div className="flex gap-2 my-3 flex-wrap">
-                    <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">{proj.category}</span>
-                    <span className="text-xs bg-emerald-900/50 text-emerald-300 px-2 py-1 rounded border border-emerald-500/30">{proj.status}</span>
-                    {techBadges}
+                {/* Minimal Header with Centered Official Logo */}
+                <div className="h-36 relative overflow-hidden flex items-center justify-center p-3 bg-black/5 dark:bg-white/[0.02] border-b border-glass-border">
+                  <div className="w-20 h-20 rounded-xl bg-white dark:bg-gray-900/80 border border-black/5 dark:border-white/10 shadow-sm flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300">
+                    {imageSlot}
                   </div>
-                  <p className="text-sm text-gray-400 mb-4 line-clamp-3">{proj.description}</p>
-                  <div className="flex gap-6 items-center mt-4">
-                    {liveBtn}
-                    {githubBtn}
-                    {!liveBtn && !githubBtn && (
-                      <a href="#" className="text-sm font-bold text-white flex items-center gap-1 hover:gap-2 transition-all">
-                        View Code <i className="fas fa-arrow-right text-primary"></i>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-4 flex flex-col flex-1">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <h4 className="text-base font-bold text-text group-hover:text-primary transition-colors truncate">
+                      {proj.title}
+                    </h4>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
+                      {proj.status}
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] font-medium text-text-muted mb-2 truncate">
+                    {proj.category}
+                  </p>
+
+                  <p className="text-xs text-text-muted line-clamp-2 mb-3 leading-relaxed">
+                    {proj.description}
+                  </p>
+
+                  {/* Compact Tech Badges */}
+                  <div className="flex gap-1.5 mb-3 flex-wrap">
+                    {proj.techStack.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-text-muted border border-glass-border"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {proj.techStack.length > 4 && (
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-black/5 dark:bg-white/5 text-text-muted">
+                        +{proj.techStack.length - 4}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action Links */}
+                  <div className="flex items-center justify-between pt-3 mt-auto border-t border-glass-border text-xs">
+                    {liveBtn ? liveBtn : <span />}
+                    {githubBtn ? githubBtn : (
+                      <a href={proj.liveUrl || "#"} className="text-xs font-semibold text-text hover:text-primary transition-colors inline-flex items-center gap-1">
+                        View <i className="fas fa-arrow-right text-[10px]"></i>
                       </a>
                     )}
                   </div>
